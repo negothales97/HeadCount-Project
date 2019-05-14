@@ -1,6 +1,8 @@
-package view;
+package view.filial;
 
+import java.awt.Container;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -11,12 +13,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import model.dao.FilialDAO;
 
 
-public class CadFilial extends JFrame{
+
+public class CadFilial extends JFrame implements ActionListener{
 	private JFrame janela;
-	private JPanel panel;
 	
 	private JButton btnSalvar;
 	private JButton btnCancelar;
@@ -43,8 +44,8 @@ public class CadFilial extends JFrame{
 	public CadFilial() {
 		
 		janela 	= new JFrame();
-		panel 	= new JPanel();
-		panel.setLayout(new FlowLayout());
+		setLayout(new GridLayout(0, 2));
+		Container c = getContentPane();
 		
 		btnSalvar 			= new JButton("Salvar");
 		btnCancelar 		= new JButton("Cancelar");
@@ -67,46 +68,42 @@ public class CadFilial extends JFrame{
 		txtComplemento 		= new JTextField(10);
 		txtBairro 			= new JTextField(12);
 		
-		panel.add(lblCNPJ);
-		panel.add(txtCNPJ);
-		panel.add(lblNome);
-		panel.add(txtNome);
-		panel.add(lblIE);
-		panel.add(txtIE);
-		panel.add(lblCep);
-		panel.add(txtCep);
-		panel.add(lblRua);
-		panel.add(txtRua);
-		panel.add(lblNumero);
-		panel.add(txtNumero);
-		panel.add(lblComplemento);
-		panel.add(txtComplemento);
-		panel.add(lblBairro);
-		panel.add(txtBairro);
-		panel.add(btnSalvar);
-		panel.add(btnCancelar);
+		c.add(lblCNPJ);
+		c.add(txtCNPJ);
+		c.add(lblNome);
+		c.add(txtNome);
+		c.add(lblIE);
+		c.add(txtIE);
+		c.add(lblCep);
+		c.add(txtCep);
+		c.add(lblRua);
+		c.add(txtRua);
+		c.add(lblNumero);
+		c.add(txtNumero);
+		c.add(lblComplemento);
+		c.add(txtComplemento);
+		c.add(lblBairro);
+		c.add(txtBairro);
+		c.add(btnSalvar);
+		c.add(btnCancelar);
 		
-		btnSalvar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				txtCep.getText();
-				txtRua.getText();
-				txtNumero.getText();
-				txtComplemento.getText();
-				txtBairro.getText();
-				FilialDAO dao = new FilialDAO();
-				try {
-					dao.create(txtNome.getText(), txtCNPJ.getText(), txtIE.getText());
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-		});
-		janela.setContentPane(panel);
-		janela.setTitle("Cadastro de Empresas");
-		janela.setSize(400,300);
+		btnSalvar.addActionListener(this);
+		btnCancelar.addActionListener(this);
+		
+		janela.setContentPane(c);
+		janela.setTitle("Cadastro de Filiais");
+		janela.setSize(600,400);
 		janela.setVisible(true);
 		janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
-	
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object fonte = e.getSource();
+		if (fonte == btnCancelar) {
+            dispose();
+        } 
+		System.out.println("Evento");
+		
+	}
 }

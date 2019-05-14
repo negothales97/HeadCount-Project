@@ -9,7 +9,6 @@ import model.vo.Filial;
 public class MainFilial {
 
 	public static void main(String[] args) {
-//		FilialController filial = new FilialController();
 		
 		FilialController filial = new FilialController();
 		
