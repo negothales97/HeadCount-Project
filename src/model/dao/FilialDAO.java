@@ -24,31 +24,26 @@ public class FilialDAO {
 				stmt.setString(2, cnpj);
 				stmt.setString(3, inscEstadual);
 
-				boolean resultado = stmt.execute();
+				stmt.execute();
 			}
 		}
 	}
 
-	public List<Filial> read(String nomeSearch) throws SQLException {
+	public List<Filial> read() throws SQLException {
 		List<Filial> filiais = new ArrayList<>();
 		try (Connection con = Database.getConnection()) {
-			String sql = "SELECT * FROM FILIAL WHERE nome LIKE %?%";
+			String sql = "SELECT * FROM FILIAL";
 			try (PreparedStatement stmt = con.prepareStatement(sql)) {
-				stmt.setString(1, nomeSearch);
-				boolean resultado = stmt.execute();
+				stmt.execute();
 				ResultSet rs = stmt.getResultSet();
 				while (rs.next()) {
 					int id = rs.getInt("id");
 					String nome = rs.getString("nome");
 					String cnpj = rs.getString("cnpj");
 					String inscEstadual = rs.getString("insc_estadual");
-					Filial filial = new Filial();
+					Filial filial = new Filial(nome, cnpj, inscEstadual);
 
 					filial.setId(id);
-					filial.setNome(nome);
-					filial.setCnpj(cnpj);
-					filial.setInscEstadual(inscEstadual);
-
 					filiais.add(filial);
 				}
 			}
@@ -67,19 +62,20 @@ public class FilialDAO {
 				stmt.setString(3, filial.getInscEstadual());
 				stmt.setInt(4, filial.getId());
 
-				boolean resultado = stmt.execute();
+				stmt.execute();
 			}
 		}
 	}
 
-	public void delete(Filial filial) throws SQLException {
-		try (Connection con = Database.getConnection()) {
-			String sql = "DELETE FROM FILIAL WHERE id=?";
-
-			try (PreparedStatement stmt = con.prepareStatement(sql)) {
-				stmt.setInt(1, filial.getId());
-				boolean resultado = stmt.execute();
-			}
-		}
+	public void delete(int id) throws SQLException {
+		System.out.println(id);
+//		try (Connection con = Database.getConnection()) {
+//			String sql = "DELETE FROM FILIAL WHERE id=?";
+//
+//			try (PreparedStatement stmt = con.prepareStatement(sql)) {
+//				stmt.setInt(1, id);
+//				stmt.execute();
+//			}
+//		}
 	}
 }

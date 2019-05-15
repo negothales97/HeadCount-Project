@@ -2,11 +2,17 @@ package model.vo;
 
 public class Endereco {
 	private String id;
-	private String cep;
 	private String rua;
-	private int numero;
-	private String complemento;
+	private String numero;
 	private String bairro;
+	
+	public Endereco(String rua, String numero, String bairro)
+	{
+		this.rua = rua;
+		this.numero = numero;
+		this.bairro = bairro;
+		
+	}
 
 	public String getId() {
 		return id;
@@ -16,13 +22,7 @@ public class Endereco {
 		this.id = id;
 	}
 
-	public String getCep() {
-		return cep;
-	}
-
-	public void setCep(String cep) {
-		this.cep = cep;
-	}
+	
 
 	public String getRua() {
 		return rua;
@@ -32,21 +32,15 @@ public class Endereco {
 		this.rua = rua;
 	}
 
-	public int getNumero() {
+	public String getNumero() {
 		return numero;
 	}
 
-	public void setNumero(int numero) {
+	public void setNumero(String numero) {
 		this.numero = numero;
 	}
 
-	public String getComplemento() {
-		return complemento;
-	}
-
-	public void setComplemento(String complemento) {
-		this.complemento = complemento;
-	}
+	
 
 	public String getBairro() {
 		return bairro;
@@ -56,23 +50,5 @@ public class Endereco {
 		this.bairro = bairro;
 	}
 
-	public String getCidade() {
-		return cidade;
-	}
-
-	public void setCidade(String cidade) {
-		this.cidade = cidade;
-	}
-
-	public String getEstado() {
-		return estado;
-	}
-
-	public void setEstado(String estado) {
-		this.estado = estado;
-	}
-
-	private String cidade;
-	private String estado;
 
 }

@@ -10,8 +10,13 @@ import java.sql.SQLException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import controller.FilialController;
+import model.vo.Endereco;
+import model.vo.Filial;
 
 
 
@@ -20,25 +25,20 @@ public class CadFilial extends JFrame implements ActionListener{
 	private JFrame janela;
 	
 	private JButton btnSalvar;
-	private JButton btnCancelar;
+	private JButton btnVoltar;
 	
 	private JLabel lblCNPJ;
 	private JLabel lblNome;
 	private JLabel lblIE;
-	
-	private JLabel lblCep;
 	private JLabel lblRua;
 	private JLabel lblNumero;
-	private JLabel lblComplemento;
 	private JLabel lblBairro;
 	
 	private JTextField txtCNPJ;
 	private JTextField txtNome;
 	private JTextField txtIE;
-	private JTextField txtCep;
 	private JTextField txtRua;
 	private JTextField txtNumero;
-	private JTextField txtComplemento;
 	private JTextField txtBairro;
 	
 	public CadFilial() {
@@ -48,24 +48,20 @@ public class CadFilial extends JFrame implements ActionListener{
 		Container c = getContentPane();
 		
 		btnSalvar 			= new JButton("Salvar");
-		btnCancelar 		= new JButton("Cancelar");
+		btnVoltar= new JButton("Voltar");
 		
 		lblCNPJ 			= new JLabel("CNPJ");
 		lblNome 			= new JLabel("Razão Social");
 		lblIE 				= new JLabel("Inscrição Estadual");
-		lblCep 				= new JLabel("CEP");
 		lblRua 				= new JLabel("Rua");
 		lblNumero 			= new JLabel("Número");
-		lblComplemento 		= new JLabel("Complemento");
 		lblBairro 			= new JLabel("Bairro");
 		
 		txtCNPJ 			= new JTextField(15);
 		txtNome 			= new JTextField(25);
 		txtIE 				= new JTextField(10);
-		txtCep 				= new JTextField(10);
 		txtRua 				= new JTextField(20);
 		txtNumero			= new JTextField(5);
-		txtComplemento 		= new JTextField(10);
 		txtBairro 			= new JTextField(12);
 		
 		c.add(lblCNPJ);
@@ -74,21 +70,17 @@ public class CadFilial extends JFrame implements ActionListener{
 		c.add(txtNome);
 		c.add(lblIE);
 		c.add(txtIE);
-		c.add(lblCep);
-		c.add(txtCep);
 		c.add(lblRua);
 		c.add(txtRua);
 		c.add(lblNumero);
 		c.add(txtNumero);
-		c.add(lblComplemento);
-		c.add(txtComplemento);
 		c.add(lblBairro);
 		c.add(txtBairro);
 		c.add(btnSalvar);
-		c.add(btnCancelar);
+		c.add(btnVoltar);
 		
 		btnSalvar.addActionListener(this);
-		btnCancelar.addActionListener(this);
+		btnVoltar.addActionListener(this);
 		
 		janela.setContentPane(c);
 		janela.setTitle("Cadastro de Filiais");
@@ -100,10 +92,20 @@ public class CadFilial extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object fonte = e.getSource();
-		if (fonte == btnCancelar) {
-            dispose();
-        } 
-		System.out.println("Evento");
+		if (fonte == btnVoltar) {
+            this.dispose();
+        }if(fonte == btnSalvar) {
+        	Filial filial = new Filial(txtNome.getText(), txtCNPJ.getText(), txtIE.getText());
+        	Endereco endereco = new Endereco(txtRua.getText(), txtNumero.getText(), txtBairro.getText());
+        	filial.setEndereco(endereco);
+        	FilialController control = new FilialController();
+        	try {
+				control.criaFilial(filial);
+				JOptionPane.showMessageDialog(null, "Filial Cadastrada com sucesso");
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+        }
 		
 	}
 }
