@@ -3,9 +3,14 @@ package model.vo;
 public class Departamento {
 	private int id;
 	private String nome;
-	private String CentroCusto;
-	private Float Orcamento;
+	private String centroCusto;
+	private double orcamento;
 	
+	public Departamento(String nome, String centroCusto, double orcamento) {
+		this.nome = nome;
+		this.centroCusto = centroCusto;
+		this.orcamento = orcamento;
+	}
 	public int getId() {
 		return id;
 	}
@@ -20,15 +25,15 @@ public class Departamento {
 	}	
 	
 	public String getCentroCusto() {
-		return CentroCusto;
+		return centroCusto;
 	}
 	public void setCentroCusto(String centroCusto) {
-		CentroCusto = centroCusto;
+		this.centroCusto = centroCusto;
 	}
-	public Float getOrcamento() {
-		return Orcamento;
+	public double getOrcamento() {
+		return orcamento;
 	}
 	public void setOrcamento(Float orcamento) {
-		Orcamento = orcamento;
+		this.orcamento = orcamento;
 	}
 }

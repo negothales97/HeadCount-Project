@@ -8,22 +8,28 @@ import java.sql.SQLException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import controller.DepartamentoController;
+import controller.FilialController;
+import model.vo.Departamento;
+import model.vo.Endereco;
+import model.vo.Filial;
 
-public class CadDepartamento extends JFrame{
+
+public class CadDepartamento extends JFrame implements ActionListener{
 	private JFrame janela;
 	private JPanel panel;
+	private DepartamentoController control;
 	
 	private JButton btnSalvar;
-	private JButton btnCancelar;
+	private JButton btnVoltar;
 	
 	private JLabel lblNome;
 	private JLabel lblCentroCusto;
 	private JLabel lblOrcamento;
-	
-	
 	
 	private JTextField txtNome;
 	private JTextField txtCentroCusto;
@@ -31,22 +37,24 @@ public class CadDepartamento extends JFrame{
 	
 	public CadDepartamento() {
 		
-		janela 	= new JFrame();
-		panel 	= new JPanel();
+		janela 			= new JFrame();
+		panel 			= new JPanel();
 		panel.setLayout(new FlowLayout());
 		
-		btnSalvar 			= new JButton("Salvar");
-		btnCancelar 		= new JButton("Cancelar");		
+		btnSalvar 		= new JButton("Salvar");
+		btnVoltar 		= new JButton("Cancelar");		
 		
-		lblNome 			= new JLabel("Nome do Departamento");
-		lblCentroCusto		= new JLabel("Centro de Custo");
-		lblOrcamento		= new JLabel("Orçamento (R$)");
+		lblNome 		= new JLabel("Nome do Departamento");
+		lblCentroCusto	= new JLabel("Centro de Custo");
+		lblOrcamento	= new JLabel("Orçamento (R$)");
 		
 		
 		
-		txtNome 			= new JTextField(25);
-		txtCentroCusto 		= new JTextField(15);
-		txtOrcamento 		= new JTextField(15);
+		txtNome 		= new JTextField(15);
+		txtCentroCusto 	= new JTextField(15);
+		txtOrcamento 	= new JTextField(15);
+		
+		btnSalvar.addActionListener(this);
 				
 		panel.add(lblNome);
 		panel.add(txtNome);
@@ -55,7 +63,7 @@ public class CadDepartamento extends JFrame{
 		panel.add(lblOrcamento);
 		panel.add(txtOrcamento);	
 		panel.add(btnSalvar);
-		panel.add(btnCancelar);
+		panel.add(btnVoltar);
 		
 		
 		janela.setContentPane(panel);
@@ -63,6 +71,25 @@ public class CadDepartamento extends JFrame{
 		janela.setSize(400,300);
 		janela.setVisible(true);
 		janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object fonte = e.getSource();
+		if (fonte == btnVoltar) {
+            this.dispose();
+        }if(fonte == btnSalvar) {
+        	double orcamento = Double.parseDouble(txtOrcamento.getText());
+        	Departamento departamento = new Departamento(txtNome.getText(), txtCentroCusto.getText(), orcamento);
+        	control = new DepartamentoController();
+        	try {
+				control.criaDepartamento(departamento);
+				JOptionPane.showMessageDialog(null, "Departamento Cadastrado com sucesso");
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+        }
+		
 	}
 	
 }
