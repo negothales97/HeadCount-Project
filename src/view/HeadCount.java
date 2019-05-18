@@ -11,7 +11,7 @@ import javax.swing.JMenuItem;
 import controller.DepartamentoController;
 import controller.FilialController;
 import controller.FuncionarioController;
-import view.dependente.DependenteController;
+import controller.DependenteController;
 
 
 public class HeadCount implements ActionListener{
@@ -82,7 +82,6 @@ public class HeadCount implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		Object fonte = e.getSource();
 		if(fonte == cadFil) {
-			System.out.println("Teste");
 			controlFil = new FilialController();
 			try {
 				controlFil.listaFilial();
@@ -91,6 +90,12 @@ public class HeadCount implements ActionListener{
 			}
 		}else if(fonte == cadFunc) {
 			controlFun = new FuncionarioController();
+			try {
+				controlFun.listaFuncionario();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}else if(fonte == cadDeprt) {
 			controlDeprt = new DepartamentoController();
 		}else if(fonte == cadDep) {

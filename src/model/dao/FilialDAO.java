@@ -20,7 +20,7 @@ public class FilialDAO {
 
 			try (PreparedStatement stmt = con.prepareStatement(sql)) {
 
-				stmt.setString(1,nome);
+				stmt.setString(1, nome);
 				stmt.setString(2, cnpj);
 				stmt.setString(3, inscEstadual);
 
@@ -69,13 +69,13 @@ public class FilialDAO {
 
 	public void delete(int id) throws SQLException {
 		System.out.println(id);
-//		try (Connection con = Database.getConnection()) {
-//			String sql = "DELETE FROM FILIAL WHERE id=?";
-//
-//			try (PreparedStatement stmt = con.prepareStatement(sql)) {
-//				stmt.setInt(1, id);
-//				stmt.execute();
-//			}
-//		}
+		try (Connection con = Database.getConnection()) {
+			String sql = "DELETE FROM FILIAL WHERE id=?";
+
+			try (PreparedStatement stmt = con.prepareStatement(sql)) {
+				stmt.setInt(1, id);
+				stmt.execute();
+			}
+		}
 	}
 }

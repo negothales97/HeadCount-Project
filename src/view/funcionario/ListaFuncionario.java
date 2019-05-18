@@ -17,11 +17,14 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 
 import controller.FilialController;
+import controller.FuncionarioController;
 import model.dao.FilialDAO;
+import model.dao.FuncionarioDAO;
 import model.vo.Filial;
+import model.vo.Funcionario;
 
 public class ListaFuncionario extends JFrame implements ActionListener {
-	private FilialController control;
+	private FuncionarioController control;
 	private JFrame janela;
 	
 	private JButton btnNovo;
@@ -30,23 +33,23 @@ public class ListaFuncionario extends JFrame implements ActionListener {
 	private JButton btnPesquisar;
 	private JTextField txtPesquisar;
 	
-	private JTable tblFilial;
+	private JTable tblFuncionario;
 	
 	private JScrollPane barraRolagem;
 	
 	public ListaFuncionario() throws SQLException {
-		String[] colunas = { "Codigo", "Nome", "CNPJ", "Insc. Estadual"};
-		FilialDAO dao = new FilialDAO();
+		String[] colunas = { "Matricula", "Nome", "CPF", "Data Nasc"};
+		FuncionarioDAO dao = new FuncionarioDAO();
 	
-			List<Filial> filiais = dao.read();
-			Object[][] dados = new Object[filiais.size()][4];   
-	           for (int i = 0; i < filiais.size(); i++) {   
-	        	   Filial filial = filiais.get(i);   
-	               dados [i][0] = filial.getId();   
-	               dados[i][1] = filial.getNome();   
-	               dados[i][2] = filial.getCnpj();
-	               dados[i][3] = filial.getInscEstadual();
-	           } 
+		List<Funcionario> funcionarios = dao.read();
+		Object[][] dados = new Object[funcionarios.size()][4];   
+           for (int i = 0; i < funcionarios.size(); i++) {   
+        	   Funcionario funcionario = funcionarios.get(i);   
+               dados [i][0] = funcionario.getMatricula();   
+               dados[i][1] = funcionario.getNome();   
+               dados[i][2] = funcionario.getCpf();
+               dados[i][3] = funcionario.getDatanasc();
+           } 
 		
 			janela 	= new JFrame();
 			setLayout(new FlowLayout());
@@ -61,10 +64,10 @@ public class ListaFuncionario extends JFrame implements ActionListener {
 			txtPesquisar 	= new JTextField(10);
 			
 			
-			tblFilial = new JTable(dados, colunas);
-			tblFilial.getWidth();
+			tblFuncionario = new JTable(dados, colunas);
+			tblFuncionario.getWidth();
 		
-			c.add(tblFilial);
+			c.add(tblFuncionario);
 			c.add(btnNovo);
 			c.add(btnSair);
 			c.add(btnRemover);
@@ -87,13 +90,13 @@ public class ListaFuncionario extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object fonte = e.getSource();
-		control = new FilialController();
+		control = new FuncionarioController();
 		if (fonte == btnNovo) {
-            control.novaFilial();
+            control.novoFuncionario();
         }if(fonte == btnRemover) {
         	int id = Integer.parseInt(JOptionPane.showInputDialog("Informe o código a ser removido"));
         	try {
-				control.deletaFilial(id);
+				control.deletaFuncionario(id);
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}

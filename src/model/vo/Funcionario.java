@@ -3,13 +3,18 @@ package model.vo;
 public class Funcionario {
 	int matricula;
 	String nome;
-	int cargo_id;
-	double salario;
 	String cpf;
 	String datanasc;
-	int setor_id;
 	String status;
+	int cargo_id;
+	int setor_id;
+	double salario;
 	
+	public Funcionario(String nome, String cpf, String datanasc) {
+		this.nome = nome;
+		this.cpf = cpf;
+		this.datanasc = datanasc;
+	}
 	public String getNome() {
 		return nome;
 	}

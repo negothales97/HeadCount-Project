@@ -1,0 +1,51 @@
+/*C3*/SET SCHEMA PUBLIC
+drop table dependente
+drop table funcionario
+CREATE TABLE Persons (\u000d\u000a    matricula int,\u000d\u000a    nome varchar(255),\u000d\u000a    cpf varchar(255),\u000d\u000a    datanasc varchar(255), \u000d\u000a)
+CREATE TABLE Funcionario(\u000d\u000a    matricula int,\u000d\u000a    nome varchar(255),\u000d\u000a    cpf varchar(255),\u000d\u000a    datanasc varchar(255), \u000d\u000a)
+drop table persons
+/*C4*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C5*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C6*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C7*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C8*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C9*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C10*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C11*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C12*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C3*/drop table funcionario
+create table funcionario(\u000d\u000amatricula INTEGER IDENTITY PRIMARY KEY,\u000d\u000anome varchar(255),\u000d\u000acpf varchar(255),\u000d\u000adatanass varchar(255)\u000d\u000a)
+/*C13*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C14*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C15*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C16*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C17*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C18*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C3*/drop table funcionario
+create table funcionario(\u000d\u000amatricula INTEGER IDENTITY PRIMARY KEY,\u000d\u000anome varchar(255),\u000d\u000acpf varchar(255),\u000d\u000adatanasc varchar(255)\u000d\u000a)
+/*C19*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C20*/SET SCHEMA PUBLIC
+INSERT INTO FUNCIONARIO VALUES(0,'Caio Coelho','404.467.353-53','30/06/1997')
+COMMIT
+DISCONNECT
+/*C21*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C22*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C3*/DISCONNECT

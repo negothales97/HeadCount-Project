@@ -3,6 +3,7 @@ package view.funcionario;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -10,58 +11,72 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import controller.FilialController;
 import controller.FuncionarioController;
 
 import java.util.Date;
 
 import javax.swing.JOptionPane;
 
+import model.vo.Endereco;
+import model.vo.Filial;
 import model.vo.Funcionario;
 
 public class CadFuncionario extends JFrame implements ActionListener {
 	private JFrame janela;
 
-	JPanel panel;
-	JButton btnSalvar;
+	private JPanel panel;
+	private JButton btnSave;
 
-	JButton btnCancelar;
-	JTextField txtMatricula;
-	JTextField txtNome;
-	JTextField txtCPF;
-	JTextField txtDataNasc;
-	JTextField txtCargo;
-	JTextField txtSalario;
-	JTextField txtSetor;
-	JTextField txtStatus;
+	private JButton btnCancelar;
+	private JTextField txtMatricula;
+	private JTextField txtNome;
+	private JTextField txtCPF;
+	private JTextField txtDataNasc;
+	private JTextField txtCargo;
+	private JTextField txtSalario;
+	private JTextField txtSetor;
+	private JTextField txtStatus;
+	private JTextField txtEPI;
+	
+	private JLabel lblMatricula;
+	private JLabel lblNome;
+	private JLabel lblCPF;
+	private JLabel lblDataNasc;
+	private JLabel lblCargo;
+	private JLabel lblSalario;
+	private JLabel lblSetor;
+	private JLabel lblEPI;
+	private JLabel lblStatus;
 
 	public CadFuncionario() {
 		janela = new JFrame();
 
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		panel.setLayout(new FlowLayout());
 
-		JButton btnSalvar = new JButton("Salvar");
-		JButton btnCancelar = new JButton("Cancelar");
+		btnSave 		= new JButton("Salvar");
+		btnCancelar 	= new JButton("Cancelar");
 
-		JTextField txtMatricula = new JTextField(6);
-		JTextField txtNome = new JTextField(30);
-		JTextField txtCPF = new JTextField(12);
-		JTextField txtDataNasc = new JTextField(8);
-		JTextField txtCargo = new JTextField(30);
-		JTextField txtSalario = new JTextField(20);
-		JTextField txtSetor = new JTextField(30);
-		JTextField txtEPI = new JTextField(1);
-		JTextField txtStatus = new JTextField(1);
+		txtMatricula 	= new JTextField(6);
+		txtNome			= new JTextField(30);
+		txtCPF 			= new JTextField(12);
+		txtDataNasc 	= new JTextField(8);
+		txtCargo 		= new JTextField(30);
+		txtSalario 		= new JTextField(20);
+		txtSetor 		= new JTextField(30);
+		txtStatus 		= new JTextField(1);
+		txtEPI 			= new JTextField(4);
 
-		JLabel lblMatricula = new JLabel("Matricula");
-		JLabel lblNome = new JLabel("Nome");
-		JLabel lblCPF = new JLabel("CPF");
-		JLabel lblDataNasc = new JLabel("Data de Nascimento");
-		JLabel lblCargo = new JLabel("Cargo");
-		JLabel lblSalario = new JLabel("Salario");
-		JLabel lblSetor = new JLabel("Setor");
-		JLabel lblEPI = new JLabel("EPI");
-		JLabel lblStatus = new JLabel("Status");
+		lblMatricula	= new JLabel("Matricula");
+		lblNome 		= new JLabel("Nome");
+		lblCPF 			= new JLabel("CPF");
+		lblDataNasc 	= new JLabel("Data de Nascimento");
+		lblCargo 		= new JLabel("Cargo");
+		lblSalario 		= new JLabel("Salario");
+		lblSetor 		= new JLabel("Setor");
+		lblEPI 			= new JLabel("EPI");
+		lblStatus 		= new JLabel("Status");
 
 		panel.add(lblMatricula);
 		panel.add(txtMatricula);
@@ -81,27 +96,33 @@ public class CadFuncionario extends JFrame implements ActionListener {
 		panel.add(txtEPI);
 		panel.add(lblStatus);
 		panel.add(txtStatus);
-		panel.add(btnSalvar);
+		panel.add(btnSave);
 		panel.add(btnCancelar);
-
+		
+		btnSave.addActionListener(this);
+		
 		janela.setContentPane(panel);
 		janela.setTitle("Cadastro de Funcionario");
 		janela.setSize(400, 300);
 		janela.setVisible(true);
 		janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		btnSalvar.addActionListener(this);
+		
 
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object fonte = e.getSource();
-		if (fonte == btnSalvar) {
+		if (fonte == btnSave) {
 			FuncionarioController col = new FuncionarioController();
-			col.recebeDados(txtNome.getText(), txtMatricula.getText(), txtCPF.getText(), txtDataNasc.getText(),
-					txtCargo.getText(), txtSalario.getText(), txtSetor.getText(),
-					txtStatus.getText());
+			Funcionario funcionario = new Funcionario(txtNome.getText(), txtCPF.getText(), txtDataNasc.getText());
+        	try {
+        		col.criaFuncionario(funcionario);
+				JOptionPane.showMessageDialog(null, "Funcionario Cadastrado com sucesso");
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 
 		}
 	}
