@@ -7,9 +7,6 @@ public class Main {
 
 	public static void main(String[] args) throws SQLException {
 		new HeadCount();
-		System.out.println("teste");
-		
-		System.out.println("foi");
 	}
 
 }
