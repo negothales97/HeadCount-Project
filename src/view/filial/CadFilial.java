@@ -16,7 +16,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import org.hsqldb.Constraint;
@@ -25,11 +24,10 @@ import controller.FilialController;
 import model.vo.Endereco;
 import model.vo.Filial;
 
-
-
-
 public class CadFilial extends JFrame implements ActionListener{
 	private JFrame janela;
+	private FilialController control;
+	private Filial filial;
 	
 	private JPanel contentPanel;
 	private JPanel panelGridTop;
@@ -56,7 +54,6 @@ public class CadFilial extends JFrame implements ActionListener{
 	private JTextField txtBairro;
 	
 	public CadFilial() {
-		
 		janela 	= new JFrame();
 		contentPanel = new JPanel();
 		panelGridTop = new JPanel();
@@ -73,10 +70,10 @@ public class CadFilial extends JFrame implements ActionListener{
 		btnVoltar	= new JButton("Voltar");
 		
 		lblCNPJ 			= new JLabel("CNPJ");
-		lblNome 			= new JLabel("Razão Social");
-		lblIE 				= new JLabel("Inscrição Estadual");
+		lblNome 			= new JLabel("Razï¿½o Social");
+		lblIE 				= new JLabel("Inscriï¿½ï¿½o Estadual");
 		lblRua 				= new JLabel("Rua");
-		lblNumero 			= new JLabel("Número");
+		lblNumero 			= new JLabel("Nï¿½mero");
 		lblBairro 			= new JLabel("Bairro");
 		
 		txtCNPJ 			= new JTextField(15);
@@ -137,21 +134,30 @@ public class CadFilial extends JFrame implements ActionListener{
 		janela.setTitle("Cadastro de Filiais");
 		janela.setSize(450,300);
 		janela.setVisible(true);
-		janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		janela.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object fonte = e.getSource();
+    	control = new FilialController();
+		
 		if (fonte == btnVoltar) {
-            this.dispose();
+            janela.dispose();
+            try {
+				control.listaFilial();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+            
         }if(fonte == btnSalvar) {
-        	Filial filial = new Filial(txtNome.getText(), txtCNPJ.getText(), txtIE.getText());
+        	filial = new Filial(txtNome.getText(), txtCNPJ.getText(), txtIE.getText());
         	Endereco endereco = new Endereco(txtRua.getText(), txtNumero.getText(), txtBairro.getText());
         	filial.setEndereco(endereco);
-        	FilialController control = new FilialController();
+        	
         	try {
 				control.criaFilial(filial);
+				janela.dispose();
 				JOptionPane.showMessageDialog(null, "Filial Cadastrada com sucesso");
 			} catch (SQLException e1) {
 				e1.printStackTrace();
