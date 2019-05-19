@@ -24,8 +24,7 @@ public class DependenteController {
 	}
 	
 	public void criaDependente(Dependente dependente) throws SQLException {
-		System.out.println(dependente.getNome()+ dependente.getCentroCusto()+ dependente.getOrcamento());
-		dao.create(dependente.getNome(), dependente.getCentroCusto(), dependente.getOrcamento());
+		dao.create(dependente);
 	}
 
 	public void deletaDependente(int id) throws SQLException {

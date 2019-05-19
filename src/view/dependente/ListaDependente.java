@@ -41,10 +41,10 @@ public class ListaDependente extends JFrame implements ActionListener {
 			Object[][] dados = new Object[dependentes.size()][4];   
 	           for (int i = 0; i < dependentes.size(); i++) {   
 	        	   Dependente dependente = dependentes.get(i);   
-	               dados [i][0] = dependente.getId();   
+	               dados [i][0] = dependente.getid();   
 	               dados[i][1] = dependente.getNome();   
-	               dados[i][2] = dependente.getCentroCusto();
-	               dados[i][3] = dependente.getOrcamento();
+	               dados[i][2] = dependente.getCpf();
+	               dados[i][3] = dependente.getDataNasc();
 	           } 
 		
 			janela 	= new JFrame();

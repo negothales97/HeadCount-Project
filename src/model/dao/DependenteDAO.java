@@ -29,12 +29,11 @@ public class DependenteDAO {
 		}
 	}
 
-	public List<Dependente> read(String search) throws SQLException {
+	public List<Dependente> read() throws SQLException {
 		List<Dependente> dependentes = new ArrayList<>();
 		try (Connection con = Database.getConnection()) {
-			String sql = "SELECT * FROM Dependente where nome like ?";
+			String sql = "SELECT * FROM Dependente";
 			try (PreparedStatement stmt = con.prepareStatement(sql)) {
-				stmt.setString(1, "%"+search+"%");
 				stmt.execute();
 				ResultSet rs = stmt.getResultSet();
 				while (rs.next()) {
