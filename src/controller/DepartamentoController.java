@@ -24,12 +24,13 @@ public class DepartamentoController {
 	}
 	
 	public void criaDepartamento(Departamento departamento) throws SQLException {
-		System.out.println(departamento.getNome()+ departamento.getCentroCusto()+ departamento.getOrcamento());
-		dao.create(departamento.getNome(), departamento.getCentroCusto(), departamento.getOrcamento());
+		dao.create(departamento);
+		this.listaDepartamento();
 	}
 
 	public void deletaDepartamento(int id) throws SQLException {
 		dao.delete(id);
+		this.listaDepartamento();
 	}
 	
 		
