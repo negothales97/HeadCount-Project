@@ -13,7 +13,7 @@ public class FilialController {
 	private FilialDAO dao = null; 
 	
 	public FilialController() {
-		FilialDAO dao = new FilialDAO();
+		dao = new FilialDAO();
 	}
 	public void listaFilial() throws SQLException {
 		listaFilial = new ListaFilial();
@@ -24,11 +24,13 @@ public class FilialController {
 	}
 	
 	public void criaFilial(Filial filial) throws SQLException {
-		dao.create(filial.getNome(), filial.getCnpj(), filial.getInscEstadual());
+		dao.create(filial);
+		this.listaFilial();
 	}
 
 	public void deletaFilial(int id) throws SQLException {
 		dao.delete(id);
+		this.listaFilial();
 	}
 	
 		

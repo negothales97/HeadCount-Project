@@ -1,7 +1,6 @@
 package view.filial;
 
 import java.awt.Container;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,18 +10,16 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import controller.FilialController;
 import model.vo.Endereco;
 import model.vo.Filial;
 
-
-
-
 public class CadFilial extends JFrame implements ActionListener{
 	private JFrame janela;
+	private FilialController control;
+	private Filial filial;
 	
 	private JButton btnSalvar;
 	private JButton btnVoltar;
@@ -42,7 +39,6 @@ public class CadFilial extends JFrame implements ActionListener{
 	private JTextField txtBairro;
 	
 	public CadFilial() {
-		
 		janela 	= new JFrame();
 		setLayout(new GridLayout(0, 2));
 		Container c = getContentPane();
@@ -86,21 +82,30 @@ public class CadFilial extends JFrame implements ActionListener{
 		janela.setTitle("Cadastro de Filiais");
 		janela.setSize(600,400);
 		janela.setVisible(true);
-		janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		janela.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object fonte = e.getSource();
+    	control = new FilialController();
+		
 		if (fonte == btnVoltar) {
-            this.dispose();
+            janela.dispose();
+            try {
+				control.listaFilial();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+            
         }if(fonte == btnSalvar) {
-        	Filial filial = new Filial(txtNome.getText(), txtCNPJ.getText(), txtIE.getText());
+        	filial = new Filial(txtNome.getText(), txtCNPJ.getText(), txtIE.getText());
         	Endereco endereco = new Endereco(txtRua.getText(), txtNumero.getText(), txtBairro.getText());
         	filial.setEndereco(endereco);
-        	FilialController control = new FilialController();
+        	
         	try {
 				control.criaFilial(filial);
+				janela.dispose();
 				JOptionPane.showMessageDialog(null, "Filial Cadastrada com sucesso");
 			} catch (SQLException e1) {
 				e1.printStackTrace();
