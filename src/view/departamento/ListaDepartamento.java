@@ -1,7 +1,9 @@
 package view.departamento;
 
+
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -14,7 +16,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
-import controller.DepartamentoController;
 import controller.DepartamentoController;
 import model.dao.DepartamentoDAO;
 import model.vo.Departamento;
@@ -34,18 +35,18 @@ public class ListaDepartamento extends JFrame implements ActionListener {
 	private JScrollPane barraRolagem;
 	
 	public ListaDepartamento() throws SQLException {
-		String[] colunas = { "Codigo", "Nome", "Centro de Custo", "Orçamento"};
+		String[] colunas = { "ID", "Nome", "Centro de Custo", "Orçamento (R$)"};
 		DepartamentoDAO dao = new DepartamentoDAO();
 	
-			List<Departamento> departamentos = dao.read();
-			Object[][] dados = new Object[departamentos.size()][4];   
-	           for (int i = 0; i < departamentos.size(); i++) {   
-	        	   Departamento departamento = departamentos.get(i);   
-	               dados [i][0] = departamento.getId();   
-	               dados[i][1] = departamento.getNome();   
-	               dados[i][2] = departamento.getCentroCusto();
-	               dados[i][3] = departamento.getOrcamento();
-	           } 
+		List<Departamento> departamentos = dao.read("Ka");
+		Object[][] dados = new Object[departamentos.size()][4];   
+           for (int i = 0; i < departamentos.size(); i++) {   
+        	   Departamento departamento = departamentos.get(i);   
+               dados [i][0] = departamento.getId();   
+               dados[i][1] = departamento.getNome();   
+               dados[i][2] = departamento.getCentroCusto();
+               dados[i][3] = departamento.getOrcamento();
+           } 
 		
 			janela 	= new JFrame();
 			setLayout(new FlowLayout());
@@ -60,7 +61,7 @@ public class ListaDepartamento extends JFrame implements ActionListener {
 			txtPesquisar 	= new JTextField(10);
 			
 			
-			tblDepartamento= new JTable(dados, colunas);
+			tblDepartamento = new JTable(dados, colunas);
 			tblDepartamento.getWidth();
 		
 			c.add(tblDepartamento);
