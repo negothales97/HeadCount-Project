@@ -1,33 +1,27 @@
 package model.vo;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-
 public class Dependente {
 	
-	private String id;
+	private int id;
 	private String nome;
 	private String cpf;
 	private String dataNasc;
-	private String parentesco;
+	private int funcionario_id;
 	
 	public Dependente() {
 		
 	}
 	
-	public Dependente(String id, String nome, String cpf, String dataNasc, String parentesco) {
-		this.id = id;
-		this.nome = nome;
-		this.cpf = cpf;
-		this.dataNasc = dataNasc;
-		this.parentesco = parentesco;
+	public Dependente(String nome, String cpf, String dataNasc, int funcionario_id) {
+		this.nome 			= nome;
+		this.cpf 			= cpf;
+		this.dataNasc 		= dataNasc;
+		this.funcionario_id = funcionario_id;
 	}
-	public String getid() {
+	public int getid() {
 		return id;
 	}
-	public void setid(String id) {
+	public void setid(int id) {
 		this.id = id;
 	}
 	public String getNome() {
@@ -48,31 +42,11 @@ public class Dependente {
 	public void setDataNasc(String dataNasc) {
 		this.dataNasc = dataNasc;
 	}
-	public String getParentesco() {
-		return parentesco;
+	public int getFuncionario() {
+		return funcionario_id;
 	}
-	public void setParentesco(String parentesco) {
-		this.parentesco = parentesco;
+	public void setFuncionario(int funcionario_id) {
+		this.funcionario_id = funcionario_id;
 	
 	}
-	
-	public boolean Persistir() throws IOException {
-		FileWriter arq = new FileWriter("c:\\temp\\dependente.txt");
-		PrintWriter gravarArq =new PrintWriter(arq);
-		gravarArq.println(id);
-		gravarArq.println(nome);
-		gravarArq.println(cpf);
-		gravarArq.println(dataNasc);
-		gravarArq.println(parentesco);
-		arq.close();
-		return true;
-	}
-	
-	public static ArrayList<Dependente> getDependente(){
-		ArrayList<Dependente> dependente = new ArrayList();
-		return dependente;
-	}
-		
-	
-
 }
