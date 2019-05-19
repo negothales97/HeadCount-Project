@@ -135,7 +135,7 @@ public class CadFilial extends JFrame implements ActionListener{
 		
 		janela.setContentPane(contentPanel);
 		janela.setTitle("Cadastro de Filiais");
-		janela.setSize(600,400);
+		janela.setSize(450,300);
 		janela.setVisible(true);
 		janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
