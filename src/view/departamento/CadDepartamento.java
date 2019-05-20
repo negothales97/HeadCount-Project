@@ -1,6 +1,9 @@
 package view.departamento;
 
-import java.awt.FlowLayout;
+import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -15,14 +18,19 @@ import javax.swing.JTextField;
 import controller.DepartamentoController;
 import controller.FilialController;
 import model.vo.Departamento;
-import model.vo.Endereco;
-import model.vo.Filial;
 
 
 public class CadDepartamento extends JFrame implements ActionListener{
 	private JFrame janela;
-	private JPanel panel;
 	private DepartamentoController control;
+	private Departamento departamento;
+	
+	private JPanel contentPanel;
+	private JPanel panelGridTop;
+	private JPanel panelGridBottom;
+	
+	private BorderLayout boderLayout;
+	private GridBagLayout gbLayout;
 	
 	private JButton btnSalvar;
 	private JButton btnVoltar;
@@ -37,9 +45,17 @@ public class CadDepartamento extends JFrame implements ActionListener{
 	
 	public CadDepartamento() {
 		
-		janela 			= new JFrame();
-		panel 			= new JPanel();
-		panel.setLayout(new FlowLayout());
+		janela 	= new JFrame();
+		contentPanel = new JPanel();
+		panelGridTop = new JPanel();
+		panelGridBottom = new JPanel();
+		
+		boderLayout = new BorderLayout();
+		gbLayout = new GridBagLayout();
+		
+		panelGridTop.setLayout(gbLayout);
+		panelGridBottom.setLayout(gbLayout);
+		contentPanel.setLayout(boderLayout);
 		
 		btnSalvar 		= new JButton("Salvar");
 		btnVoltar 		= new JButton("Cancelar");		
@@ -54,36 +70,64 @@ public class CadDepartamento extends JFrame implements ActionListener{
 		txtCentroCusto 	= new JTextField(15);
 		txtOrcamento 	= new JTextField(15);
 		
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.insets=new Insets(5,5,5,5);
+		
+		gbc.anchor=13;
+		panelGridTop.add(lblNome, gbc);
+		gbc.anchor=17;
+		panelGridTop.add(txtNome, gbc);
+		
+		gbc.gridy=1;
+		gbc.anchor=13;
+		panelGridTop.add(lblCentroCusto, gbc);
+		gbc.anchor=17;
+		panelGridTop.add(txtCentroCusto, gbc);
+		
+		gbc.gridy=2;
+		gbc.anchor=13;
+		panelGridTop.add(lblOrcamento, gbc);
+		gbc.anchor=17;
+		panelGridTop.add(txtOrcamento, gbc);			
+		
+		panelGridBottom.add(btnSalvar);
+		panelGridBottom.add(btnVoltar);
+		
 		btnSalvar.addActionListener(this);
-				
-		panel.add(lblNome);
-		panel.add(txtNome);
-		panel.add(lblCentroCusto);
-		panel.add(txtCentroCusto);
-		panel.add(lblOrcamento);
-		panel.add(txtOrcamento);	
-		panel.add(btnSalvar);
-		panel.add(btnVoltar);
+		btnVoltar.addActionListener(this);
 		
+		contentPanel.add(BorderLayout.NORTH, panelGridTop);
+		contentPanel.add(BorderLayout.CENTER, panelGridBottom);
 		
-		janela.setContentPane(panel);
+		janela.setContentPane(contentPanel);
 		janela.setTitle("Cadastro de Departamentos");
-		janela.setSize(400,300);
+		janela.setSize(450,300);
 		janela.setVisible(true);
 		janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
+	
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object fonte = e.getSource();
+    	control = new DepartamentoController();
+		
 		if (fonte == btnVoltar) {
-            this.dispose();
-        }if(fonte == btnSalvar) {
+            janela.dispose();
+            try {
+				control.listaDepartamento();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+          
+		} if(fonte == btnSalvar) {
         	double orcamento = Double.parseDouble(txtOrcamento.getText());
         	Departamento departamento = new Departamento(txtNome.getText(), txtCentroCusto.getText(), orcamento);
         	control = new DepartamentoController();
         	try {
 				control.criaDepartamento(departamento);
+				janela.dispose();
 				JOptionPane.showMessageDialog(null, "Departamento Cadastrado com sucesso");
 			} catch (SQLException e1) {
 				e1.printStackTrace();
