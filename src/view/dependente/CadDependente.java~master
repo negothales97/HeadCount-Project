@@ -12,9 +12,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
-import model.dao.DependenteTM;
-
-public class DependenteView {
+public class CadDependente {
 
 	private JFrame janela;
 	
@@ -43,8 +41,6 @@ public class DependenteView {
 	private JLabel lblDataNasc;
 	private JLabel lblParentesco;
 	
-	private DependenteTM Modelo;
-	
 	private String[] coluna = { "Codigo", "Nome", "CPF", "Data Nasc", "Parentesco" };
 	private Object[][] data = {{"Codigo","Nome","CPF","Data Nasc","Parentesco"}};
 	
@@ -62,8 +58,6 @@ public class DependenteView {
     
     
     public void LoadTable(){
-        Modelo = new DependenteTM(DependenteController.getDependente());
-        tblDependente.setModel(Modelo);
         
         tblDependente.getColumnModel().getColumn(0).setPreferredWidth(100);
         tblDependente.getColumnModel().getColumn(1).setPreferredWidth(250);
@@ -88,7 +82,7 @@ public class DependenteView {
 		}
 	}
 	
-	public DependenteView() {
+	public CadDependente() {
 		criaComponentes();
 		Botoes(true, false, false, false, false);
 		HabilitaTxt(false);
@@ -103,7 +97,6 @@ public class DependenteView {
 		janela = new JFrame();
 
 		JPanel panel = new JPanel();
-//		panel.setLayout(new JTabbedPane());
 
 		btnSalvar = new JButton("Salvar");
 		btnCancelar = new JButton("Cancelar");
@@ -146,36 +139,6 @@ public class DependenteView {
 		panel.add(txtPesquisar);
 		panel.add(tblDependente);
 		
-		btnIncluir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnIncluirActionPerformed(evt);
-            }
-        });
-
-        btnEditar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarActionPerformed(evt);
-            }
-        });
-
-        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnExcluirActionPerformed(evt);
-            }
-        });
-
-        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSalvarActionPerformed(evt);
-            }
-        });
-
-        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarActionPerformed(evt);
-            }
-        });
-		
 		janela.setContentPane(panel);
 		janela.setTitle("Cadastro de Funcionario");
 		janela.setSize(600, 400);
@@ -183,51 +146,5 @@ public class DependenteView {
 		janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	}
-	
-	private void tbl_alunosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_alunosMouseClicked
-        Botoes(true,true,true,false,false);
-        int index = tblDependente.getSelectedRow();
-        if(index>=0 && index<Modelo.getRowCount()){
-            String temp[] = Modelo.getAluno(index);
-            txtCodigo.setText(temp[0]);
-            txtNome.setText(temp[1]);
-            txtCPF.setText(temp[2]);
-            txtParentesco.setText(temp[3]);
-        }
-    }
-	
-	private void btnIncluirActionPerformed(ActionEvent evt) {
-		Botoes(false, false, false, true, true);
-		HabilitaTxt(true);
-		LimpaTxt(true);
-	}
-	
-	private void btnEditarActionPerformed(ActionEvent evt) {
-		Botoes(false, false, false, true, true);
-		HabilitaTxt(true);
-	}
-	
-	private void btnExcluirActionPerformed(ActionEvent evt) {
-		
-	}
-	
-	private void btnSalvarActionPerformed(ActionEvent evt) {
-		 if( DependenteController.SalvarDependente(txtCodigo.getText(),txtNome.getText(),txtCPF.getText(),txtDataNasc.getText(),txtParentesco.getText()) ){
-//	            this.LoadTable();
-	            JOptionPane.showMessageDialog(null, "Dependente salvo com sucesso!");
-	        }else
-	            JOptionPane.showMessageDialog(null, "Erro ao salvar o Dependente!");
-		Botoes(true, true, true, false, false);
-		HabilitaTxt(false);
-	}
-		
-	private void btnCancelarActionPerformed(ActionEvent evt) {
-		Botoes(true, true, true, false, false);
-		HabilitaTxt(false);
-		LimpaTxt(true);
-	}
-	
-	private void btnPesquisarActionPerformed(ActionEvent evt) {
 
-	}
 }
