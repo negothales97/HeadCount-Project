@@ -2,8 +2,6 @@ package view;
 
 import java.sql.SQLException;
 
-import view.departamento.ConfirmaRCD;
-import view.departamento.RegCustoDepartamento;
 
 
 public class Main {

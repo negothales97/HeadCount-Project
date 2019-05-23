@@ -8,9 +8,6 @@ public class Dependente {
 	private String dataNasc;
 	private int funcionario_id;
 
-	public Dependente() {
-
-	}
 
 	public Dependente(String nome, String cpf, String dataNasc, int funcionario_id) {
 		this.nome = nome;
@@ -19,11 +16,11 @@ public class Dependente {
 		this.funcionario_id = funcionario_id;
 	}
 
-	public int getid() {
+	public int getId() {
 		return id;
 	}
 
-	public void setid(int id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
