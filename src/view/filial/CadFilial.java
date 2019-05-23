@@ -1,16 +1,11 @@
 package view.filial;
 
 import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
-import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,7 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import org.hsqldb.Constraint;
+import java.sql.SQLException;
 
 import controller.FilialController;
 import model.vo.Endereco;
@@ -55,34 +50,34 @@ public class CadFilial extends JFrame implements ActionListener {
 	private JTextField txtBairro;
 
 	public CadFilial() {
-		janela = new JFrame();
-		contentPanel = new JPanel();
-		panelGridTop = new JPanel();
+		janela 			= new JFrame();
+		contentPanel 	= new JPanel();
+		panelGridTop 	= new JPanel();
 		panelGridBottom = new JPanel();
 
-		boderLayout = new BorderLayout();
-		gbLayout = new GridBagLayout();
+		boderLayout 	= new BorderLayout();
+		gbLayout 		= new GridBagLayout();
 
 		panelGridTop.setLayout(gbLayout);
 		panelGridBottom.setLayout(gbLayout);
 		contentPanel.setLayout(boderLayout);
 
-		btnSalvar = new JButton("Salvar");
-		btnVoltar = new JButton("Voltar");
+		btnSalvar 		= new JButton("Salvar");
+		btnVoltar 		= new JButton("Voltar");
 
-		lblCNPJ = new JLabel("CNPJ");
-		lblNome = new JLabel("Razao Social");
-		lblIE = new JLabel("Inscricao Estadual");
-		lblRua = new JLabel("Rua");
-		lblNumero = new JLabel("Numero");
-		lblBairro = new JLabel("Bairro");
+		lblCNPJ 		= new JLabel("CNPJ");
+		lblNome 		= new JLabel("Razao Social");
+		lblIE 			= new JLabel("Inscricao Estadual");
+		lblRua 			= new JLabel("Rua");
+		lblNumero 		= new JLabel("Numero");
+		lblBairro 		= new JLabel("Bairro");
 
-		txtCNPJ = new JTextField(15);
-		txtNome = new JTextField(25);
-		txtIE = new JTextField(10);
-		txtRua = new JTextField(20);
-		txtNumero = new JTextField(5);
-		txtBairro = new JTextField(12);
+		txtCNPJ 		= new JTextField(15);
+		txtNome 		= new JTextField(25);
+		txtIE 			= new JTextField(10);
+		txtRua 			= new JTextField(20);
+		txtNumero 		= new JTextField(5);
+		txtBairro 		= new JTextField(12);
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets(5, 5, 5, 5);
