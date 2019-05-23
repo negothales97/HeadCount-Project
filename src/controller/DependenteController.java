@@ -15,7 +15,7 @@ public class DependenteController {
 	public DependenteController() {
 		dao = new DependenteDAO();
 	}
-	public void listaDependente() throws SQLException {
+	public void ListaDependente() throws SQLException {
 		listaDependente = new ListaDependente();
 	}
 
