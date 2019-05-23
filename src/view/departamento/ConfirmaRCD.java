@@ -87,7 +87,7 @@ public class ConfirmaRCD {
 
 		janela.setContentPane(contentPanel);
 		janela.setTitle("Registro de Custo de Departamento");
-		janela.setSize(400, 300);
+		janela.setSize(350, 200);
 		janela.setVisible(true);
 		janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
