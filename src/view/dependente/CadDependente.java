@@ -133,18 +133,17 @@ public class CadDependente extends JFrame implements ActionListener {
 			}
 
 		}
-		if (fonte == btnSalvar) {
-			int parentesco = Integer.parseInt(txtParentesco.getText());
-			Dependente dependente = new Dependente(txtNome.getText(), txtCPF.getText(), txtDataNasc.getText(), parentesco);
-
-			try {
-				control.criaDependente(dependente);
-				janela.dispose();
-				JOptionPane.showMessageDialog(null, "Dependente Cadastrado com sucesso");
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-		}
+////		if (fonte == btnSalvar) {
+//			Dependente dependente = new Dependente(txtNome.getText(), txtCPF.getText(), txtDataNasc.getText(), txtParentesco.getText());
+//
+//			try {
+//				control.criaDependente(dependente);
+//				janela.dispose();
+//				JOptionPane.showMessageDialog(null, "Dependente Cadastrado com sucesso");
+//			} catch (SQLException e1) {
+//				e1.printStackTrace();
+//			}
+//		}
 
 	}
 }
