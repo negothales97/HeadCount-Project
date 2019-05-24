@@ -19,6 +19,7 @@ public class HeadCount implements ActionListener{
 	private JMenuBar menuBar;
 	private JMenu crudMenu;
 	private JMenu relMenu;
+	private JMenu optionMenu;
 
 	private JMenuItem cadFil;
 	private JMenuItem  cadDeprt;
@@ -28,6 +29,9 @@ public class HeadCount implements ActionListener{
 	private JMenuItem relCustoFunc;
 	private JMenuItem relCustoDeprt;
 	private JMenuItem relCustoEmp;
+	
+	private JMenuItem optionConfirmaRCD;
+	private JMenuItem optionRegCustoDepartamento;
 	
 	private FilialController controlFil;
 	private FuncionarioController controlFun;
@@ -46,9 +50,11 @@ public class HeadCount implements ActionListener{
 		janela.setJMenuBar(menuBar);
 		crudMenu 		= new JMenu("Cadastro");
 		relMenu 		= new JMenu("Relatório");
+		optionMenu 		= new JMenu("Relacionamentos");
 
 		menuBar.add(crudMenu);
 		menuBar.add(relMenu);
+		menuBar.add(optionMenu);
 
 		cadFil 			= new JMenuItem("Filial");
 		cadDeprt 		= new JMenuItem("Departamento");
@@ -58,6 +64,9 @@ public class HeadCount implements ActionListener{
 		relCustoFunc 	= new JMenuItem("Custo p/ Função");
 		relCustoDeprt 	= new JMenuItem("Custo p/ Departamento");
 		relCustoEmp 	= new JMenuItem("Custo p/ Empresa");
+		
+		optionConfirmaRCD = new JMenuItem("teste");
+		optionRegCustoDepartamento = new JMenuItem("Custo de Departamento");
 
 		crudMenu.add(cadFil);
 		crudMenu.add(cadFunc);
@@ -68,11 +77,16 @@ public class HeadCount implements ActionListener{
 		relMenu.add(relCustoDeprt);
 		relMenu.add(relCustoFunc);
 		
+		optionMenu.add(optionConfirmaRCD);
+		optionMenu.add(optionRegCustoDepartamento);
+		
 		cadFil.addActionListener(this);
 		cadDeprt.addActionListener(this);
 		cadFunc.addActionListener(this);
 		cadDep.addActionListener(this);
-
+		
+		optionConfirmaRCD.addActionListener(this);
+		optionRegCustoDepartamento.addActionListener(this);
 		janela.setSize(600, 400);
 		janela.setVisible(true);
 		janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -107,9 +121,11 @@ public class HeadCount implements ActionListener{
 			try {
 				controlDep.ListaDependente();
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+		}else if(fonte == optionRegCustoDepartamento) {
+			controlDeprt = new DepartamentoController();
+			controlDeprt.registraCustoDepartamento();
 		}
 		
 	}

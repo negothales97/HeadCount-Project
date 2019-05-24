@@ -2,21 +2,23 @@ package view.departamento;
 
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.Insets;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class RegCustoDepartamento {
+import controller.DepartamentoController;
+
+public class RegCustoDepartamento implements ActionListener{
 	
 	private JFrame janela;
 	private JPanel panelPrincipal;
-	private GridBagLayout gbLayout;
 	private JButton btnRegCusto;
 	private JComboBox<String> cmbFilial;
+	private DepartamentoController control;
 	private JComboBox<String> cmbDepartamento;
 	
 	public RegCustoDepartamento(){
@@ -38,12 +40,25 @@ public class RegCustoDepartamento {
 		panelPrincipal.add(cmbDepartamento, gbc);
 		panelPrincipal.add(btnRegCusto, gbc);
 		
+		btnRegCusto.addActionListener(this);
+		
 		janela.setContentPane(panelPrincipal);
 		janela.setTitle("Registro de Custo de Departamento");
 		janela.setSize(400,100);
 		janela.setVisible(true);
-		janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		janela.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object fonte = e.getSource();
+		control = new DepartamentoController();
+
+		if (fonte == btnRegCusto) {
+			janela.dispose();
+			control.formRegistraCusto();
+		}
 	}
 
 }
