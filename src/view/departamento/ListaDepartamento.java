@@ -1,6 +1,5 @@
 package view.departamento;
 
-
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
@@ -29,88 +28,85 @@ import model.vo.Departamento;
 
 public class ListaDepartamento extends JFrame implements ActionListener {
 	private DepartamentoController control;
-	private DepartamentoDAO dao;	
+	private DepartamentoDAO dao;
 	private JFrame janela;
 	private JPanel contentPanel;
 	private JPanel panelGrid;
 	private Container container;
 	private BorderLayout boderLayout;
 	private GridBagLayout gbLayout;
-	
+
 	private JButton btnNovo;
 	private JButton btnSair;
 	private JButton btnRemover;
 	private JButton btnPesquisar;
 	private JTextField txtPesquisar;
-	
-	private JTable tblDepartamento;
-	
-	private JScrollPane barraRolagem;
-	
-	public ListaDepartamento() throws SQLException {
-		String[] colunas = { "ID", "Nome", "Centro de Custo", "Orçamento (R$)"};
-		DepartamentoDAO dao = new DepartamentoDAO();
-	
-		List<Departamento> departamentos = dao.read("Ka");
-		Object[][] dados = new Object[departamentos.size()][4];   
-           for (int i = 0; i < departamentos.size(); i++) {   
-        	   Departamento departamento = departamentos.get(i);   
-               dados [i][0] = departamento.getId();   
-               dados[i][1] = departamento.getNome();   
-               dados[i][2] = departamento.getCentroCusto();
-               dados[i][3] = departamento.getOrcamento();
-           } 
-		
-            janela 	= new JFrame();
-			contentPanel = new JPanel();
-			panelGrid = new JPanel();
-			container = new JPanel();
-			
-			boderLayout = new BorderLayout();
-			gbLayout = new GridBagLayout();
-			
-			
-			panelGrid.setLayout(gbLayout);
-			contentPanel.setLayout(boderLayout);
-			container.setLayout(new FlowLayout());
-			
-			barraRolagem = new JScrollPane();
-			
-			btnNovo 		= new JButton("Novo");
-			btnRemover 		= new JButton("Remover");
-			btnSair 		= new JButton("Sair");
-			btnPesquisar	= new JButton("Pesquisar");
-			
-			txtPesquisar 	= new JTextField(10);
-			
-			
-			tblDepartamento = new JTable(dados, colunas);
-			tblDepartamento.setSize(container.getWidth(), container.getHeight());
-		
-			GridBagConstraints gbc = new GridBagConstraints();
-			
-			gbc.insets=new Insets(5,5,5,5);
-			
-			panelGrid.add(btnNovo, gbc);
-			panelGrid.add(btnSair, gbc );
-			panelGrid.add(btnRemover, gbc);
-			panelGrid.add(txtPesquisar, gbc);
-			panelGrid.add(btnPesquisar,gbc );
-			container.add(tblDepartamento, gbc);
 
-			contentPanel.add(BorderLayout.NORTH, panelGrid);
-			contentPanel.add(BorderLayout.CENTER, container);			
-			
-			btnNovo.addActionListener(this);
-			btnRemover.addActionListener(this);
-			btnSair.addActionListener(this);
-			
-			
-			janela.setContentPane(contentPanel);
-			janela.setTitle("Lista de Departamentos");
-			janela.setSize(600,400);
-			janela.setVisible(true);
-			janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	private JTable tblDepartamento;
+
+	private JScrollPane barraRolagem;
+
+	public ListaDepartamento() throws SQLException {
+		String[] colunas = { "ID", "Nome", "Centro de Custo", "Orçamento (R$)" };
+		DepartamentoDAO dao = new DepartamentoDAO();
+
+		List<Departamento> departamentos = dao.read();
+		Object[][] dados = new Object[departamentos.size()][4];
+		for (int i = 0; i < departamentos.size(); i++) {
+			Departamento departamento = departamentos.get(i);
+			dados[i][0] = departamento.getId();
+			dados[i][1] = departamento.getNome();
+			dados[i][2] = departamento.getCentroCusto();
+			dados[i][3] = departamento.getOrcamento();
+		}
+
+		janela = new JFrame();
+		contentPanel = new JPanel();
+		panelGrid = new JPanel();
+		container = new JPanel();
+
+		boderLayout = new BorderLayout();
+		gbLayout = new GridBagLayout();
+
+		panelGrid.setLayout(gbLayout);
+		contentPanel.setLayout(boderLayout);
+		container.setLayout(new FlowLayout());
+
+		barraRolagem = new JScrollPane();
+
+		btnNovo = new JButton("Novo");
+		btnRemover = new JButton("Remover");
+		btnSair = new JButton("Sair");
+		btnPesquisar = new JButton("Pesquisar");
+
+		txtPesquisar = new JTextField(10);
+
+		tblDepartamento = new JTable(dados, colunas);
+		tblDepartamento.setSize(container.getWidth(), container.getHeight());
+
+		GridBagConstraints gbc = new GridBagConstraints();
+
+		gbc.insets = new Insets(5, 5, 5, 5);
+
+		panelGrid.add(btnNovo, gbc);
+		panelGrid.add(btnSair, gbc);
+		panelGrid.add(btnRemover, gbc);
+		panelGrid.add(txtPesquisar, gbc);
+		panelGrid.add(btnPesquisar, gbc);
+		container.add(tblDepartamento, gbc);
+
+		contentPanel.add(BorderLayout.NORTH, panelGrid);
+		contentPanel.add(BorderLayout.CENTER, container);
+
+		btnNovo.addActionListener(this);
+		btnRemover.addActionListener(this);
+		btnSair.addActionListener(this);
+
+		janela.setContentPane(contentPanel);
+		janela.setTitle("Lista de Departamentos");
+		janela.setSize(600, 400);
+		janela.setVisible(true);
+		janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	}
 
@@ -118,27 +114,30 @@ public class ListaDepartamento extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object fonte = e.getSource();
 		control = new DepartamentoController();
-		
+
 		if (fonte == btnNovo) {
-            control.novoDepartamento();
-            janela.dispose();
-            
-        }if(fonte == btnRemover) {
-        	int id = Integer.parseInt(JOptionPane.showInputDialog("Informe o código a ser removido"));
-        	try {
+			control.novoDepartamento();
+			janela.dispose();
+
+		}
+		if (fonte == btnRemover) {
+			int id = Integer.parseInt(JOptionPane.showInputDialog("Informe o código a ser removido"));
+			try {
 				control.deletaDepartamento(id);
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
-        	janela.dispose();
-        	JOptionPane.showMessageDialog(null, "Departamento removido com sucesso");
-        	
-        }if(fonte == btnSair) {
 			janela.dispose();
-			
-		}if(fonte == btnPesquisar) {
+			JOptionPane.showMessageDialog(null, "Departamento removido com sucesso");
+
+		}
+		if (fonte == btnSair) {
+			janela.dispose();
+
+		}
+		if (fonte == btnPesquisar) {
 			txtPesquisar.getText();
 		}
-			
+
 	}
 }

@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import controller.DependenteController;
 import controller.FilialController;
 import controller.FuncionarioController;
 
@@ -28,7 +29,7 @@ import model.vo.Funcionario;
 
 public class CadFuncionario extends JFrame implements ActionListener {
 	private JFrame janela;
-	private FilialController control;
+	private FuncionarioController control;
 	private Filial filial;
 
 	private JPanel contentPanel;
@@ -39,10 +40,10 @@ public class CadFuncionario extends JFrame implements ActionListener {
 	private GridBagLayout gbLayout;
 
 	private JPanel panel;
-	
+
 	private JButton btnSave;
 	private JButton btnVoltar;
-	
+
 	private JLabel lblMatricula;
 	private JLabel lblNome;
 	private JLabel lblCPF;
@@ -52,7 +53,7 @@ public class CadFuncionario extends JFrame implements ActionListener {
 	private JLabel lblSetor;
 	private JLabel lblEPI;
 	private JLabel lblStatus;
-	
+
 	private JTextField txtMatricula;
 	private JTextField txtNome;
 	private JTextField txtCPF;
@@ -62,8 +63,6 @@ public class CadFuncionario extends JFrame implements ActionListener {
 	private JTextField txtSetor;
 	private JTextField txtStatus;
 	private JTextField txtEPI;
-	
-
 
 	public CadFuncionario() {
 		janela = new JFrame();
@@ -78,50 +77,49 @@ public class CadFuncionario extends JFrame implements ActionListener {
 		panelGridBottom.setLayout(gbLayout);
 		contentPanel.setLayout(boderLayout);
 
+		btnSave = new JButton("Salvar");
+		btnVoltar = new JButton("Voltar");
 
-		btnSave 		= new JButton("Salvar");
-		btnVoltar 	= new JButton("Voltar");
+		txtMatricula = new JTextField(6);
+		txtNome = new JTextField(30);
+		txtCPF = new JTextField(12);
+		txtDataNasc = new JTextField(8);
+		txtCargo = new JTextField(30);
+		txtSalario = new JTextField(20);
+		txtSetor = new JTextField(30);
+		txtStatus = new JTextField(1);
+		txtEPI = new JTextField(4);
 
-		txtMatricula 	= new JTextField(6);
-		txtNome			= new JTextField(30);
-		txtCPF 			= new JTextField(12);
-		txtDataNasc 	= new JTextField(8);
-		txtCargo 		= new JTextField(30);
-		txtSalario 		= new JTextField(20);
-		txtSetor 		= new JTextField(30);
-		txtStatus 		= new JTextField(1);
-		txtEPI 			= new JTextField(4);
+		lblMatricula = new JLabel("Matricula");
+		lblNome = new JLabel("Nome");
+		lblCPF = new JLabel("CPF");
+		lblDataNasc = new JLabel("Data de Nascimento");
+		lblCargo = new JLabel("Cargo");
+		lblSalario = new JLabel("Salario");
+		lblSetor = new JLabel("Setor");
+		lblEPI = new JLabel("EPI");
+		lblStatus = new JLabel("Status");
 
-		lblMatricula	= new JLabel("Matricula");
-		lblNome 		= new JLabel("Nome");
-		lblCPF 			= new JLabel("CPF");
-		lblDataNasc 	= new JLabel("Data de Nascimento");
-		lblCargo 		= new JLabel("Cargo");
-		lblSalario 		= new JLabel("Salario");
-		lblSetor 		= new JLabel("Setor");
-		lblEPI 			= new JLabel("EPI");
-		lblStatus 		= new JLabel("Status");
-		
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets(5, 5, 5, 5);
-		
+
 		gbc.anchor = 13;
 		panelGridTop.add(lblMatricula, gbc);
 		gbc.anchor = 17;
 		panelGridTop.add(txtMatricula, gbc);
-		
+
 		gbc.gridy = 1;
 		gbc.anchor = 13;
 		panelGridTop.add(lblNome, gbc);
 		gbc.anchor = 17;
 		panelGridTop.add(txtNome, gbc);
-		
+
 		gbc.gridy = 2;
 		gbc.anchor = 13;
 		panelGridTop.add(lblCPF, gbc);
 		gbc.anchor = 17;
 		panelGridTop.add(txtCPF, gbc);
-		
+
 		gbc.gridy = 3;
 		gbc.anchor = 13;
 		panelGridTop.add(lblDataNasc, gbc);
@@ -133,36 +131,36 @@ public class CadFuncionario extends JFrame implements ActionListener {
 		panelGridTop.add(lblCargo, gbc);
 		gbc.anchor = 17;
 		panelGridTop.add(txtCargo, gbc);
-		
+
 		gbc.gridy = 5;
 		gbc.anchor = 13;
 		panelGridTop.add(lblSalario, gbc);
 		gbc.anchor = 17;
 		panelGridTop.add(txtSalario, gbc);
-		
+
 		gbc.gridy = 6;
 		gbc.anchor = 13;
 		panelGridTop.add(lblSetor, gbc);
 		gbc.anchor = 17;
 		panelGridTop.add(txtSetor, gbc);
-		
+
 		gbc.gridy = 7;
 		gbc.anchor = 13;
 		panelGridTop.add(lblStatus, gbc);
 		gbc.anchor = 17;
 		panelGridTop.add(txtStatus, gbc);
-		
+
 		gbc.gridy = 8;
 		gbc.anchor = 13;
 		panelGridTop.add(lblEPI, gbc);
 		gbc.anchor = 17;
 		panelGridTop.add(txtEPI, gbc);
-		
-		panelGridBottom.add(btnSave);
-		panelGridBottom.add(btnVoltar);
-		
+
+		panelGridBottom.add(btnSave, gbc);
+		panelGridBottom.add(btnVoltar, gbc);
+
 		btnSave.addActionListener(this);
-		
+
 		contentPanel.add(BorderLayout.NORTH, panelGridTop);
 		contentPanel.add(BorderLayout.CENTER, panelGridBottom);
 
@@ -172,18 +170,29 @@ public class CadFuncionario extends JFrame implements ActionListener {
 		janela.setVisible(true);
 		janela.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-		
-
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object fonte = e.getSource();
+		control = new FuncionarioController();
+
+		if (fonte == btnVoltar) {
+			janela.dispose();
+			try {
+				control.listaFuncionario();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+
+		}
+
 		if (fonte == btnSave) {
 			FuncionarioController col = new FuncionarioController();
 			Funcionario funcionario = new Funcionario(txtNome.getText(), txtCPF.getText(), txtDataNasc.getText());
-        	try {
-        		col.criaFuncionario(funcionario);
+			try {
+				col.criaFuncionario(funcionario);
+				janela.dispose();
 				JOptionPane.showMessageDialog(null, "Funcionario Cadastrado com sucesso");
 			} catch (SQLException e1) {
 				e1.printStackTrace();

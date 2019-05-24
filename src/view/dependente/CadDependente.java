@@ -49,7 +49,6 @@ public class CadDependente extends JFrame implements ActionListener {
 	private JTextField txtDataNasc;
 	private JTextField txtParentesco;
 
-
 	public CadDependente() {
 		janela = new JFrame();
 		contentPanel = new JPanel();
@@ -70,7 +69,6 @@ public class CadDependente extends JFrame implements ActionListener {
 		lblCPF = new JLabel("CPF");
 		lblDataNasc = new JLabel("Data Nascimento");
 		lblParentesco = new JLabel("Parentesco");
-
 
 		txtNome = new JTextField(15);
 		txtCPF = new JTextField(11);
@@ -103,8 +101,8 @@ public class CadDependente extends JFrame implements ActionListener {
 		gbc.anchor = 17;
 		panelGridTop.add(txtParentesco, gbc);
 
-		panelGridBottom.add(btnSalvar);
-		panelGridBottom.add(btnVoltar);
+		panelGridBottom.add(btnSalvar, gbc);
+		panelGridBottom.add(btnVoltar, gbc);
 
 		btnSalvar.addActionListener(this);
 		btnVoltar.addActionListener(this);
@@ -135,7 +133,7 @@ public class CadDependente extends JFrame implements ActionListener {
 		}
 		if (fonte == btnSalvar) {
 			int parentesco = Integer.parseInt(txtParentesco.getText());
-			Dependente dependente = new Dependente(txtNome.getText(), txtCPF.getText(), txtDataNasc.getText(), parentesco);
+			Dependente dependente = new Dependente(txtNome.getText(), txtCPF.getText(), txtDataNasc.getText(),parentesco);
 
 			try {
 				control.criaDependente(dependente);

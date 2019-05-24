@@ -9,7 +9,8 @@ import view.funcionario.CadFuncionario;
 public class Main {
 
 	public static void main(String[] args) throws SQLException {
-		new HeadCount();
+//		new HeadCount();
+		new Login();
 	}
 
 }
