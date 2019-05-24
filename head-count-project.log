@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 <<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+/*C23*/SET SCHEMA PUBLIC
+=======
+>>>>>>> master
 /*C6*/SET SCHEMA PUBLIC
 =======
 /*C8*/SET SCHEMA PUBLIC
@@ -30,6 +36,7 @@ DISCONNECT
 DISCONNECT
 <<<<<<< Updated upstream
 /*C5*/SET SCHEMA PUBLIC
+<<<<<<< HEAD
 =======
 /*C20*/SET SCHEMA PUBLIC
 DISCONNECT
@@ -51,4 +58,7 @@ DISCONNECT
 DISCONNECT
 /*C7*/SET SCHEMA PUBLIC
 >>>>>>> Stashed changes
+=======
+>>>>>>> master
+>>>>>>> master
 DISCONNECT
