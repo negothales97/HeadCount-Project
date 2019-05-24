@@ -9,31 +9,40 @@ import java.util.List;
 
 import model.connection.Database;
 import model.vo.Departamento;
+import model.vo.Filial;
 
 
 public class DepartamentoDAO {
+	private int id;
 
-	public void create(String nome, String centroCusto, double orcamento) throws SQLException {
+	public void create(Departamento departamento) throws SQLException {
 		try (Connection con = Database.getConnection()) {
 
-			String sql = "INSERT INTO departamento (nome, centrocusto, orcamento) values (?, ?, ?)";
+			String sql = "INSERT INTO DEPARTAMENTO (nome, centrocusto, orcamento) values (?, ?, ?)";
+			try (PreparedStatement stmt = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
-			try (PreparedStatement stmt = con.prepareStatement(sql)) {
-
-				stmt.setString(1,nome);
-				stmt.setString(2, centroCusto);
-				stmt.setDouble(3, orcamento);
-
+				stmt.setString(1, departamento.getNome());
+				stmt.setString(2, departamento.getCentroCusto());
+				stmt.setDouble(3, departamento.getOrcamento());
+				
 				stmt.execute();
-			}
+				ResultSet resultSet = stmt.getGeneratedKeys();
+		        while (resultSet.next()) {
+		            id = resultSet.getInt("id");
+		            
+		        }
+		        resultSet.close();
+			}	
 		}
 	}
 
-	public List<Departamento> read() throws SQLException {
+	
+	public List<Departamento> read(String search) throws SQLException {
 		List<Departamento> departamentos = new ArrayList<>();
 		try (Connection con = Database.getConnection()) {
-			String sql = "SELECT * FROM DEPARTAMENTO";
+			String sql = "SELECT * FROM DEPARTAMENTO where nome like ?";
 			try (PreparedStatement stmt = con.prepareStatement(sql)) {
+				stmt.setString(1, "%"+search+"%");
 				stmt.execute();
 				ResultSet rs = stmt.getResultSet();
 				while (rs.next()) {
@@ -51,7 +60,7 @@ public class DepartamentoDAO {
 		}
 		return departamentos;
 	}
-
+	
 	public void update(Departamento departamento) throws SQLException {
 		try (Connection con = Database.getConnection()) {
 			String sql = "UPDATE DEPARTAMENTO SET nome=?, centrocusto=?, orcamento=? WHERE id=?";
@@ -66,7 +75,7 @@ public class DepartamentoDAO {
 			}
 		}
 	}
-
+	
 	public void delete(int id) throws SQLException {
 		try (Connection con = Database.getConnection()) {
 			String sql = "DELETE FROM DEPARTAMENTO WHERE id=?";

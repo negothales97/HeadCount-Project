@@ -100,11 +100,16 @@ public class HeadCount implements ActionListener{
 			try {
 				controlDeprt.listaDepartamento();
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}else if(fonte == cadDep) {
 			controlDep = new DependenteController();
+			try {
+				controlDep.ListaDependente();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 		
 	}

@@ -1,12 +1,16 @@
-package view.departamento;
+package view.dependente;
 
 import java.awt.BorderLayout;
+import java.awt.Container;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -15,14 +19,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import controller.DepartamentoController;
-import controller.FilialController;
-import model.vo.Departamento;
+import org.hsqldb.Constraint;
 
-public class CadDepartamento extends JFrame implements ActionListener {
+import controller.DependenteController;
+import model.vo.Dependente;
+
+public class CadDependente extends JFrame implements ActionListener {
 	private JFrame janela;
-	private DepartamentoController control;
-	private Departamento departamento;
+	private DependenteController control;
+	private Dependente filial;
 
 	private JPanel contentPanel;
 	private JPanel panelGridTop;
@@ -35,15 +40,17 @@ public class CadDepartamento extends JFrame implements ActionListener {
 	private JButton btnVoltar;
 
 	private JLabel lblNome;
-	private JLabel lblCentroCusto;
-	private JLabel lblOrcamento;
+	private JLabel lblCPF;
+	private JLabel lblDataNasc;
+	private JLabel lblParentesco;
 
 	private JTextField txtNome;
-	private JTextField txtCentroCusto;
-	private JTextField txtOrcamento;
+	private JTextField txtCPF;
+	private JTextField txtDataNasc;
+	private JTextField txtParentesco;
 
-	public CadDepartamento() {
 
+	public CadDependente() {
 		janela = new JFrame();
 		contentPanel = new JPanel();
 		panelGridTop = new JPanel();
@@ -57,15 +64,18 @@ public class CadDepartamento extends JFrame implements ActionListener {
 		contentPanel.setLayout(boderLayout);
 
 		btnSalvar = new JButton("Salvar");
-		btnVoltar = new JButton("Cancelar");
+		btnVoltar = new JButton("Voltar");
 
-		lblNome = new JLabel("Nome do Departamento");
-		lblCentroCusto = new JLabel("Centro de Custo");
-		lblOrcamento = new JLabel("Orçamento (R$)");
+		lblNome = new JLabel("Nome");
+		lblCPF = new JLabel("CPF");
+		lblDataNasc = new JLabel("Data Nascimento");
+		lblParentesco = new JLabel("Parentesco");
+
 
 		txtNome = new JTextField(15);
-		txtCentroCusto = new JTextField(15);
-		txtOrcamento = new JTextField(15);
+		txtCPF = new JTextField(11);
+		txtDataNasc = new JTextField(8);
+		txtParentesco = new JTextField(20);
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets(5, 5, 5, 5);
@@ -77,15 +87,21 @@ public class CadDepartamento extends JFrame implements ActionListener {
 
 		gbc.gridy = 1;
 		gbc.anchor = 13;
-		panelGridTop.add(lblCentroCusto, gbc);
+		panelGridTop.add(lblCPF, gbc);
 		gbc.anchor = 17;
-		panelGridTop.add(txtCentroCusto, gbc);
+		panelGridTop.add(txtCPF, gbc);
 
 		gbc.gridy = 2;
 		gbc.anchor = 13;
-		panelGridTop.add(lblOrcamento, gbc);
+		panelGridTop.add(lblDataNasc, gbc);
 		gbc.anchor = 17;
-		panelGridTop.add(txtOrcamento, gbc);
+		panelGridTop.add(txtDataNasc, gbc);
+
+		gbc.gridy = 3;
+		gbc.anchor = 13;
+		panelGridTop.add(lblParentesco, gbc);
+		gbc.anchor = 17;
+		panelGridTop.add(txtParentesco, gbc);
 
 		panelGridBottom.add(btnSalvar);
 		panelGridBottom.add(btnVoltar);
@@ -97,39 +113,38 @@ public class CadDepartamento extends JFrame implements ActionListener {
 		contentPanel.add(BorderLayout.CENTER, panelGridBottom);
 
 		janela.setContentPane(contentPanel);
-		janela.setTitle("Cadastro de Departamentos");
+		janela.setTitle("Cadastro de Dependentes");
 		janela.setSize(450, 300);
 		janela.setVisible(true);
-		janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		janela.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object fonte = e.getSource();
-		control = new DepartamentoController();
+		control = new DependenteController();
 
 		if (fonte == btnVoltar) {
 			janela.dispose();
 			try {
-				control.listaDepartamento();
+				control.ListaDependente();
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
 
 		}
 		if (fonte == btnSalvar) {
-			double orcamento = Double.parseDouble(txtOrcamento.getText());
-			Departamento departamento = new Departamento(txtNome.getText(), txtCentroCusto.getText(), orcamento);
-			control = new DepartamentoController();
+			int parentesco = Integer.parseInt(txtParentesco.getText());
+			Dependente dependente = new Dependente(txtNome.getText(), txtCPF.getText(), txtDataNasc.getText(), parentesco);
+
 			try {
-				control.criaDepartamento(departamento);
+				control.criaDependente(dependente);
 				janela.dispose();
-				JOptionPane.showMessageDialog(null, "Departamento Cadastrado com sucesso");
+				JOptionPane.showMessageDialog(null, "Dependente Cadastrado com sucesso");
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
 		}
 
 	}
-
 }

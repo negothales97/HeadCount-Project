@@ -1,4 +1,4 @@
-package view.filial;
+package view.dependente;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -19,13 +19,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
-import controller.FilialController;
-import model.dao.FilialDAO;
-import model.vo.Filial;
+import controller.DependenteController;
+import model.dao.DependenteDAO;
+import model.vo.Dependente;
 
-public class ListaFilial extends JFrame implements ActionListener {
-	private FilialController control;
-	private FilialDAO dao;
+public class ListaDependente extends JFrame implements ActionListener {
+	private DependenteController control;
+	private DependenteDAO dao;
 	private JFrame janela;
 	private JPanel contentPanel;
 	private JPanel panelGrid;
@@ -39,22 +39,22 @@ public class ListaFilial extends JFrame implements ActionListener {
 	private JButton btnPesquisar;
 	private JTextField txtPesquisar;
 
-	private JTable tblFilial;
+	private JTable tblDependente;
 
 	private JScrollPane barraRolagem;
 
-	public ListaFilial() throws SQLException {
-		String[] colunas = { "Codigo", "Nome", "CNPJ", "Insc. Estadual" };
-		dao = new FilialDAO();
+	public ListaDependente() throws SQLException {
+		String[] colunas = { "Codigo", "Nome", "CPF", "Funcionário" };
+		dao = new DependenteDAO();
 
-		List<Filial> filiais = dao.read("Ka");
-		Object[][] dados = new Object[filiais.size()][4];
-		for (int i = 0; i < filiais.size(); i++) {
-			Filial filial = filiais.get(i);
-			dados[i][0] = filial.getId();
-			dados[i][1] = filial.getNome();
-			dados[i][2] = filial.getCnpj();
-			dados[i][3] = filial.getInscEstadual();
+		List<Dependente> dependentes = dao.read();
+		Object[][] dados = new Object[dependentes.size()][4];
+		for (int i = 0; i < dependentes.size(); i++) {
+			Dependente dependente = dependentes.get(i);
+			dados[i][0] = dependente.getId();
+			dados[i][1] = dependente.getNome();
+			dados[i][2] = dependente.getCpf();
+			dados[i][3] = dependente.getFuncionario();
 		}
 
 		janela = new JFrame();
@@ -78,8 +78,8 @@ public class ListaFilial extends JFrame implements ActionListener {
 
 		txtPesquisar = new JTextField(10);
 
-		tblFilial = new JTable(dados, colunas);
-		tblFilial.setSize(container.getWidth(), container.getHeight());
+		tblDependente = new JTable(dados, colunas);
+		tblDependente.setSize(container.getWidth(), container.getHeight());
 
 		GridBagConstraints gbc = new GridBagConstraints();
 
@@ -90,7 +90,7 @@ public class ListaFilial extends JFrame implements ActionListener {
 		panelGrid.add(btnRemover, gbc);
 		panelGrid.add(txtPesquisar, gbc);
 		panelGrid.add(btnPesquisar, gbc);
-		container.add(tblFilial, gbc);
+		container.add(tblDependente, gbc);
 
 		contentPanel.add(BorderLayout.NORTH, panelGrid);
 		contentPanel.add(BorderLayout.CENTER, container);
@@ -111,10 +111,10 @@ public class ListaFilial extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object fonte = e.getSource();
-		control = new FilialController();
+		control = new DependenteController();
 
 		if (fonte == btnNovo) {
-			control.novaFilial();
+			control.novoDependente();
 			janela.dispose();
 
 		}
@@ -122,12 +122,12 @@ public class ListaFilial extends JFrame implements ActionListener {
 
 			int id = Integer.parseInt(JOptionPane.showInputDialog("Informe o cï¿½digo a ser removido"));
 			try {
-				control.deletaFilial(id);
+				control.deletaDependente(id);
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
 			janela.dispose();
-			JOptionPane.showMessageDialog(null, "Filial Removida com sucesso");
+			JOptionPane.showMessageDialog(null, "Dependente Removida com sucesso");
 		}
 		if (fonte == btnSair) {
 			janela.dispose();
