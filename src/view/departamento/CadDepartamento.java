@@ -87,8 +87,8 @@ public class CadDepartamento extends JFrame implements ActionListener {
 		gbc.anchor = 17;
 		panelGridTop.add(txtOrcamento, gbc);
 
-		panelGridBottom.add(btnSalvar);
-		panelGridBottom.add(btnVoltar);
+		panelGridBottom.add(btnSalvar, gbc);
+		panelGridBottom.add(btnVoltar, gbc);
 
 		btnSalvar.addActionListener(this);
 		btnVoltar.addActionListener(this);

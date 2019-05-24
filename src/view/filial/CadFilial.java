@@ -116,7 +116,6 @@ public class CadFilial extends JFrame implements ActionListener {
 		panelGridTop.add(lblBairro, gbc);
 		gbc.anchor = 17;
 		panelGridTop.add(txtBairro, gbc);
-		gbc.anchor = 13;
 
 		panelGridBottom.add(btnSalvar, gbc);
 		panelGridBottom.add(btnVoltar, gbc);

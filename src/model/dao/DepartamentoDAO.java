@@ -37,12 +37,11 @@ public class DepartamentoDAO {
 	}
 
 	
-	public List<Departamento> read(String search) throws SQLException {
+	public List<Departamento> read() throws SQLException {
 		List<Departamento> departamentos = new ArrayList<>();
 		try (Connection con = Database.getConnection()) {
-			String sql = "SELECT * FROM DEPARTAMENTO where nome like ?";
+			String sql = "SELECT * FROM DEPARTAMENTO";
 			try (PreparedStatement stmt = con.prepareStatement(sql)) {
-				stmt.setString(1, "%"+search+"%");
 				stmt.execute();
 				ResultSet rs = stmt.getResultSet();
 				while (rs.next()) {
@@ -51,8 +50,8 @@ public class DepartamentoDAO {
 					String centroCusto = rs.getString("centrocusto");
 					Double orcamento = rs.getDouble("orcamento");
 					Departamento departamento = new Departamento(nome, centroCusto, orcamento);
+					
 					departamento.setId(id);
-
 					departamentos.add(departamento);
 				}
 			}

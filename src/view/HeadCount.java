@@ -1,4 +1,5 @@
 package view;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -13,51 +14,50 @@ import controller.FilialController;
 import controller.FuncionarioController;
 import controller.DependenteController;
 
-
-public class HeadCount implements ActionListener{
+public class HeadCount implements ActionListener {
 	private JFrame janela;
 	private JMenuBar menuBar;
 	private JMenu crudMenu;
 	private JMenu relMenu;
 
 	private JMenuItem cadFil;
-	private JMenuItem  cadDeprt;
+	private JMenuItem cadDeprt;
 	private JMenuItem cadFunc;
 	private JMenuItem cadDep;
 
 	private JMenuItem relCustoFunc;
 	private JMenuItem relCustoDeprt;
 	private JMenuItem relCustoEmp;
-	
+
 	private FilialController controlFil;
 	private FuncionarioController controlFun;
 	private DepartamentoController controlDeprt;
 	private DependenteController controlDep;
-	
+
 	public HeadCount() {
 
-		janela 			= new JFrame();
+		janela = new JFrame();
 
 		janela.setTitle("HeadCount");
 		janela.setSize(150, 150);
 
-		menuBar 		= new JMenuBar();
+		menuBar = new JMenuBar();
 
 		janela.setJMenuBar(menuBar);
-		crudMenu 		= new JMenu("Cadastro");
-		relMenu 		= new JMenu("Relatório");
+		crudMenu = new JMenu("Cadastro");
+		relMenu = new JMenu("Relatório");
 
 		menuBar.add(crudMenu);
 		menuBar.add(relMenu);
 
-		cadFil 			= new JMenuItem("Filial");
-		cadDeprt 		= new JMenuItem("Departamento");
-		cadFunc 		= new JMenuItem("Funcionário");
-		cadDep 			= new JMenuItem("Dependente");
-		
-		relCustoFunc 	= new JMenuItem("Custo p/ Função");
-		relCustoDeprt 	= new JMenuItem("Custo p/ Departamento");
-		relCustoEmp 	= new JMenuItem("Custo p/ Empresa");
+		cadFil = new JMenuItem("Filial");
+		cadDeprt = new JMenuItem("Departamento");
+		cadFunc = new JMenuItem("Funcionário");
+		cadDep = new JMenuItem("Dependente");
+
+		relCustoFunc = new JMenuItem("Custo p/ Função");
+		relCustoDeprt = new JMenuItem("Custo p/ Departamento");
+		relCustoEmp = new JMenuItem("Custo p/ Empresa");
 
 		crudMenu.add(cadFil);
 		crudMenu.add(cadFunc);
@@ -67,7 +67,7 @@ public class HeadCount implements ActionListener{
 		relMenu.add(relCustoEmp);
 		relMenu.add(relCustoDeprt);
 		relMenu.add(relCustoFunc);
-		
+
 		cadFil.addActionListener(this);
 		cadDeprt.addActionListener(this);
 		cadFunc.addActionListener(this);
@@ -81,28 +81,28 @@ public class HeadCount implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object fonte = e.getSource();
-		if(fonte == cadFil) {
+		if (fonte == cadFil) {
 			controlFil = new FilialController();
 			try {
 				controlFil.listaFilial();
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
-		}else if(fonte == cadFunc) {
+		} else if (fonte == cadFunc) {
 			controlFun = new FuncionarioController();
 			try {
 				controlFun.listaFuncionario();
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
-		}else if(fonte == cadDeprt) {
+		} else if (fonte == cadDeprt) {
 			controlDeprt = new DepartamentoController();
 			try {
 				controlDeprt.listaDepartamento();
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
-		}else if(fonte == cadDep) {
+		} else if (fonte == cadDep) {
 			controlDep = new DependenteController();
 			try {
 				controlDep.ListaDependente();
@@ -111,6 +111,6 @@ public class HeadCount implements ActionListener{
 				e1.printStackTrace();
 			}
 		}
-		
+
 	}
 }

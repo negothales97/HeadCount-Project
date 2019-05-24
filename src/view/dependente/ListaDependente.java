@@ -44,7 +44,7 @@ public class ListaDependente extends JFrame implements ActionListener {
 	private JScrollPane barraRolagem;
 
 	public ListaDependente() throws SQLException {
-		String[] colunas = { "Codigo", "Nome", "CPF", "Funcionário" };
+		String[] colunas = { "Codigo", "Nome", "CPF", "Funcionario" };
 		dao = new DependenteDAO();
 
 		List<Dependente> dependentes = dao.read();
@@ -120,7 +120,7 @@ public class ListaDependente extends JFrame implements ActionListener {
 		}
 		if (fonte == btnRemover) {
 
-			int id = Integer.parseInt(JOptionPane.showInputDialog("Informe o cï¿½digo a ser removido"));
+			int id = Integer.parseInt(JOptionPane.showInputDialog("Informe o codigo a ser removido"));
 			try {
 				control.deletaDependente(id);
 			} catch (SQLException e1) {
