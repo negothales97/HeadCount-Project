@@ -44,25 +44,20 @@ public class CadFuncionario extends JFrame implements ActionListener {
 	private JButton btnSave;
 	private JButton btnVoltar;
 
-	private JLabel lblMatricula;
 	private JLabel lblNome;
 	private JLabel lblCPF;
 	private JLabel lblDataNasc;
 	private JLabel lblCargo;
 	private JLabel lblSalario;
 	private JLabel lblSetor;
-	private JLabel lblEPI;
-	private JLabel lblStatus;
 
-	private JTextField txtMatricula;
+
 	private JTextField txtNome;
 	private JTextField txtCPF;
 	private JTextField txtDataNasc;
 	private JTextField txtCargo;
 	private JTextField txtSalario;
 	private JTextField txtSetor;
-	private JTextField txtStatus;
-	private JTextField txtEPI;
 
 	public CadFuncionario() {
 		janela = new JFrame();
@@ -80,33 +75,22 @@ public class CadFuncionario extends JFrame implements ActionListener {
 		btnSave = new JButton("Salvar");
 		btnVoltar = new JButton("Voltar");
 
-		txtMatricula = new JTextField(6);
 		txtNome = new JTextField(30);
 		txtCPF = new JTextField(12);
 		txtDataNasc = new JTextField(8);
 		txtCargo = new JTextField(30);
 		txtSalario = new JTextField(20);
 		txtSetor = new JTextField(30);
-		txtStatus = new JTextField(1);
-		txtEPI = new JTextField(4);
 
-		lblMatricula = new JLabel("Matricula");
 		lblNome = new JLabel("Nome");
 		lblCPF = new JLabel("CPF");
 		lblDataNasc = new JLabel("Data de Nascimento");
 		lblCargo = new JLabel("Cargo");
 		lblSalario = new JLabel("Salario");
 		lblSetor = new JLabel("Setor");
-		lblEPI = new JLabel("EPI");
-		lblStatus = new JLabel("Status");
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets(5, 5, 5, 5);
-
-		gbc.anchor = 13;
-		panelGridTop.add(lblMatricula, gbc);
-		gbc.anchor = 17;
-		panelGridTop.add(txtMatricula, gbc);
 
 		gbc.gridy = 1;
 		gbc.anchor = 13;
@@ -144,22 +128,11 @@ public class CadFuncionario extends JFrame implements ActionListener {
 		gbc.anchor = 17;
 		panelGridTop.add(txtSetor, gbc);
 
-		gbc.gridy = 7;
-		gbc.anchor = 13;
-		panelGridTop.add(lblStatus, gbc);
-		gbc.anchor = 17;
-		panelGridTop.add(txtStatus, gbc);
-
-		gbc.gridy = 8;
-		gbc.anchor = 13;
-		panelGridTop.add(lblEPI, gbc);
-		gbc.anchor = 17;
-		panelGridTop.add(txtEPI, gbc);
-
 		panelGridBottom.add(btnSave, gbc);
 		panelGridBottom.add(btnVoltar, gbc);
 
 		btnSave.addActionListener(this);
+		btnVoltar.addActionListener(this);
 
 		contentPanel.add(BorderLayout.NORTH, panelGridTop);
 		contentPanel.add(BorderLayout.CENTER, panelGridBottom);
