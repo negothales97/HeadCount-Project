@@ -49,7 +49,7 @@ public class HeadCount implements ActionListener {
 
 		janela.setJMenuBar(menuBar);
 		crudMenu 		= new JMenu("Cadastro");
-		relMenu 		= new JMenu("Relat�rio");
+		relMenu 		= new JMenu("Relatorio");
 		optionMenu 		= new JMenu("Relacionamentos");
 
 		menuBar.add(crudMenu);
@@ -58,17 +58,17 @@ public class HeadCount implements ActionListener {
 
 		cadFil 			= new JMenuItem("Filial");
 		cadDeprt 		= new JMenuItem("Departamento");
-		cadFunc 		= new JMenuItem("Funcion�rio");
+		cadFunc 		= new JMenuItem("Funcionario");
 		cadDep 			= new JMenuItem("Dependente");
 		
-		relCustoFunc 	= new JMenuItem("Custo p/ Fun��o");
+		relCustoFunc 	= new JMenuItem("Custo p/ Funcionario");
 		relCustoDeprt 	= new JMenuItem("Custo p/ Departamento");
 		relCustoEmp 	= new JMenuItem("Custo p/ Empresa");
 		
 		optionConfirmaRCD = new JMenuItem("teste");
 		optionRegCustoDepartamento = new JMenuItem("Custo de Departamento");
 
-		relCustoFunc = new JMenuItem("Custo p/ Fun��o");
+		relCustoFunc = new JMenuItem("Custo p/ Funcionario");
 		relCustoDeprt = new JMenuItem("Custo p/ Departamento");
 		relCustoEmp = new JMenuItem("Custo p/ Empresa");
 
