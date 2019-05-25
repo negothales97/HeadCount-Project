@@ -36,8 +36,6 @@ public class ListaDependente extends JFrame implements ActionListener {
 	private JButton btnNovo;
 	private JButton btnSair;
 	private JButton btnRemover;
-	private JButton btnPesquisar;
-	private JTextField txtPesquisar;
 
 	private JTable tblDependente;
 
@@ -74,9 +72,6 @@ public class ListaDependente extends JFrame implements ActionListener {
 		btnNovo = new JButton("Novo");
 		btnRemover = new JButton("Remover");
 		btnSair = new JButton("Sair");
-		btnPesquisar = new JButton("Pesquisar");
-
-		txtPesquisar = new JTextField(10);
 
 		tblDependente = new JTable(dados, colunas);
 		tblDependente.setSize(container.getWidth(), container.getHeight());
@@ -88,8 +83,6 @@ public class ListaDependente extends JFrame implements ActionListener {
 		panelGrid.add(btnNovo, gbc);
 		panelGrid.add(btnSair, gbc);
 		panelGrid.add(btnRemover, gbc);
-		panelGrid.add(txtPesquisar, gbc);
-		panelGrid.add(btnPesquisar, gbc);
 		container.add(tblDependente, gbc);
 
 		contentPanel.add(BorderLayout.NORTH, panelGrid);
@@ -98,7 +91,6 @@ public class ListaDependente extends JFrame implements ActionListener {
 		btnNovo.addActionListener(this);
 		btnRemover.addActionListener(this);
 		btnSair.addActionListener(this);
-		btnPesquisar.addActionListener(this);
 
 		janela.setContentPane(contentPanel);
 		janela.setTitle("Lista de Filiais");
@@ -132,9 +124,5 @@ public class ListaDependente extends JFrame implements ActionListener {
 		if (fonte == btnSair) {
 			janela.dispose();
 		}
-		if (fonte == btnPesquisar) {
-			txtPesquisar.getText();
-		}
-
 	}
 }

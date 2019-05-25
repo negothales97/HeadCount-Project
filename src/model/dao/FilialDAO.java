@@ -44,12 +44,12 @@ public class FilialDAO {
 		}
 	}
 
-	public List<Filial> read(String search) throws SQLException {
+	
+	public List<Filial> read() throws SQLException {
 		List<Filial> filiais = new ArrayList<>();
 		try (Connection con = Database.getConnection()) {
-			String sql = "SELECT * FROM FILIAL where nome like ?";
+			String sql = "SELECT * FROM FILIAL";
 			try (PreparedStatement stmt = con.prepareStatement(sql)) {
-				stmt.setString(1, "%"+search+"%");
 				stmt.execute();
 				ResultSet rs = stmt.getResultSet();
 				while (rs.next()) {

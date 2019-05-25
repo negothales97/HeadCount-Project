@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -23,6 +24,7 @@ import java.util.Date;
 
 import javax.swing.JOptionPane;
 
+import model.vo.Departamento;
 import model.vo.Endereco;
 import model.vo.Filial;
 import model.vo.Funcionario;
@@ -50,6 +52,8 @@ public class CadFuncionario extends JFrame implements ActionListener {
 	private JLabel lblCargo;
 	private JLabel lblSalario;
 	private JLabel lblSetor;
+	private JLabel lblDepartamento;
+	private JLabel lblFilial;
 
 
 	private JTextField txtNome;
@@ -85,12 +89,21 @@ public class CadFuncionario extends JFrame implements ActionListener {
 		lblNome = new JLabel("Nome");
 		lblCPF = new JLabel("CPF");
 		lblDataNasc = new JLabel("Data de Nascimento");
-		lblCargo = new JLabel("Cargo");
 		lblSalario = new JLabel("Salario");
 		lblSetor = new JLabel("Setor");
+		lblCargo = new JLabel("Cargo");
+		lblFilial = new JLabel("Filial");
+		lblDepartamento = new JLabel("Departamento");
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets(5, 5, 5, 5);
+		
+		JComboBox<Filial>comboBoxCargo = new JComboBox<Filial>();//trocar o objeto dessa collection
+		JComboBox<Departamento>comboBoxDepartamento = new JComboBox<Departamento>();
+		JComboBox<Filial>comboBoxFilial = new JComboBox<Filial>();
+
+		
+		
 
 		gbc.gridy = 1;
 		gbc.anchor = 13;
@@ -114,7 +127,7 @@ public class CadFuncionario extends JFrame implements ActionListener {
 		gbc.anchor = 13;
 		panelGridTop.add(lblCargo, gbc);
 		gbc.anchor = 17;
-		panelGridTop.add(txtCargo, gbc);
+		panelGridTop.add(comboBoxCargo, gbc);
 
 		gbc.gridy = 5;
 		gbc.anchor = 13;
@@ -127,6 +140,20 @@ public class CadFuncionario extends JFrame implements ActionListener {
 		panelGridTop.add(lblSetor, gbc);
 		gbc.anchor = 17;
 		panelGridTop.add(txtSetor, gbc);
+		
+		gbc.gridy = 7;
+		gbc.anchor = 13;
+		panelGridTop.add(lblDepartamento, gbc);
+		gbc.anchor = 17;
+		panelGridTop.add(comboBoxDepartamento, gbc);
+		
+		gbc.gridy = 8;
+		gbc.anchor = 13;
+		panelGridTop.add(lblFilial, gbc);
+		gbc.anchor = 17;
+		panelGridTop.add(comboBoxFilial, gbc);
+		
+
 
 		panelGridBottom.add(btnSave, gbc);
 		panelGridBottom.add(btnVoltar, gbc);

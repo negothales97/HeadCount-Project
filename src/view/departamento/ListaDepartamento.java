@@ -39,8 +39,6 @@ public class ListaDepartamento extends JFrame implements ActionListener {
 	private JButton btnNovo;
 	private JButton btnSair;
 	private JButton btnRemover;
-	private JButton btnPesquisar;
-	private JTextField txtPesquisar;
 
 	private JTable tblDepartamento;
 
@@ -77,9 +75,6 @@ public class ListaDepartamento extends JFrame implements ActionListener {
 		btnNovo = new JButton("Novo");
 		btnRemover = new JButton("Remover");
 		btnSair = new JButton("Sair");
-		btnPesquisar = new JButton("Pesquisar");
-
-		txtPesquisar = new JTextField(10);
 
 		tblDepartamento = new JTable(dados, colunas);
 		tblDepartamento.setSize(container.getWidth(), container.getHeight());
@@ -91,8 +86,6 @@ public class ListaDepartamento extends JFrame implements ActionListener {
 		panelGrid.add(btnNovo, gbc);
 		panelGrid.add(btnSair, gbc);
 		panelGrid.add(btnRemover, gbc);
-		panelGrid.add(txtPesquisar, gbc);
-		panelGrid.add(btnPesquisar, gbc);
 		container.add(tblDepartamento, gbc);
 
 		contentPanel.add(BorderLayout.NORTH, panelGrid);
@@ -134,9 +127,6 @@ public class ListaDepartamento extends JFrame implements ActionListener {
 		if (fonte == btnSair) {
 			janela.dispose();
 
-		}
-		if (fonte == btnPesquisar) {
-			txtPesquisar.getText();
 		}
 
 	}
