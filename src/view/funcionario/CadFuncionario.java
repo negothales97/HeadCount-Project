@@ -16,14 +16,17 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import controller.DepartamentoController;
 import controller.DependenteController;
 import controller.FilialController;
 import controller.FuncionarioController;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import model.dao.FilialDAO;
 import model.vo.Departamento;
 import model.vo.Endereco;
 import model.vo.Filial;
@@ -33,6 +36,9 @@ public class CadFuncionario extends JFrame implements ActionListener {
 	private JFrame janela;
 	private FuncionarioController control;
 	private Filial filial;
+	private FilialController filialControl;
+	private DepartamentoController departamentoController;
+	
 
 	private JPanel contentPanel;
 	private JPanel panelGridTop;
@@ -54,6 +60,7 @@ public class CadFuncionario extends JFrame implements ActionListener {
 	private JLabel lblSetor;
 	private JLabel lblDepartamento;
 	private JLabel lblFilial;
+	private List<Filial> filiais;
 
 
 	private JTextField txtNome;
@@ -62,6 +69,7 @@ public class CadFuncionario extends JFrame implements ActionListener {
 	private JTextField txtCargo;
 	private JTextField txtSalario;
 	private JTextField txtSetor;
+	private FilialDAO dao;
 
 	public CadFuncionario() {
 		janela = new JFrame();
@@ -78,6 +86,9 @@ public class CadFuncionario extends JFrame implements ActionListener {
 
 		btnSave = new JButton("Salvar");
 		btnVoltar = new JButton("Voltar");
+		
+	
+
 
 		txtNome = new JTextField(30);
 		txtCPF = new JTextField(12);
@@ -99,11 +110,29 @@ public class CadFuncionario extends JFrame implements ActionListener {
 		gbc.insets = new Insets(5, 5, 5, 5);
 		
 		JComboBox<Filial>comboBoxCargo = new JComboBox<Filial>();//trocar o objeto dessa collection
-		JComboBox<Departamento>comboBoxDepartamento = new JComboBox<Departamento>();
-		JComboBox<Filial>comboBoxFilial = new JComboBox<Filial>();
+		JComboBox<String>comboBoxDepartamento = new JComboBox<String>();
+		try {
+			departamentoController = new DepartamentoController();
+			String [] masterDepartamento =departamentoController.comboBoxDepartamento(); ;
+			for (int i =0; i< masterDepartamento.length; i++) {
+				comboBoxDepartamento.addItem(masterDepartamento[i]);
+			}
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+		}
+		JComboBox<String>comboBoxFilial = new JComboBox<String>();
+		  try { 
+			  filialControl = new FilialController();
+			  String [] master =filialControl.comboBoxFilial();
+			  for (int i = 0; i < master.length; i++) {
+			   comboBoxFilial.addItem(master[i]);}
+			  }
+		  catch (SQLException e) { 
+		  e.printStackTrace(); }
+		 		
 
-		
-		
+	
 
 		gbc.gridy = 1;
 		gbc.anchor = 13;
@@ -200,4 +229,6 @@ public class CadFuncionario extends JFrame implements ActionListener {
 
 		}
 	}
+	
+
 }
