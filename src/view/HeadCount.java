@@ -9,6 +9,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+import controller.CargoController;
 import controller.DepartamentoController;
 import controller.FilialController;
 import controller.FuncionarioController;
@@ -25,6 +26,7 @@ public class HeadCount implements ActionListener {
 	private JMenuItem cadDeprt;
 	private JMenuItem cadFunc;
 	private JMenuItem cadDep;
+	private JMenuItem cadCar;
 
 	private JMenuItem relCustoFunc;
 	private JMenuItem relCustoDeprt;
@@ -37,6 +39,7 @@ public class HeadCount implements ActionListener {
 	private FuncionarioController controlFun;
 	private DepartamentoController controlDeprt;
 	private DependenteController controlDep;
+	private CargoController controlCar;
 
 	public HeadCount() {
 
@@ -60,6 +63,7 @@ public class HeadCount implements ActionListener {
 		cadDeprt 		= new JMenuItem("Departamento");
 		cadFunc 		= new JMenuItem("Funcionario");
 		cadDep 			= new JMenuItem("Dependente");
+		cadCar 			= new JMenuItem("Cargo");
 		
 		relCustoFunc 	= new JMenuItem("Custo p/ Funcionario");
 		relCustoDeprt 	= new JMenuItem("Custo p/ Departamento");
@@ -76,6 +80,7 @@ public class HeadCount implements ActionListener {
 		crudMenu.add(cadFunc);
 		crudMenu.add(cadDeprt);
 		crudMenu.add(cadDep);
+		crudMenu.add(cadCar);
 
 		relMenu.add(relCustoEmp);
 		relMenu.add(relCustoDeprt);
@@ -88,6 +93,7 @@ public class HeadCount implements ActionListener {
 		cadDeprt.addActionListener(this);
 		cadFunc.addActionListener(this);
 		cadDep.addActionListener(this);
+		cadCar.addActionListener(this);
 		
 		optionConfirmaRCD.addActionListener(this);
 		optionRegCustoDepartamento.addActionListener(this);
@@ -124,6 +130,13 @@ public class HeadCount implements ActionListener {
 			controlDep = new DependenteController();
 			try {
 				controlDep.ListaDependente();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		} else if (fonte == cadCar) {
+			controlCar = new CargoController();
+			try {
+				controlCar.listaCargo();
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
