@@ -11,39 +11,31 @@ import model.connection.Database;
 import model.vo.Cargo;
 
 public class CargoDAO {
-	private int id;
 
 	public void create(Cargo cargo) throws SQLException {
 		try (Connection con = Database.getConnection()) {
 
-			String sql = "INSERT INTO CARGO (cargo) values (?)";
-			try (PreparedStatement stmt = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+			String sql = "INSERT INTO CARGO (nome) values (?)";
+			try (PreparedStatement stmt = con.prepareStatement(sql)) {
 
-				stmt.setString(1, cargo.getCargo());
+				stmt.setString(1, cargo.getNome());
 				
 				stmt.execute();
-				ResultSet resultSet = stmt.getGeneratedKeys();
-		        while (resultSet.next()) {
-		            id = resultSet.getInt("id");
-		            
-		        }
-		        resultSet.close();
 			}
 		}
 	}
 
-	public List<Cargo> read(String search) throws SQLException {
+	public List<Cargo> read() throws SQLException {
 		List<Cargo> cargos = new ArrayList<>();
 		try (Connection con = Database.getConnection()) {
-			String sql = "SELECT * FROM CARGO where cargo like ?";
+			String sql = "SELECT * FROM CARGO";
 			try (PreparedStatement stmt = con.prepareStatement(sql)) {
-				stmt.setString(1, "%"+search+"%");
 				stmt.execute();
 				ResultSet rs = stmt.getResultSet();
 				while (rs.next()) {
 					int id = rs.getInt("id");
-					String cargo1 = rs.getString("cargo");
-					Cargo cargo = new Cargo(cargo1);
+					String nome = rs.getString("nome");
+					Cargo cargo = new Cargo(nome);
 
 					cargo.setId(id);
 					cargos.add(cargo);
@@ -59,7 +51,7 @@ public class CargoDAO {
 			String sql = "UPDATE CARGO SET cargo=? WHERE id=?";
 
 			try (PreparedStatement stmt = con.prepareStatement(sql)) {
-				stmt.setString(1, cargo.getCargo());
+				stmt.setString(1, cargo.getNome());
 				stmt.setInt(2, cargo.getId());
 
 				stmt.execute();

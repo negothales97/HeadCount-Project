@@ -84,9 +84,9 @@ public class ListaFilial extends JFrame implements ActionListener {
 		gbc.insets = new Insets(5, 5, 5, 5);
 
 		panelGrid.add(btnNovo, gbc);
-		panelGrid.add(btnSair, gbc);
-		panelGrid.add(btnRemover, gbc);
 		panelGrid.add(btnEditar, gbc);
+		panelGrid.add(btnRemover, gbc);
+		panelGrid.add(btnSair, gbc);
 		container.add(tblFilial, gbc);
 
 		contentPanel.add(BorderLayout.NORTH, panelGrid);
@@ -96,6 +96,7 @@ public class ListaFilial extends JFrame implements ActionListener {
 		btnEditar.addActionListener(this);
 		btnRemover.addActionListener(this);
 		btnSair.addActionListener(this);
+		
 		janela.setContentPane(contentPanel);
 		janela.setTitle("Lista de Filiais");
 		janela.setSize(600, 400);
@@ -113,6 +114,12 @@ public class ListaFilial extends JFrame implements ActionListener {
 			control.novaFilial();
 			janela.dispose();
 
+		}
+		if(fonte== btnEditar) {
+			int id = Integer.parseInt(JOptionPane.showInputDialog("Informe o código a ser editado"));
+			control.editaFilial(id);
+			janela.dispose();
+			
 		}
 		if (fonte == btnRemover) {
 
