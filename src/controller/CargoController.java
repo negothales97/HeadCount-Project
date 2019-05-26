@@ -1,6 +1,7 @@
 package controller;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import model.dao.CargoDAO;
 import model.vo.Cargo;
@@ -33,5 +34,20 @@ public class CargoController {
 		this.listaCargo();
 	}
 	
+	public String [] comboBoxCargo() throws SQLException {
+			String[] colunas = { "Codigo", "Cargo" };
+			dao = new CargoDAO();
+
+			List<Cargo> cargos = dao.read("");
+			String [] masterCargos = new String[cargos.size()];
+			Object[][] dados = new Object[cargos.size()][4];
+			for (int i = 0; i < cargos.size(); i++) {
+				Cargo cargo = cargos.get(i);
+				dados[i][0] = cargo.getId();
+				dados[i][1] = cargo.getCargo();
+				masterCargos[i]= cargo.getCargo();
+			}
+			return masterCargos;
+	}
 		
 }

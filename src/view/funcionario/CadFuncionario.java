@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import controller.CargoController;
 import controller.DepartamentoController;
 import controller.DependenteController;
 import controller.FilialController;
@@ -38,6 +39,7 @@ public class CadFuncionario extends JFrame implements ActionListener {
 	private Filial filial;
 	private FilialController filialControl;
 	private DepartamentoController departamentoController;
+	private CargoController cargoController;
 	
 
 	private JPanel contentPanel;
@@ -109,11 +111,22 @@ public class CadFuncionario extends JFrame implements ActionListener {
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets(5, 5, 5, 5);
 		
-		JComboBox<Filial>comboBoxCargo = new JComboBox<Filial>();//trocar o objeto dessa collection
+		JComboBox<String>comboBoxCargo = new JComboBox<String>();
+		try {
+				cargoController = new CargoController();
+				String [] masterCargo = cargoController.comboBoxCargo();
+				for(int i =0;i<masterCargo.length;i++) {
+					comboBoxCargo.addItem(masterCargo[i]);
+				}
+			
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		//trocar o objeto dessa collection
 		JComboBox<String>comboBoxDepartamento = new JComboBox<String>();
 		try {
 			departamentoController = new DepartamentoController();
-			String [] masterDepartamento =departamentoController.comboBoxDepartamento(); ;
+			String [] masterDepartamento =departamentoController.comboBoxDepartamento();
 			for (int i =0; i< masterDepartamento.length; i++) {
 				comboBoxDepartamento.addItem(masterDepartamento[i]);
 			}
