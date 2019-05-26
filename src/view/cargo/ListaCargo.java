@@ -46,12 +46,12 @@ public class ListaCargo extends JFrame implements ActionListener {
 		String[] colunas = { "Codigo", "Cargo" };
 		dao = new CargoDAO();
 
-		List<Cargo> filiais = dao.read("");
+		List<Cargo> filiais = dao.read();
 		Object[][] dados = new Object[filiais.size()][4];
 		for (int i = 0; i < filiais.size(); i++) {
 			Cargo cargo = filiais.get(i);
 			dados[i][0] = cargo.getId();
-			dados[i][1] = cargo.getCargo();
+			dados[i][1] = cargo.getNome();
 		}
 
 		janela = new JFrame();

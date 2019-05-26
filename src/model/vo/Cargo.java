@@ -2,10 +2,10 @@ package model.vo;
 
 public class Cargo {
 	private int id;
-	private String cargo;
+	private String nome;
 	
-	public Cargo(String cargo) {
-		this.cargo = cargo;
+	public Cargo(String nome) {
+		this.nome = nome;
 	}
 	
 	public int getId() {
@@ -14,10 +14,10 @@ public class Cargo {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getCargo() {
-		return cargo;
+	public String getNome() {
+		return nome;
 	}
-	public void setCargo(String cargo) {
-		this.cargo = cargo;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 }
