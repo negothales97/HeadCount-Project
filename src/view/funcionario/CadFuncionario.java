@@ -10,19 +10,25 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import controller.CargoController;
+import controller.DepartamentoController;
 import controller.DependenteController;
 import controller.FilialController;
 import controller.FuncionarioController;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import model.dao.FilialDAO;
+import model.vo.Departamento;
 import model.vo.Endereco;
 import model.vo.Filial;
 import model.vo.Funcionario;
@@ -31,6 +37,10 @@ public class CadFuncionario extends JFrame implements ActionListener {
 	private JFrame janela;
 	private FuncionarioController control;
 	private Filial filial;
+	private FilialController filialControl;
+	private DepartamentoController departamentoController;
+	private CargoController cargoController;
+	
 
 	private JPanel contentPanel;
 	private JPanel panelGridTop;
@@ -44,25 +54,24 @@ public class CadFuncionario extends JFrame implements ActionListener {
 	private JButton btnSave;
 	private JButton btnVoltar;
 
-	private JLabel lblMatricula;
 	private JLabel lblNome;
 	private JLabel lblCPF;
 	private JLabel lblDataNasc;
 	private JLabel lblCargo;
 	private JLabel lblSalario;
 	private JLabel lblSetor;
-	private JLabel lblEPI;
-	private JLabel lblStatus;
+	private JLabel lblDepartamento;
+	private JLabel lblFilial;
+	private List<Filial> filiais;
 
-	private JTextField txtMatricula;
+
 	private JTextField txtNome;
 	private JTextField txtCPF;
 	private JTextField txtDataNasc;
 	private JTextField txtCargo;
 	private JTextField txtSalario;
 	private JTextField txtSetor;
-	private JTextField txtStatus;
-	private JTextField txtEPI;
+	private FilialDAO dao;
 
 	public CadFuncionario() {
 		janela = new JFrame();
@@ -79,34 +88,64 @@ public class CadFuncionario extends JFrame implements ActionListener {
 
 		btnSave = new JButton("Salvar");
 		btnVoltar = new JButton("Voltar");
+		
+	
 
-		txtMatricula = new JTextField(6);
+
 		txtNome = new JTextField(30);
 		txtCPF = new JTextField(12);
 		txtDataNasc = new JTextField(8);
 		txtCargo = new JTextField(30);
 		txtSalario = new JTextField(20);
 		txtSetor = new JTextField(30);
-		txtStatus = new JTextField(1);
-		txtEPI = new JTextField(4);
 
-		lblMatricula = new JLabel("Matricula");
 		lblNome = new JLabel("Nome");
 		lblCPF = new JLabel("CPF");
 		lblDataNasc = new JLabel("Data de Nascimento");
-		lblCargo = new JLabel("Cargo");
 		lblSalario = new JLabel("Salario");
 		lblSetor = new JLabel("Setor");
-		lblEPI = new JLabel("EPI");
-		lblStatus = new JLabel("Status");
+		lblCargo = new JLabel("Cargo");
+		lblFilial = new JLabel("Filial");
+		lblDepartamento = new JLabel("Departamento");
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets(5, 5, 5, 5);
+		
+		JComboBox<String>comboBoxCargo = new JComboBox<String>();
+		try {
+				cargoController = new CargoController();
+				String [] masterCargo = cargoController.comboBoxCargo();
+				for(int i =0;i<masterCargo.length;i++) {
+					comboBoxCargo.addItem(masterCargo[i]);
+				}
+			
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		//trocar o objeto dessa collection
+		JComboBox<String>comboBoxDepartamento = new JComboBox<String>();
+		try {
+			departamentoController = new DepartamentoController();
+			String [] masterDepartamento =departamentoController.comboBoxDepartamento();
+			for (int i =0; i< masterDepartamento.length; i++) {
+				comboBoxDepartamento.addItem(masterDepartamento[i]);
+			}
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+		}
+		JComboBox<String>comboBoxFilial = new JComboBox<String>();
+		  try { 
+			  filialControl = new FilialController();
+			  String [] master =filialControl.comboBoxFilial();
+			  for (int i = 0; i < master.length; i++) {
+			   comboBoxFilial.addItem(master[i]);}
+			  }
+		  catch (SQLException e) { 
+		  e.printStackTrace(); }
+		 		
 
-		gbc.anchor = 13;
-		panelGridTop.add(lblMatricula, gbc);
-		gbc.anchor = 17;
-		panelGridTop.add(txtMatricula, gbc);
+	
 
 		gbc.gridy = 1;
 		gbc.anchor = 13;
@@ -130,7 +169,7 @@ public class CadFuncionario extends JFrame implements ActionListener {
 		gbc.anchor = 13;
 		panelGridTop.add(lblCargo, gbc);
 		gbc.anchor = 17;
-		panelGridTop.add(txtCargo, gbc);
+		panelGridTop.add(comboBoxCargo, gbc);
 
 		gbc.gridy = 5;
 		gbc.anchor = 13;
@@ -143,23 +182,26 @@ public class CadFuncionario extends JFrame implements ActionListener {
 		panelGridTop.add(lblSetor, gbc);
 		gbc.anchor = 17;
 		panelGridTop.add(txtSetor, gbc);
-
+		
 		gbc.gridy = 7;
 		gbc.anchor = 13;
-		panelGridTop.add(lblStatus, gbc);
+		panelGridTop.add(lblDepartamento, gbc);
 		gbc.anchor = 17;
-		panelGridTop.add(txtStatus, gbc);
-
+		panelGridTop.add(comboBoxDepartamento, gbc);
+		
 		gbc.gridy = 8;
 		gbc.anchor = 13;
-		panelGridTop.add(lblEPI, gbc);
+		panelGridTop.add(lblFilial, gbc);
 		gbc.anchor = 17;
-		panelGridTop.add(txtEPI, gbc);
+		panelGridTop.add(comboBoxFilial, gbc);
+		
+
 
 		panelGridBottom.add(btnSave, gbc);
 		panelGridBottom.add(btnVoltar, gbc);
 
 		btnSave.addActionListener(this);
+		btnVoltar.addActionListener(this);
 
 		contentPanel.add(BorderLayout.NORTH, panelGridTop);
 		contentPanel.add(BorderLayout.CENTER, panelGridBottom);
@@ -200,4 +242,6 @@ public class CadFuncionario extends JFrame implements ActionListener {
 
 		}
 	}
+	
+
 }

@@ -35,9 +35,8 @@ public class ListaFilial extends JFrame implements ActionListener {
 	
 	private JButton btnNovo;
 	private JButton btnSair;
+	private JButton btnEditar;
 	private JButton btnRemover;
-	private JButton btnPesquisar;
-	private JTextField txtPesquisar;
 
 	private JTable tblFilial;
 
@@ -47,7 +46,7 @@ public class ListaFilial extends JFrame implements ActionListener {
 		String[] colunas = { "Codigo", "Nome", "CNPJ", "Insc. Estadual" };
 		dao = new FilialDAO();
 
-		List<Filial> filiais = dao.read("Ka");
+		List<Filial> filiais = dao.read();
 		Object[][] dados = new Object[filiais.size()][4];
 		for (int i = 0; i < filiais.size(); i++) {
 			Filial filial = filiais.get(i);
@@ -74,9 +73,8 @@ public class ListaFilial extends JFrame implements ActionListener {
 		btnNovo = new JButton("Novo");
 		btnRemover = new JButton("Remover");
 		btnSair = new JButton("Sair");
-		btnPesquisar = new JButton("Pesquisar");
+		btnEditar = new JButton ("Editar");
 
-		txtPesquisar = new JTextField(10);
 
 		tblFilial = new JTable(dados, colunas);
 		tblFilial.setSize(container.getWidth(), container.getHeight());
@@ -86,20 +84,19 @@ public class ListaFilial extends JFrame implements ActionListener {
 		gbc.insets = new Insets(5, 5, 5, 5);
 
 		panelGrid.add(btnNovo, gbc);
-		panelGrid.add(btnSair, gbc);
+		panelGrid.add(btnEditar, gbc);
 		panelGrid.add(btnRemover, gbc);
-		panelGrid.add(txtPesquisar, gbc);
-		panelGrid.add(btnPesquisar, gbc);
+		panelGrid.add(btnSair, gbc);
 		container.add(tblFilial, gbc);
 
 		contentPanel.add(BorderLayout.NORTH, panelGrid);
 		contentPanel.add(BorderLayout.CENTER, container);
 
 		btnNovo.addActionListener(this);
+		btnEditar.addActionListener(this);
 		btnRemover.addActionListener(this);
 		btnSair.addActionListener(this);
-		btnPesquisar.addActionListener(this);
-
+		
 		janela.setContentPane(contentPanel);
 		janela.setTitle("Lista de Filiais");
 		janela.setSize(600, 400);
@@ -118,9 +115,15 @@ public class ListaFilial extends JFrame implements ActionListener {
 			janela.dispose();
 
 		}
+		if(fonte== btnEditar) {
+			int id = Integer.parseInt(JOptionPane.showInputDialog("Informe o código a ser editado"));
+			control.editaFilial(id);
+			janela.dispose();
+			
+		}
 		if (fonte == btnRemover) {
 
-			int id = Integer.parseInt(JOptionPane.showInputDialog("Informe o cï¿½digo a ser removido"));
+			int id = Integer.parseInt(JOptionPane.showInputDialog("Informe o código a ser removido"));
 			try {
 				control.deletaFilial(id);
 			} catch (SQLException e1) {
@@ -131,9 +134,6 @@ public class ListaFilial extends JFrame implements ActionListener {
 		}
 		if (fonte == btnSair) {
 			janela.dispose();
-		}
-		if (fonte == btnPesquisar) {
-			txtPesquisar.getText();
 		}
 
 	}

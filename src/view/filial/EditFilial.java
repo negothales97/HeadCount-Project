@@ -20,7 +20,7 @@ import controller.FilialController;
 import model.vo.Endereco;
 import model.vo.Filial;
 
-public class CadFilial extends JFrame implements ActionListener {
+public class EditFilial extends JFrame implements ActionListener {
 	private JFrame janela;
 	private FilialController control;
 	private Filial filial;
@@ -32,9 +32,9 @@ public class CadFilial extends JFrame implements ActionListener {
 	private BorderLayout boderLayout;
 	private GridBagLayout gbLayout;
 
-	private JButton btnSalvar;
+	private JButton btnEditar;
 	private JButton btnVoltar;
-
+	
 	private JLabel lblCNPJ;
 	private JLabel lblNome;
 	private JLabel lblIE;
@@ -49,7 +49,8 @@ public class CadFilial extends JFrame implements ActionListener {
 	private JTextField txtNumero;
 	private JTextField txtBairro;
 
-	public CadFilial() {
+	public EditFilial(Filial filial) {
+		this.filial = filial;
 		janela 			= new JFrame();
 		contentPanel 	= new JPanel();
 		panelGridTop 	= new JPanel();
@@ -62,9 +63,9 @@ public class CadFilial extends JFrame implements ActionListener {
 		panelGridBottom.setLayout(gbLayout);
 		contentPanel.setLayout(boderLayout);
 
-		btnSalvar 		= new JButton("Salvar");
+		btnEditar 		= new JButton("Editar");
 		btnVoltar 		= new JButton("Voltar");
-
+		
 		lblCNPJ 		= new JLabel("CNPJ");
 		lblNome 		= new JLabel("Razao Social");
 		lblIE 			= new JLabel("Inscricao Estadual");
@@ -78,6 +79,13 @@ public class CadFilial extends JFrame implements ActionListener {
 		txtRua 			= new JTextField(20);
 		txtNumero 		= new JTextField(5);
 		txtBairro 		= new JTextField(12);
+		
+		txtCNPJ.setText(filial.getCnpj());
+		txtNome.setText(filial.getNome());
+		txtIE.setText(filial.getInscEstadual());
+		txtRua.setText(filial.getEndereco().getRua());
+		txtNumero.setText(filial.getEndereco().getNumero());
+		txtBairro.setText(filial.getEndereco().getBairro());
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets(5, 5, 5, 5);
@@ -117,10 +125,10 @@ public class CadFilial extends JFrame implements ActionListener {
 		gbc.anchor = 17;
 		panelGridTop.add(txtBairro, gbc);
 
-		panelGridBottom.add(btnSalvar, gbc);
+		panelGridBottom.add(btnEditar, gbc);
 		panelGridBottom.add(btnVoltar, gbc);
 
-		btnSalvar.addActionListener(this);
+		btnEditar.addActionListener(this);
 		btnVoltar.addActionListener(this);
 
 		contentPanel.add(BorderLayout.NORTH, panelGridTop);
@@ -145,18 +153,18 @@ public class CadFilial extends JFrame implements ActionListener {
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
-
 		}
-		if (fonte == btnSalvar) {
-			filial = new Filial(txtNome.getText(), txtCNPJ.getText(), txtIE.getText());
+		if (fonte == btnEditar) {
+			this.filial.setCnpj(txtCNPJ.getText());
+			this.filial.setNome(txtNome.getText());
+			this.filial.setInscEstadual(txtIE.getText());
 			Endereco endereco = new Endereco(txtRua.getText(), txtNumero.getText(), txtBairro.getText());
-			filial.setEndereco(endereco);
-
-			control.criaFilial(filial);
-			janela.dispose();
-			JOptionPane.showMessageDialog(null, "Filial Cadastrada com sucesso");
 			
-		}
+			this.filial.setEndereco(endereco);
+			control.updateFilial(filial);
+			janela.dispose();
+			JOptionPane.showMessageDialog(null, "Filial Editada com sucesso");
+	}
 
 	}
 }
