@@ -9,6 +9,8 @@ import java.util.List;
 
 import model.connection.Database;
 import model.vo.Cargo;
+import model.vo.Endereco;
+import model.vo.Filial;
 
 public class CargoDAO {
 
@@ -46,14 +48,30 @@ public class CargoDAO {
 		return cargos;
 	}
 
+	public Cargo getCargo(int id) throws SQLException{
+		try (Connection con = Database.getConnection()){
+			String sql = "SELECT * FROM CARGO WHERE ID=? ";
+			try(PreparedStatement stmt = con.prepareStatement(sql)){
+				stmt.setInt(1, id);
+				stmt.execute();
+				ResultSet rs = stmt.getResultSet();
+				rs.next();
+				int idCargo = rs.getInt("id");
+				String nome = rs.getString("nome");
+				Cargo cargo = new Cargo(nome);
+				cargo.setId(idCargo);
+				return cargo;
+			}
+		}
+	}
+
 	public void update(Cargo cargo) throws SQLException {
 		try (Connection con = Database.getConnection()) {
-			String sql = "UPDATE CARGO SET cargo=? WHERE id=?";
 
+			String sql = "UPDATE CARGO SET nome = ? WHERE id = ?;";
 			try (PreparedStatement stmt = con.prepareStatement(sql)) {
 				stmt.setString(1, cargo.getNome());
-				stmt.setInt(2, cargo.getId());
-
+				stmt.setInt(1, cargo.getId());
 				stmt.execute();
 			}
 		}
