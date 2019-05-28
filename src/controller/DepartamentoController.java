@@ -1,21 +1,21 @@
 package controller;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import model.dao.DepartamentoDAO;
 import model.vo.Departamento;
 import view.departamento.CadDepartamento;
-import view.departamento.ConfirmaRCD;
+import view.departamento.CustoDepartamento;
 import view.departamento.ListaDepartamento;
-import view.departamento.RegCustoDepartamento;
 
 public class DepartamentoController {
 	private ListaDepartamento listaDepartamento = null;
-	private CadDepartamento cadDepartamento = null;
-	private RegCustoDepartamento regCustoDepartamento = null;
-	private DepartamentoDAO dao = null;
-	private ConfirmaRCD confirmaRCD = null;
+	private CadDepartamento cadDepartamento 	= null;
+	private CustoDepartamento custoDepartamento = null;
+	private DepartamentoDAO dao 				= null;
+	
 
 	public DepartamentoController() {
 		dao = new DepartamentoDAO();
@@ -40,11 +40,20 @@ public class DepartamentoController {
 	}
 
 	public void registraCustoDepartamento() {
-		regCustoDepartamento = new RegCustoDepartamento();
+		try {
+			custoDepartamento = new CustoDepartamento();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
-
-	public void formRegistraCusto() {
-		confirmaRCD = new ConfirmaRCD();
+	
+	public void incluiCusto(int filial_id, int departamento_id, String obs, double custo) {
+		try {
+			dao.custoDep(filial_id, departamento_id, obs, custo);
+			this.registraCustoDepartamento();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public String[] comboBoxDepartamento() throws SQLException {

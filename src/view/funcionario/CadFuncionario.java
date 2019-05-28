@@ -120,7 +120,6 @@ public class CadFuncionario extends JFrame implements ActionListener {
 				}
 			
 		}catch (Exception e) {
-			// TODO: handle exception
 		}
 		//trocar o objeto dessa collection
 		JComboBox<String>comboBoxDepartamento = new JComboBox<String>();
@@ -139,9 +138,9 @@ public class CadFuncionario extends JFrame implements ActionListener {
 			  filialControl = new FilialController();
 			  String [] master =filialControl.comboBoxFilial();
 			  for (int i = 0; i < master.length; i++) {
-			   comboBoxFilial.addItem(master[i]);}
+			   comboBoxFilial.addItem(master[i]);
 			  }
-		  catch (SQLException e) { 
+		  }catch (SQLException e) { 
 		  e.printStackTrace(); }
 		 		
 

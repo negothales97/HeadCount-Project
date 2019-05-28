@@ -5,12 +5,14 @@ import java.sql.SQLException;
 import model.dao.FuncionarioDAO;
 import model.vo.Funcionario;
 import view.funcionario.CadFuncionario;
+import view.funcionario.CustoFuncionario;
 import view.funcionario.ListaFuncionario;
 
 public class FuncionarioController {
-	private ListaFuncionario listaFuncionario = null;
-	private CadFuncionario cadFuncionario = null;
-	private FuncionarioDAO dao = null;
+	private ListaFuncionario listaFuncionario;
+	private CadFuncionario cadFuncionario;
+	private FuncionarioDAO dao;
+	private CustoFuncionario custoFuncionario;
 	
 	public FuncionarioController() {
 		dao = new FuncionarioDAO();
@@ -29,5 +31,12 @@ public class FuncionarioController {
 
 	public void deletaFuncionario(int id) throws SQLException {
 		dao.delete(id);
+	}
+	public void registraCustoFuncionario() {
+		try {
+			custoFuncionario = new CustoFuncionario();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

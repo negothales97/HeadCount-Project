@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.crypto.Data;
+
 import model.connection.Database;
 import model.vo.Departamento;
 import model.vo.Filial;
@@ -81,6 +83,19 @@ public class DepartamentoDAO {
 
 			try (PreparedStatement stmt = con.prepareStatement(sql)) {
 				stmt.setInt(1, id);
+				stmt.execute();
+			}
+		}
+	}
+	
+	public void custoDep(int filial_id, int departamento_id, String obs, double custo) throws SQLException{
+		try(Connection con = Database.getConnection()){
+			String sql = "INSERT INTO CUSTO_DEPARTAMENTO (filial_id, departamento_id, observacao, custo) values (?, ?, ?, ?)";
+			try(PreparedStatement stmt = con.prepareStatement(sql)){
+				stmt.setInt(1, filial_id);
+				stmt.setInt(2, departamento_id);
+				stmt.setString(3, obs);
+				stmt.setDouble(4, custo);
 				stmt.execute();
 			}
 		}

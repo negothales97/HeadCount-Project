@@ -15,7 +15,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -23,27 +22,26 @@ import javax.swing.JTextField;
 
 import controller.DepartamentoController;
 import controller.FilialController;
-import model.dao.DepartamentoDAO;
-import model.dao.FilialDAO;
-import model.vo.Departamento;
 
 public class CustoDepartamento extends JFrame implements ActionListener {
-	private DepartamentoController control;
-	private DepartamentoDAO dao;
+	
 	private JFrame janela;
 	private JPanel contentPanel;
 	private JPanel panelGrid;
+	
 	private Container container;
 	private BorderLayout boderLayout;
 	private GridBagLayout gbLayout;
 
 	private JComboBox<String> cmbFilial;
 	private JComboBox<String> cmbDepartamento;
+	
 	private JLabel lblFilial;
 	private JLabel lblDepartamento;
-	private JLabel lblOBS;
+	private JLabel lblObs;
 	private JLabel lblCusto;
-	private JTextField txtOBS;
+	
+	private JTextField txtObs;
 	private JTextField txtCusto;
 	private JButton btnSalvar;
 	private JButton btnSair;
@@ -51,51 +49,59 @@ public class CustoDepartamento extends JFrame implements ActionListener {
 	private JTable tblDepartamento;
 
 	private JScrollPane barraRolagem;
+	private DepartamentoController controlDepart;
+	private FilialController filialControl;
 
 	public CustoDepartamento() throws SQLException {
-		String[] colunas = { "ID", "Nome", "Centro de Custo", "Orçamento (R$)" };
-		DepartamentoDAO dao = new DepartamentoDAO();
+		String[] colunas = { "Filial", "Departamento", "Observação", "Custo (R$)" };
+		janela 			= new JFrame();
+		contentPanel 	= new JPanel();
+		panelGrid 		= new JPanel();
+		container 		= new JPanel();
 
-		List<Departamento> departamentos = dao.read();
-		Object[][] dados = new Object[departamentos.size()][4];
-		for (int i = 0; i < departamentos.size(); i++) {
-			Departamento departamento = departamentos.get(i);
-			dados[i][0] = departamento.getId();
-			dados[i][1] = departamento.getNome();
-			dados[i][2] = departamento.getCentroCusto();
-			dados[i][3] = departamento.getOrcamento();
-		}
-
-		janela = new JFrame();
-		contentPanel = new JPanel();
-		panelGrid = new JPanel();
-		container = new JPanel();
-
-		boderLayout = new BorderLayout();
-		gbLayout = new GridBagLayout();
+		boderLayout 	= new BorderLayout();
+		gbLayout 		= new GridBagLayout();
 
 		panelGrid.setLayout(gbLayout);
 		contentPanel.setLayout(boderLayout);
 		container.setLayout(new FlowLayout());
 
-		barraRolagem = new JScrollPane();
+		barraRolagem 	= new JScrollPane();
 		
-		lblFilial = new JLabel("Filial");
+		lblFilial 		= new JLabel("Filial");
 		lblDepartamento = new JLabel("Departamento");
-		lblOBS = new JLabel("Observcao");
-		lblCusto = new JLabel("Custo");
+		lblObs 			= new JLabel("Observcao");
+		lblCusto 		= new JLabel("Custo");
 		
-		cmbFilial = new JComboBox<String>();
+		cmbFilial 		= new JComboBox<String>();
 		cmbDepartamento = new JComboBox<String>();
 		
-		txtOBS = new JTextField(10);
+		cmbDepartamento.addItem("SELECIONE....");
+		cmbFilial.addItem("SELECIONE....");
+		try {
+			controlDepart = new DepartamentoController();
+			String [] masterDepartamento = controlDepart.comboBoxDepartamento();
+			for (int i = 0; i< masterDepartamento.length; i++) {
+				cmbDepartamento.addItem(masterDepartamento[i]);
+			}
+			filialControl = new FilialController();
+			  String [] master = filialControl.comboBoxFilial();
+			  for (int i = 0; i < master.length; i++) {
+				  
+				  cmbFilial.addItem(master[i]);
+			  }
+		}
+		catch (Exception e) {
+		}
+		
+		txtObs = new JTextField(10);
 		txtCusto  = new JTextField(10);
 
 		btnSalvar = new JButton("Salvar");
 		btnSair = new JButton("Sair");
 
 
-		tblDepartamento = new JTable(dados, colunas);
+		tblDepartamento = new JTable();
 		tblDepartamento.setSize(container.getWidth(), container.getHeight());
 
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -106,8 +112,8 @@ public class CustoDepartamento extends JFrame implements ActionListener {
 		panelGrid.add(cmbFilial, gbc);
 		panelGrid.add(lblDepartamento, gbc);
 		panelGrid.add(cmbDepartamento, gbc);
-		panelGrid.add(lblOBS, gbc);
-		panelGrid.add(txtOBS, gbc);
+		panelGrid.add(lblObs, gbc);
+		panelGrid.add(txtObs, gbc);
 		panelGrid.add(lblCusto, gbc);
 		panelGrid.add(txtCusto, gbc);
 		panelGrid.add(btnSalvar, gbc);
@@ -124,18 +130,20 @@ public class CustoDepartamento extends JFrame implements ActionListener {
 		janela.setTitle("Lista de Departamentos");
 		janela.setSize(800, 600);
 		janela.setVisible(true);
-		janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		janela.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object fonte = e.getSource();
-		control = new DepartamentoController();
-
+		controlDepart = new DepartamentoController();
 		if (fonte == btnSalvar) {
+			double custo = Double.parseDouble(txtCusto.getText());
+			int filial_id = cmbFilial.getSelectedIndex();
+			int departamento_id = cmbDepartamento.getSelectedIndex();
+			controlDepart.incluiCusto(filial_id, departamento_id, txtObs.getText(), custo);
 			janela.dispose();
-
 		}
 		if (fonte == btnSair) {
 			janela.dispose();
