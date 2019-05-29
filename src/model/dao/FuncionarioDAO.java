@@ -78,4 +78,18 @@ public class FuncionarioDAO {
 			}
 		}
 	}
+
+	public void custoFunc(int funcionario_id, String obs, double custo) throws SQLException {
+		try(Connection con = Database.getConnection()){
+			String sql = "INSERT INTO CUSTO_FUNCIONARIO (funcionario_id, observacao, custo) values (?, ?, ?)";
+			try(PreparedStatement stmt = con.prepareStatement(sql)){
+				stmt.setInt(1, funcionario_id);
+				stmt.setString(2, obs);
+				stmt.setDouble(3, custo);
+				
+				stmt.execute();
+			}
+		}
+		
+	}
 }

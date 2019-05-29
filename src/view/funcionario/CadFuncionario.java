@@ -131,7 +131,7 @@ public class CadFuncionario extends JFrame implements ActionListener {
 			}
 		}
 		catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 		JComboBox<String>comboBoxFilial = new JComboBox<String>();
 		  try { 

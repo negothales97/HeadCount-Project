@@ -96,6 +96,7 @@ public class DepartamentoDAO {
 				stmt.setInt(2, departamento_id);
 				stmt.setString(3, obs);
 				stmt.setDouble(4, custo);
+				
 				stmt.execute();
 			}
 		}

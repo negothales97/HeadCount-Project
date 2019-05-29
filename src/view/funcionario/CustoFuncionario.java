@@ -37,13 +37,11 @@ public class CustoFuncionario extends JFrame implements ActionListener {
 	private BorderLayout boderLayout;
 	private GridBagLayout gbLayout;
 
-	private JComboBox<String> cmbFilial;
 	private JComboBox<String> cmbFuncionario;
-	private JLabel lblFilial;
 	private JLabel lblFuncionario;
-	private JLabel lblOBS;
+	private JLabel lblObs;
 	private JLabel lblCusto;
-	private JTextField txtOBS;
+	private JTextField txtObs;
 	private JTextField txtCusto;
 	private JButton btnSalvar;
 	private JButton btnSair;
@@ -80,15 +78,26 @@ public class CustoFuncionario extends JFrame implements ActionListener {
 
 		barraRolagem = new JScrollPane();
 		
-		lblFilial = new JLabel("Filial");
 		lblFuncionario = new JLabel("Funcionario");
-		lblOBS = new JLabel("Observcao");
+		lblObs = new JLabel("Observcao");
 		lblCusto = new JLabel("Custo");
 		
-		cmbFilial = new JComboBox<String>();
 		cmbFuncionario = new JComboBox<String>();
 		
-		txtOBS = new JTextField(10);
+		cmbFuncionario.addItem("SELECIONE....");
+		try {
+			control = new FuncionarioController();
+			String [] master = control.comboBoxFuncionario();
+			for (int i = 0; i< master.length; i++) {
+				cmbFuncionario.addItem(master[i]);
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		txtObs = new JTextField(10);
 		txtCusto  = new JTextField(10);
 
 		btnSalvar = new JButton("Salvar");
@@ -102,12 +111,10 @@ public class CustoFuncionario extends JFrame implements ActionListener {
 
 		gbc.insets = new Insets(5, 5, 5, 5);
 		
-		panelGrid.add(lblFilial, gbc);
-		panelGrid.add(cmbFilial, gbc);
 		panelGrid.add(lblFuncionario, gbc);
 		panelGrid.add(cmbFuncionario, gbc);
-		panelGrid.add(lblOBS, gbc);
-		panelGrid.add(txtOBS, gbc);
+		panelGrid.add(lblObs, gbc);
+		panelGrid.add(txtObs, gbc);
 		panelGrid.add(lblCusto, gbc);
 		panelGrid.add(txtCusto, gbc);
 		panelGrid.add(btnSalvar, gbc);
@@ -134,6 +141,10 @@ public class CustoFuncionario extends JFrame implements ActionListener {
 		control = new FuncionarioController();
 
 		if (fonte == btnSalvar) {
+			double custo = Double.parseDouble(txtCusto.getText());
+			int funcionario_id = cmbFuncionario.getSelectedIndex();
+			control.incluiCusto(funcionario_id, txtObs.getText(), custo);
+			JOptionPane.showMessageDialog(null, "Custo adicionado com sucesso");
 			janela.dispose();
 
 		}

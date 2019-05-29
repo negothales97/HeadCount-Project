@@ -92,6 +92,7 @@ public class CustoDepartamento extends JFrame implements ActionListener {
 			  }
 		}
 		catch (Exception e) {
+			e.printStackTrace();
 		}
 		
 		txtObs = new JTextField(10);
