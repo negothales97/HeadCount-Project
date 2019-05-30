@@ -41,9 +41,9 @@ public class FuncionarioDAO {
 					String nome = rs.getString("nome");
 					String cpf = rs.getString("cpf");
 					String dataNasc = rs.getString("datanasc");
-					Funcionario funcionario = new Funcionario(nome, cpf, dataNasc);
+					Funcionario funcionario = new Funcionario(matricula, nome, cpf, dataNasc);
 
-					funcionario.setMatricula(matricula);
+					
 					funcionarios.add(funcionario);
 				}
 			}

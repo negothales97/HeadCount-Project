@@ -137,9 +137,9 @@ public class CadFuncionario extends JFrame implements ActionListener {
 		JComboBox<String>comboBoxFilial = new JComboBox<String>();
 		  try { 
 			  filialControl = new FilialController();
-			  String [] master =filialControl.comboBoxFilial();
-			  for (int i = 0; i < master.length; i++) {
-			   comboBoxFilial.addItem(master[i]);}
+			  List<Filial> master =filialControl.comboBoxFilial();
+			  for (int i = 0; i < master.size(); i++) {
+			   comboBoxFilial.addItem(master.get(i).getNome());}
 			  }
 		  catch (SQLException e) { 
 		  e.printStackTrace(); }

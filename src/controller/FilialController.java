@@ -58,7 +58,7 @@ public class FilialController  {
 		this.listaFilial();
 	}
 	
-	public String[] comboBoxFilial() throws SQLException {
+	public List<Filial> comboBoxFilial() throws SQLException {
 		String[] colunas = { "Codigo", "Nome", "CNPJ", "Insc. Estadual" };
 
 		List<Filial> filiais = dao.read();
@@ -72,7 +72,7 @@ public class FilialController  {
 			dados[i][3] = filial.getInscEstadual();
 			master[i] = filial.getNome();
 		}
-		return master;
+		return filiais;
 	}
 		
 }
