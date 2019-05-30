@@ -41,12 +41,11 @@ public class FuncionarioController {
 			e.printStackTrace();
 		}
 	}
-	public String[] comboBoxFuncionario() throws SQLException {
+	public List<Funcionario> comboBoxFuncionario() throws SQLException {
 		String[] colunas = { "ID", "Nome", "Centro de Custo", "Orçamento (R$)" };
 		dao = new FuncionarioDAO();
 
 		List<Funcionario> funcionarios = dao.read();
-		String [] master = new String [funcionarios.size()];
 		Object[][] dados = new Object[funcionarios.size()][4];
 		for (int i = 0; i < funcionarios.size(); i++) {
 			Funcionario funcionario = funcionarios.get(i);
@@ -54,10 +53,9 @@ public class FuncionarioController {
 			dados[i][1] = funcionario.getNome();
 			dados[i][2] = funcionario.getCpf();
 			dados[i][3] = funcionario.getDatanasc();
-			master[i] = funcionario.getNome();
 
 		}
-		return master;
+		return funcionarios;
 	}
 	public void incluiCusto(int funcionario_id, String obs, double custo) {
 		try {

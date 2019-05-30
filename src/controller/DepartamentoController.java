@@ -56,12 +56,11 @@ public class DepartamentoController {
 		}
 	}
 
-	public String[] comboBoxDepartamento() throws SQLException {
+	public List<Departamento> comboBoxDepartamento() throws SQLException {
 		String[] colunas = { "ID", "Nome", "Centro de Custo", "Orçamento (R$)" };
 		DepartamentoDAO dao = new DepartamentoDAO();
 
 		List<Departamento> departamentos = dao.read();
-		String [] masterDepartamento = new String [departamentos.size()];
 		Object[][] dados = new Object[departamentos.size()][4];
 		for (int i = 0; i < departamentos.size(); i++) {
 			Departamento departamento = departamentos.get(i);
@@ -69,9 +68,8 @@ public class DepartamentoController {
 			dados[i][1] = departamento.getNome();
 			dados[i][2] = departamento.getCentroCusto();
 			dados[i][3] = departamento.getOrcamento();
-			masterDepartamento[i] = departamento.getNome();
 
 		}
-		return masterDepartamento;
+		return departamentos;
 	}
 }

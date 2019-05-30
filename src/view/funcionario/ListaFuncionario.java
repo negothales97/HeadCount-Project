@@ -107,7 +107,7 @@ public class ListaFuncionario extends JFrame implements ActionListener {
 		btnPesquisar.addActionListener(this);
 
 		janela.setContentPane(contentPanel);
-		janela.setTitle("Lista de Filiais");
+		janela.setTitle("Lista de Funcionarios");
 		janela.setSize(600, 400);
 		janela.setVisible(true);
 		janela.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

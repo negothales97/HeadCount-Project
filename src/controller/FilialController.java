@@ -62,7 +62,7 @@ public class FilialController  {
 		String[] colunas = { "Codigo", "Nome", "CNPJ", "Insc. Estadual" };
 
 		List<Filial> filiais = dao.read();
-		String [] master = new String[filiais.size()];
+		
 		Object[][] dados = new Object[filiais.size()][4];
 		for (int i = 0; i < filiais.size(); i++) {
 			Filial filial = filiais.get(i);
@@ -70,7 +70,7 @@ public class FilialController  {
 			dados[i][1] = filial.getNome();
 			dados[i][2] = filial.getCnpj();
 			dados[i][3] = filial.getInscEstadual();
-			master[i] = filial.getNome();
+			
 		}
 		return filiais;
 	}

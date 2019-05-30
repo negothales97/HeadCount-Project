@@ -28,6 +28,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import model.dao.FilialDAO;
+import model.vo.Cargo;
 import model.vo.Departamento;
 import model.vo.Endereco;
 import model.vo.Filial;
@@ -114,20 +115,20 @@ public class CadFuncionario extends JFrame implements ActionListener {
 		JComboBox<String>comboBoxCargo = new JComboBox<String>();
 		try {
 				cargoController = new CargoController();
-				String [] masterCargo = cargoController.comboBoxCargo();
-				for(int i =0;i<masterCargo.length;i++) {
-					comboBoxCargo.addItem(masterCargo[i]);
+				List<Cargo> masterCargo = cargoController.comboBoxCargo();
+				for(int i =0;i<masterCargo.size();i++) {
+					comboBoxCargo.addItem(masterCargo.get(i).getNome());
 				}
 			
 		}catch (Exception e) {
 		}
-		//trocar o objeto dessa collection
+	
 		JComboBox<String>comboBoxDepartamento = new JComboBox<String>();
 		try {
 			departamentoController = new DepartamentoController();
-			String [] masterDepartamento =departamentoController.comboBoxDepartamento();
-			for (int i =0; i< masterDepartamento.length; i++) {
-				comboBoxDepartamento.addItem(masterDepartamento[i]);
+			List<Departamento> masterDepartamento =departamentoController.comboBoxDepartamento();
+			for (int i =0; i< masterDepartamento.size(); i++) {
+				comboBoxDepartamento.addItem(masterDepartamento.get(i).getNome());
 			}
 		}
 		catch (Exception e) {
@@ -140,7 +141,7 @@ public class CadFuncionario extends JFrame implements ActionListener {
 			  for (int i = 0; i < master.size(); i++) {
 			   comboBoxFilial.addItem(master.get(i).getNome());}
 			  }
-		  }catch (SQLException e) { 
+		  catch (SQLException e) { 
 		  e.printStackTrace(); }
 		 		
 

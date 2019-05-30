@@ -22,6 +22,8 @@ import javax.swing.JTextField;
 
 import controller.DepartamentoController;
 import controller.FilialController;
+import model.vo.Departamento;
+import model.vo.Filial;
 
 public class CustoDepartamento extends JFrame implements ActionListener {
 	
@@ -80,15 +82,15 @@ public class CustoDepartamento extends JFrame implements ActionListener {
 		cmbFilial.addItem("SELECIONE....");
 		try {
 			controlDepart = new DepartamentoController();
-			String [] masterDepartamento = controlDepart.comboBoxDepartamento();
-			for (int i = 0; i< masterDepartamento.length; i++) {
-				cmbDepartamento.addItem(masterDepartamento[i]);
+			List<Departamento> masterDepartamento = controlDepart.comboBoxDepartamento();
+			for (int i = 0; i< masterDepartamento.size(); i++) {
+				cmbDepartamento.addItem(masterDepartamento.get(i).getNome());
 			}
 			filialControl = new FilialController();
-			  String [] master = filialControl.comboBoxFilial();
-			  for (int i = 0; i < master.length; i++) {
+			List<Filial> master = filialControl.comboBoxFilial();
+			  for (int i = 0; i < master.size(); i++) {
 				  
-				  cmbFilial.addItem(master[i]);
+				  cmbFilial.addItem(master.get(i).getNome());
 			  }
 		}
 		catch (Exception e) {

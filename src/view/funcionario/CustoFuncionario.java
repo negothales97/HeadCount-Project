@@ -87,9 +87,9 @@ public class CustoFuncionario extends JFrame implements ActionListener {
 		cmbFuncionario.addItem("SELECIONE....");
 		try {
 			control = new FuncionarioController();
-			String [] master = control.comboBoxFuncionario();
-			for (int i = 0; i< master.length; i++) {
-				cmbFuncionario.addItem(master[i]);
+			List<Funcionario> master= control.comboBoxFuncionario();
+			for (int i = 0; i< master.size(); i++) {
+				cmbFuncionario.addItem(master.get(i).getNome());
 			}
 		}
 		catch (Exception e) {
