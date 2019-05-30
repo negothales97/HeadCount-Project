@@ -19,21 +19,16 @@ public class HeadCount implements ActionListener {
 	private JFrame janela;
 	private JMenuBar menuBar;
 	private JMenu crudMenu;
-	private JMenu relMenu;
-	private JMenu optionMenu;
+	private JMenu custoMenu;
 
 	private JMenuItem cadFil;
 	private JMenuItem cadDeprt;
 	private JMenuItem cadFunc;
 	private JMenuItem cadDep;
 	private JMenuItem cadCar;
-
-	private JMenuItem relCustoFunc;
-	private JMenuItem relCustoDeprt;
-	private JMenuItem relCustoEmp;
 	
-	private JMenuItem optionConfirmaRCD;
-	private JMenuItem optionRegCustoDepartamento;
+	private JMenuItem custoDepart;
+	private JMenuItem custoFunc;
 	
 	private FilialController controlFil;
 	private FuncionarioController controlFun;
@@ -52,12 +47,10 @@ public class HeadCount implements ActionListener {
 
 		janela.setJMenuBar(menuBar);
 		crudMenu 		= new JMenu("Cadastro");
-		relMenu 		= new JMenu("Relatorio");
-		optionMenu 		= new JMenu("Relacionamentos");
+		custoMenu 		= new JMenu("Incluir custos");
 
 		menuBar.add(crudMenu);
-		menuBar.add(relMenu);
-		menuBar.add(optionMenu);
+		menuBar.add(custoMenu);
 
 		cadFil 			= new JMenuItem("Filial");
 		cadDeprt 		= new JMenuItem("Departamento");
@@ -65,38 +58,28 @@ public class HeadCount implements ActionListener {
 		cadDep 			= new JMenuItem("Dependente");
 		cadCar 			= new JMenuItem("Cargo");
 		
-		relCustoFunc 	= new JMenuItem("Custo p/ Funcionario");
-		relCustoDeprt 	= new JMenuItem("Custo p/ Departamento");
-		relCustoEmp 	= new JMenuItem("Custo p/ Empresa");
+		custoFunc 		= new JMenuItem("Custo p/ Funcionario");
+		custoDepart 	= new JMenuItem("Custo p/ Departamento");
 		
-		optionConfirmaRCD = new JMenuItem("teste");
-		optionRegCustoDepartamento = new JMenuItem("Custo de Departamento");
-
-		relCustoFunc = new JMenuItem("Custo p/ Funcionario");
-		relCustoDeprt = new JMenuItem("Custo p/ Departamento");
-		relCustoEmp = new JMenuItem("Custo p/ Empresa");
-
 		crudMenu.add(cadFil);
 		crudMenu.add(cadFunc);
 		crudMenu.add(cadDeprt);
 		crudMenu.add(cadDep);
 		crudMenu.add(cadCar);
 
-		relMenu.add(relCustoEmp);
-		relMenu.add(relCustoDeprt);
-		relMenu.add(relCustoFunc);
+		custoMenu.add(custoFunc);
+		custoMenu.add(custoDepart);
 		
-		optionMenu.add(optionConfirmaRCD);
-		optionMenu.add(optionRegCustoDepartamento);
+		
 		
 		cadFil.addActionListener(this);
 		cadDeprt.addActionListener(this);
 		cadFunc.addActionListener(this);
 		cadDep.addActionListener(this);
 		cadCar.addActionListener(this);
+		custoFunc.addActionListener(this);
+		custoDepart.addActionListener(this);
 		
-		optionConfirmaRCD.addActionListener(this);
-		optionRegCustoDepartamento.addActionListener(this);
 		janela.setSize(600, 400);
 		janela.setVisible(true);
 		janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -140,7 +123,10 @@ public class HeadCount implements ActionListener {
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
-		}else if(fonte == optionRegCustoDepartamento) {
+		}else if(fonte == custoFunc) {
+			controlFun = new FuncionarioController();
+			controlFun.registraCustoFuncionario();
+		}else if(fonte == custoDepart){
 			controlDeprt = new DepartamentoController();
 			controlDeprt.registraCustoDepartamento();
 		}
