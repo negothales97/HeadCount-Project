@@ -38,7 +38,7 @@ public class ListaFuncionario extends JFrame implements ActionListener {
 	private Container container;
 	private BorderLayout boderLayout;
 	private GridBagLayout gbLayout;
-	
+
 	private JButton btnNovo;
 	private JButton btnSair;
 	private JButton btnRemover;

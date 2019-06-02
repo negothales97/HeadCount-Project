@@ -40,25 +40,25 @@ public class CadCargo extends JFrame implements ActionListener {
 	private JTextField txtCargo;
 
 	public CadCargo() {
-		janela 			= new JFrame();
-		contentPanel 	= new JPanel();
-		panelGridTop 	= new JPanel();
+		janela = new JFrame();
+		contentPanel = new JPanel();
+		panelGridTop = new JPanel();
 		panelGridBottom = new JPanel();
 
-		boderLayout 	= new BorderLayout();
-		gbLayout 		= new GridBagLayout();
+		boderLayout = new BorderLayout();
+		gbLayout = new GridBagLayout();
 
 		panelGridTop.setLayout(gbLayout);
 		panelGridBottom.setLayout(gbLayout);
 		contentPanel.setLayout(boderLayout);
 
-		btnSalvar 		= new JButton("Salvar");
-		btnVoltar 		= new JButton("Voltar");
+		btnSalvar = new JButton("Salvar");
+		btnVoltar = new JButton("Voltar");
 
-		lblCargo 		= new JLabel("Cargo");
+		lblCargo = new JLabel("Cargo");
 
-		txtCargo 		= new JTextField(25);
-		
+		txtCargo = new JTextField(25);
+
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets(5, 5, 5, 5);
 

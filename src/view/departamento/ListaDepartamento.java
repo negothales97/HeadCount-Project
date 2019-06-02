@@ -5,7 +5,6 @@ import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -45,7 +44,7 @@ public class ListaDepartamento extends JFrame implements ActionListener {
 	private JScrollPane barraRolagem;
 
 	public ListaDepartamento() throws SQLException {
-		String[] colunas = { "ID", "Nome", "Centro de Custo", "Orçamento (R$)" };
+		String[] colunas = { "ID", "Nome", "Centro de Custo", "Orï¿½amento (R$)" };
 		DepartamentoDAO dao = new DepartamentoDAO();
 
 		List<Departamento> departamentos = dao.read();
@@ -114,7 +113,7 @@ public class ListaDepartamento extends JFrame implements ActionListener {
 
 		}
 		if (fonte == btnRemover) {
-			int id = Integer.parseInt(JOptionPane.showInputDialog("Informe o código a ser removido"));
+			int id = Integer.parseInt(JOptionPane.showInputDialog("Informe o cï¿½digo a ser removido"));
 			try {
 				control.deletaDepartamento(id);
 			} catch (SQLException e1) {

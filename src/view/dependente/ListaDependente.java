@@ -32,14 +32,12 @@ public class ListaDependente extends JFrame implements ActionListener {
 	private Container container;
 	private BorderLayout boderLayout;
 	private GridBagLayout gbLayout;
-	
+
 	private JButton btnNovo;
 	private JButton btnSair;
 	private JButton btnRemover;
 
 	private JTable tblDependente;
-
-	private JScrollPane barraRolagem;
 
 	public ListaDependente() throws SQLException {
 		String[] colunas = { "Codigo", "Nome", "CPF", "Funcionario" };

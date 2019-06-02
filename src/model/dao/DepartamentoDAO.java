@@ -10,6 +10,7 @@ import java.util.List;
 import javax.xml.crypto.Data;
 
 import model.connection.Database;
+import model.vo.CustoDepartamento;
 import model.vo.Departamento;
 import model.vo.Filial;
 
@@ -62,6 +63,29 @@ public class DepartamentoDAO {
 		return departamentos;
 	}
 	
+	public List<CustoDepartamento> readCustoDep() throws SQLException{
+		List<CustoDepartamento> custosDepartamento = new ArrayList<>();
+		try (Connection con = Database.getConnection()){
+			String sql = "SELECT * FROM CUSTO_DEPARTAMENTO";
+			try (PreparedStatement stmt = con.prepareStatement(sql)){
+				stmt.execute();
+				ResultSet rs = stmt.getResultSet();
+				while (rs.next()) {
+					int id = rs.getInt("id");
+					int filial_id = rs.getInt("filial_id");
+					int departamento_id = rs.getInt("departamento_id");
+					String observacao = rs.getString("observacao");
+					double custo = rs.getDouble("custo");
+					
+					CustoDepartamento custoDep = new CustoDepartamento(id, filial_id, departamento_id, observacao, custo);
+					custosDepartamento.add(custoDep);
+					
+				}
+			}
+		}
+		return custosDepartamento;
+	}
+	
 	public void update(Departamento departamento) throws SQLException {
 		try (Connection con = Database.getConnection()) {
 			String sql = "UPDATE DEPARTAMENTO SET nome=?, centrocusto=?, orcamento=? WHERE id=?";
@@ -76,6 +100,8 @@ public class DepartamentoDAO {
 			}
 		}
 	}
+	
+	
 	
 	public void delete(int id) throws SQLException {
 		try (Connection con = Database.getConnection()) {

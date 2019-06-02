@@ -46,21 +46,21 @@ public class HeadCount implements ActionListener {
 		menuBar = new JMenuBar();
 
 		janela.setJMenuBar(menuBar);
-		crudMenu 		= new JMenu("Cadastro");
-		custoMenu 		= new JMenu("Incluir custos");
+		crudMenu = new JMenu("Cadastro");
+		custoMenu = new JMenu("Incluir custos");
 
 		menuBar.add(crudMenu);
 		menuBar.add(custoMenu);
 
-		cadFil 			= new JMenuItem("Filial");
-		cadDeprt 		= new JMenuItem("Departamento");
-		cadFunc 		= new JMenuItem("Funcionario");
-		cadDep 			= new JMenuItem("Dependente");
-		cadCar 			= new JMenuItem("Cargo");
-		
-		custoFunc 		= new JMenuItem("Custo p/ Funcionario");
-		custoDepart 	= new JMenuItem("Custo p/ Departamento");
-		
+		cadFil = new JMenuItem("Filial");
+		cadDeprt = new JMenuItem("Departamento");
+		cadFunc = new JMenuItem("Funcionario");
+		cadDep = new JMenuItem("Dependente");
+		cadCar = new JMenuItem("Cargo");
+
+		custoFunc = new JMenuItem("Custo p/ Funcionario");
+		custoDepart = new JMenuItem("Custo p/ Departamento");
+
 		crudMenu.add(cadFil);
 		crudMenu.add(cadFunc);
 		crudMenu.add(cadDeprt);
@@ -69,9 +69,7 @@ public class HeadCount implements ActionListener {
 
 		custoMenu.add(custoFunc);
 		custoMenu.add(custoDepart);
-		
-		
-		
+
 		cadFil.addActionListener(this);
 		cadDeprt.addActionListener(this);
 		cadFunc.addActionListener(this);
@@ -79,7 +77,7 @@ public class HeadCount implements ActionListener {
 		cadCar.addActionListener(this);
 		custoFunc.addActionListener(this);
 		custoDepart.addActionListener(this);
-		
+
 		janela.setSize(600, 400);
 		janela.setVisible(true);
 		janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -123,10 +121,10 @@ public class HeadCount implements ActionListener {
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
-		}else if(fonte == custoFunc) {
+		} else if (fonte == custoFunc) {
 			controlFun = new FuncionarioController();
 			controlFun.registraCustoFuncionario();
-		}else if(fonte == custoDepart){
+		} else if (fonte == custoDepart) {
 			controlDeprt = new DepartamentoController();
 			controlDeprt.registraCustoDepartamento();
 		}

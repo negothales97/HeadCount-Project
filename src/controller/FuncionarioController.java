@@ -6,14 +6,14 @@ import java.util.List;
 import model.dao.FuncionarioDAO;
 import model.vo.Funcionario;
 import view.funcionario.CadFuncionario;
-import view.funcionario.CustoFuncionario;
+import view.funcionario.CustoFuncionarioView;
 import view.funcionario.ListaFuncionario;
 
 public class FuncionarioController {
 	private ListaFuncionario listaFuncionario;
 	private CadFuncionario cadFuncionario;
 	private FuncionarioDAO dao;
-	private CustoFuncionario custoFuncionario;
+	private CustoFuncionarioView custoFuncionario;
 	
 	public FuncionarioController() {
 		dao = new FuncionarioDAO();
@@ -36,13 +36,13 @@ public class FuncionarioController {
 	
 	public void registraCustoFuncionario() {
 		try {
-			custoFuncionario = new CustoFuncionario();
+			custoFuncionario = new CustoFuncionarioView();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 	public List<Funcionario> comboBoxFuncionario() throws SQLException {
-		String[] colunas = { "ID", "Nome", "Centro de Custo", "Orçamento (R$)" };
+		String[] colunas = { "ID", "Nome", "Centro de Custo", "Orï¿½amento (R$)" };
 		dao = new FuncionarioDAO();
 
 		List<Funcionario> funcionarios = dao.read();

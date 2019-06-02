@@ -32,15 +32,13 @@ public class ListaFilial extends JFrame implements ActionListener {
 	private Container container;
 	private BorderLayout boderLayout;
 	private GridBagLayout gbLayout;
-	
+
 	private JButton btnNovo;
 	private JButton btnSair;
 	private JButton btnEditar;
 	private JButton btnRemover;
 
 	private JTable tblFilial;
-
-	private JScrollPane barraRolagem;
 
 	public ListaFilial() throws SQLException {
 		String[] colunas = { "Codigo", "Nome", "CNPJ", "Insc. Estadual" };
@@ -116,14 +114,14 @@ public class ListaFilial extends JFrame implements ActionListener {
 
 		}
 		if(fonte== btnEditar) {
-			int id = Integer.parseInt(JOptionPane.showInputDialog("Informe o código a ser editado"));
+			int id = Integer.parseInt(JOptionPane.showInputDialog("Informe o cï¿½digo a ser editado"));
 			control.editaFilial(id);
 			janela.dispose();
 			
 		}
 		if (fonte == btnRemover) {
 
-			int id = Integer.parseInt(JOptionPane.showInputDialog("Informe o código a ser removido"));
+			int id = Integer.parseInt(JOptionPane.showInputDialog("Informe o cï¿½digo a ser removido"));
 			try {
 				control.deletaFilial(id);
 			} catch (SQLException e1) {
