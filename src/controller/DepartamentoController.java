@@ -7,13 +7,13 @@ import java.util.List;
 import model.dao.DepartamentoDAO;
 import model.vo.Departamento;
 import view.departamento.CadDepartamento;
-import view.departamento.CustoDepartamento;
+import view.departamento.CustoDepartamentoView;
 import view.departamento.ListaDepartamento;
 
 public class DepartamentoController {
 	private ListaDepartamento listaDepartamento = null;
 	private CadDepartamento cadDepartamento 	= null;
-	private CustoDepartamento custoDepartamento = null;
+	private CustoDepartamentoView custoDepartamento = null;
 	private DepartamentoDAO dao 				= null;
 	
 
@@ -41,7 +41,7 @@ public class DepartamentoController {
 
 	public void registraCustoDepartamento() {
 		try {
-			custoDepartamento = new CustoDepartamento();
+			custoDepartamento = new CustoDepartamentoView();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -25,7 +25,7 @@ import controller.FilialController;
 import model.vo.Departamento;
 import model.vo.Filial;
 
-public class CustoDepartamento extends JFrame implements ActionListener {
+public class CustoDepartamentoView extends JFrame implements ActionListener {
 	
 	private JFrame janela;
 	private JPanel contentPanel;
@@ -54,7 +54,7 @@ public class CustoDepartamento extends JFrame implements ActionListener {
 	private DepartamentoController controlDepart;
 	private FilialController filialControl;
 
-	public CustoDepartamento() throws SQLException {
+	public CustoDepartamentoView() throws SQLException {
 		String[] colunas = { "Filial", "Departamento", "Observação", "Custo (R$)" };
 		janela 			= new JFrame();
 		contentPanel 	= new JPanel();

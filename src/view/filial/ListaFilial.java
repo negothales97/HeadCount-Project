@@ -66,7 +66,6 @@ public class ListaFilial extends JFrame implements ActionListener {
 		contentPanel.setLayout(boderLayout);
 		container.setLayout(new FlowLayout());
 
-		barraRolagem = new JScrollPane();
 
 		btnNovo = new JButton("Novo");
 		btnRemover = new JButton("Remover");

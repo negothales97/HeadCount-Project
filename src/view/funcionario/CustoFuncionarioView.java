@@ -25,6 +25,7 @@ import controller.FuncionarioController;
 import controller.FilialController;
 import model.dao.FuncionarioDAO;
 import model.dao.FilialDAO;
+import model.vo.CustoFuncionario;
 import model.vo.Funcionario;
 
 public class CustoFuncionarioView extends JFrame implements ActionListener {
@@ -51,17 +52,17 @@ public class CustoFuncionarioView extends JFrame implements ActionListener {
 	private JScrollPane barraRolagem;
 
 	public CustoFuncionarioView() throws SQLException {
-		String[] colunas = { "ID", "Nome", "Centro de Custo", "Orçamento (R$)" };
+		String[] colunas = { "ID", "Nome", "Observação", "Custo" };
 		FuncionarioDAO dao = new FuncionarioDAO();
 
-		List<Funcionario> funcionarios = dao.read();
-		Object[][] dados = new Object[funcionarios.size()][4];
-		for (int i = 0; i < funcionarios.size(); i++) {
-			Funcionario funcionario = funcionarios.get(i);
-			dados[i][0] = funcionario.getMatricula();
-			dados[i][1] = funcionario.getNome();
-			dados[i][2] = funcionario.getCpf();
-			dados[i][3] = funcionario.getDatanasc();
+		List<CustoFuncionario> custos = dao.readCustoFunc();
+		Object[][] dados = new Object[custos.size()][4];
+		for (int i = 0; i < custos.size(); i++) {
+			CustoFuncionario custo = custos.get(i);
+			dados[i][0] = custo.getId();
+			dados[i][1] = custo.getFuncionario_id();
+			dados[i][2] = custo.getObservacao();
+			dados[i][3] = custo.getCusto();
 		}
 
 		janela = new JFrame();
@@ -76,7 +77,7 @@ public class CustoFuncionarioView extends JFrame implements ActionListener {
 		contentPanel.setLayout(boderLayout);
 		container.setLayout(new FlowLayout());
 
-		barraRolagem = new JScrollPane();
+		
 		
 		lblFuncionario = new JLabel("Funcionario");
 		lblObs = new JLabel("Observcao");
@@ -105,8 +106,7 @@ public class CustoFuncionarioView extends JFrame implements ActionListener {
 
 
 		tblFuncionario = new JTable(dados, colunas);
-		tblFuncionario.setSize(container.getWidth(), container.getHeight());
-
+		barraRolagem = new JScrollPane(tblFuncionario);
 		GridBagConstraints gbc = new GridBagConstraints();
 
 		gbc.insets = new Insets(5, 5, 5, 5);
@@ -119,7 +119,7 @@ public class CustoFuncionarioView extends JFrame implements ActionListener {
 		panelGrid.add(txtCusto, gbc);
 		panelGrid.add(btnSalvar, gbc);
 		panelGrid.add(btnSair, gbc);
-		container.add(tblFuncionario, gbc);
+		container.add(barraRolagem, gbc);
 		
 		contentPanel.add(BorderLayout.NORTH, panelGrid);
 		contentPanel.add(BorderLayout.CENTER, container);

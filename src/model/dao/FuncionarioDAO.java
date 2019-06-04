@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.connection.Database;
+import model.vo.CustoDepartamento;
+import model.vo.CustoFuncionario;
 import model.vo.Filial;
 import model.vo.Funcionario;
 
@@ -91,5 +93,26 @@ public class FuncionarioDAO {
 			}
 		}
 		
+	}
+	public List<CustoFuncionario> readCustoFunc() throws SQLException{
+		List<CustoFuncionario> custoFuncs = new ArrayList<>();
+		try (Connection con = Database.getConnection()){
+			String sql = "SELECT * FROM CUSTO_FUNCIONARIO";
+			try (PreparedStatement stmt = con.prepareStatement(sql)){
+				stmt.execute();
+				ResultSet rs = stmt.getResultSet();
+				while (rs.next()) {
+					int id = rs.getInt("id");
+					int funcionario_id = rs.getInt("funcionario_id");
+					String observacao = rs.getString("observacao");
+					double custo = rs.getDouble("custo");
+					
+					CustoFuncionario custoFunc = new CustoFuncionario(id, funcionario_id, observacao, custo);
+					custoFuncs.add(custoFunc);
+					
+				}
+			}
+		}
+		return custoFuncs;
 	}
 }
