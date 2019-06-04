@@ -27,7 +27,7 @@ import model.dao.FuncionarioDAO;
 import model.dao.FilialDAO;
 import model.vo.Funcionario;
 
-public class CustoFuncionario extends JFrame implements ActionListener {
+public class CustoFuncionarioView extends JFrame implements ActionListener {
 	private FuncionarioController control;
 	private FuncionarioDAO dao;
 	private JFrame janela;
@@ -50,7 +50,7 @@ public class CustoFuncionario extends JFrame implements ActionListener {
 
 	private JScrollPane barraRolagem;
 
-	public CustoFuncionario() throws SQLException {
+	public CustoFuncionarioView() throws SQLException {
 		String[] colunas = { "ID", "Nome", "Centro de Custo", "Orçamento (R$)" };
 		FuncionarioDAO dao = new FuncionarioDAO();
 
