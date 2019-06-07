@@ -7,44 +7,76 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.xml.crypto.Data;
 
 import model.connection.Database;
+import model.vo.Cargo;
 import model.vo.CustoDepartamento;
 import model.vo.Departamento;
 import model.vo.Filial;
 
 
 public class DepartamentoDAO {
-	private int id;
+	private final String INSERT		= "INSERT INTO DEPARTAMENTO (nome, centrocusto, orcamento) values (?, ?, ?)";
+	private final String UPDATE		= "UPDATE DEPARTAMENTO SET nome=?, centrocusto=?, orcamento=? WHERE id=?";
+	private final String DELETE 	= "DELETE FROM DEPARTAMENTO WHERE id=?";
+	private final String LIST 		= "SELECT * FROM DEPARTAMENTO";
+	private final String LISTBYID 	= "SELECT * FROM DEPARTAMENTO WHERE ID = ?";
 
 	public void create(Departamento departamento) throws SQLException {
 		try (Connection con = Database.getConnection()) {
 
-			String sql = "INSERT INTO DEPARTAMENTO (nome, centrocusto, orcamento) values (?, ?, ?)";
-			try (PreparedStatement stmt = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
-
+			try (PreparedStatement stmt = con.prepareStatement(INSERT)) {
 				stmt.setString(1, departamento.getNome());
 				stmt.setString(2, departamento.getCentroCusto());
 				stmt.setDouble(3, departamento.getOrcamento());
-				
+				JOptionPane.showMessageDialog(null, "Departamento criado com sucesso");
+			}catch (SQLException e) {
+	    		JOptionPane.showMessageDialog(null, "Erro ao criar departamento no banco de dados: " +e.getMessage());
+			}	
+		}
+	}
+	
+	public void update(Departamento departamento) throws SQLException {
+		try (Connection con = Database.getConnection()) {
+			String sql = "UPDATE DEPARTAMENTO SET nome=?, centrocusto=?, orcamento=? WHERE id=?";
+
+			try (PreparedStatement stmt = con.prepareStatement(sql)) {
+				stmt.setString(1, departamento.getNome());
+				stmt.setString(2, departamento.getCentroCusto());
+				stmt.setDouble(3, departamento.getOrcamento());
+				stmt.setInt(4, departamento.getId());
+
 				stmt.execute();
-				ResultSet resultSet = stmt.getGeneratedKeys();
-		        while (resultSet.next()) {
-		            id = resultSet.getInt("id");
-		            
-		        }
-		        resultSet.close();
+				JOptionPane.showMessageDialog(null, "Departamento editado com sucesso");
+			}catch (SQLException e) {
+	    		JOptionPane.showMessageDialog(null, "Erro ao editar departamento no banco de dados: " +e.getMessage());
+			}	
+		}
+	}
+	
+	
+	
+	public void delete(int id) throws SQLException {
+		try (Connection con = Database.getConnection()) {
+			String sql = "DELETE FROM DEPARTAMENTO WHERE id=?";
+
+			try (PreparedStatement stmt = con.prepareStatement(sql)) {
+				stmt.setInt(1, id);
+				stmt.execute();
+				JOptionPane.showMessageDialog(null, "Departamento removido com sucesso");
+			}catch (SQLException e) {
+	    		JOptionPane.showMessageDialog(null, "Erro ao deletar departamento no banco de dados: " +e.getMessage());
 			}	
 		}
 	}
 
 	
-	public List<Departamento> read() throws SQLException {
+	public List<Departamento> getDepartamentos() throws SQLException {
 		List<Departamento> departamentos = new ArrayList<>();
 		try (Connection con = Database.getConnection()) {
-			String sql = "SELECT * FROM DEPARTAMENTO";
-			try (PreparedStatement stmt = con.prepareStatement(sql)) {
+			try (PreparedStatement stmt = con.prepareStatement(LIST)) {
 				stmt.execute();
 				ResultSet rs = stmt.getResultSet();
 				while (rs.next()) {
@@ -61,6 +93,23 @@ public class DepartamentoDAO {
 
 		}
 		return departamentos;
+	}
+	public Departamento getDepartamento(int id) throws SQLException {
+		try (Connection con = Database.getConnection()){
+			try(PreparedStatement stmt = con.prepareStatement(LISTBYID)){
+				stmt.setInt(1, id);
+				stmt.execute();
+				ResultSet rs = stmt.getResultSet();
+				rs.next();
+				int idDepartamento = rs.getInt("id");
+				String nome = rs.getString("nome");
+				String centrocusto = rs.getString("centrocusto");
+				double orcamento= rs.getDouble("orcamento");
+				Departamento departamento = new Departamento(nome, centrocusto, orcamento);
+				departamento.setId(idDepartamento);
+				return departamento;
+			}
+		}
 	}
 	
 	public List<CustoDepartamento> readCustoDep() throws SQLException{
@@ -86,33 +135,7 @@ public class DepartamentoDAO {
 		return custosDepartamento;
 	}
 	
-	public void update(Departamento departamento) throws SQLException {
-		try (Connection con = Database.getConnection()) {
-			String sql = "UPDATE DEPARTAMENTO SET nome=?, centrocusto=?, orcamento=? WHERE id=?";
-
-			try (PreparedStatement stmt = con.prepareStatement(sql)) {
-				stmt.setString(1, departamento.getNome());
-				stmt.setString(2, departamento.getCentroCusto());
-				stmt.setDouble(3, departamento.getOrcamento());
-				stmt.setInt(4, departamento.getId());
-
-				stmt.execute();
-			}
-		}
-	}
 	
-	
-	
-	public void delete(int id) throws SQLException {
-		try (Connection con = Database.getConnection()) {
-			String sql = "DELETE FROM DEPARTAMENTO WHERE id=?";
-
-			try (PreparedStatement stmt = con.prepareStatement(sql)) {
-				stmt.setInt(1, id);
-				stmt.execute();
-			}
-		}
-	}
 	
 	public void custoDep(int filial_id, int departamento_id, String obs, double custo) throws SQLException{
 		try(Connection con = Database.getConnection()){
@@ -127,4 +150,7 @@ public class DepartamentoDAO {
 			}
 		}
 	}
+
+
+	
 }

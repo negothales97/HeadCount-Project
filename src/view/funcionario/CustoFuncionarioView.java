@@ -30,7 +30,6 @@ import model.vo.Funcionario;
 
 public class CustoFuncionarioView extends JFrame implements ActionListener {
 	private FuncionarioController control;
-	private FuncionarioDAO dao;
 	private JFrame janela;
 	private JPanel contentPanel;
 	private JPanel panelGrid;
@@ -88,7 +87,7 @@ public class CustoFuncionarioView extends JFrame implements ActionListener {
 		cmbFuncionario.addItem("SELECIONE....");
 		try {
 			control = new FuncionarioController();
-			List<Funcionario> master= control.comboBoxFuncionario();
+			List<Funcionario> master= control.getFuncionarios();
 			for (int i = 0; i< master.size(); i++) {
 				cmbFuncionario.addItem(master.get(i).getNome());
 			}

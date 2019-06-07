@@ -140,13 +140,9 @@ public class CadFilial extends JFrame implements ActionListener {
 
 		if (fonte == btnVoltar) {
 			janela.dispose();
-			try {
-				control.listaFilial();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-
+			control.listaFilial();
 		}
+
 		if (fonte == btnSalvar) {
 			filial = new Filial(txtNome.getText(), txtCNPJ.getText(), txtIE.getText());
 			Endereco endereco = new Endereco(txtRua.getText(), txtNumero.getText(), txtBairro.getText());

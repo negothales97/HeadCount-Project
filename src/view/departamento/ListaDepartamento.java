@@ -27,7 +27,6 @@ import model.vo.Departamento;
 
 public class ListaDepartamento extends JFrame implements ActionListener {
 	private DepartamentoController control;
-	private DepartamentoDAO dao;
 	private JFrame janela;
 	private JPanel contentPanel;
 	private JPanel panelGrid;
@@ -36,6 +35,7 @@ public class ListaDepartamento extends JFrame implements ActionListener {
 	private GridBagLayout gbLayout;
 
 	private JButton btnNovo;
+	private JButton btnEditar;
 	private JButton btnSair;
 	private JButton btnRemover;
 
@@ -44,10 +44,9 @@ public class ListaDepartamento extends JFrame implements ActionListener {
 	private JScrollPane barraRolagem;
 
 	public ListaDepartamento() throws SQLException {
-		String[] colunas = { "ID", "Nome", "Centro de Custo", "Or�amento (R$)" };
-		DepartamentoDAO dao = new DepartamentoDAO();
-
-		List<Departamento> departamentos = dao.read();
+		String[] colunas = { "ID", "Nome", "Centro de Custo", "Orcamento (R$)" };
+		control = new DepartamentoController();
+		List<Departamento> departamentos = control.getDepartamentos();
 		Object[][] dados = new Object[departamentos.size()][4];
 		for (int i = 0; i < departamentos.size(); i++) {
 			Departamento departamento = departamentos.get(i);
@@ -72,25 +71,28 @@ public class ListaDepartamento extends JFrame implements ActionListener {
 		barraRolagem = new JScrollPane();
 
 		btnNovo = new JButton("Novo");
+		btnEditar = new JButton("Editar");
 		btnRemover = new JButton("Remover");
 		btnSair = new JButton("Sair");
 
 		tblDepartamento = new JTable(dados, colunas);
-		tblDepartamento.setSize(container.getWidth(), container.getHeight());
+		barraRolagem = new JScrollPane(tblDepartamento);
 
 		GridBagConstraints gbc = new GridBagConstraints();
 
 		gbc.insets = new Insets(5, 5, 5, 5);
 
 		panelGrid.add(btnNovo, gbc);
-		panelGrid.add(btnSair, gbc);
+		panelGrid.add(btnEditar, gbc);
 		panelGrid.add(btnRemover, gbc);
-		container.add(tblDepartamento, gbc);
+		panelGrid.add(btnSair, gbc);
+		container.add(barraRolagem, gbc);
 
 		contentPanel.add(BorderLayout.NORTH, panelGrid);
 		contentPanel.add(BorderLayout.CENTER, container);
 
 		btnNovo.addActionListener(this);
+		btnEditar.addActionListener(this);
 		btnRemover.addActionListener(this);
 		btnSair.addActionListener(this);
 
@@ -112,15 +114,18 @@ public class ListaDepartamento extends JFrame implements ActionListener {
 			janela.dispose();
 
 		}
+		if(fonte == btnEditar) {
+			int id = Integer.parseInt(JOptionPane.showInputDialog("Informe o codigo a ser editado"));
+			control.editaDepartamento(id);
+		}
 		if (fonte == btnRemover) {
-			int id = Integer.parseInt(JOptionPane.showInputDialog("Informe o c�digo a ser removido"));
+			int id = Integer.parseInt(JOptionPane.showInputDialog("Informe o codigo a ser removido"));
 			try {
 				control.deletaDepartamento(id);
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
 			janela.dispose();
-			JOptionPane.showMessageDialog(null, "Departamento removido com sucesso");
 
 		}
 		if (fonte == btnSair) {

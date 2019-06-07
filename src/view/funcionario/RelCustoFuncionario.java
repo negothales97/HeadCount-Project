@@ -79,7 +79,7 @@ public class RelCustoFuncionario extends JFrame implements ActionListener {
 
 		try {
 			controlDepart = new DepartamentoController();
-			List<Departamento> masterDepartamento = controlDepart.comboBoxDepartamento();
+			List<Departamento> masterDepartamento = controlDepart.getDepartamentos();
 			for (int i = 0; i < masterDepartamento.size(); i++) {
 				cmbDepartamento.addItem(masterDepartamento.get(i).getNome());
 			}

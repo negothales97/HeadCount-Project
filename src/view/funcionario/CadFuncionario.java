@@ -115,7 +115,7 @@ public class CadFuncionario extends JFrame implements ActionListener {
 		JComboBox<String>comboBoxCargo = new JComboBox<String>();
 		try {
 				cargoController = new CargoController();
-				List<Cargo> masterCargo = cargoController.comboBoxCargo();
+				List<Cargo> masterCargo = cargoController.getCargos();
 				for(int i =0;i<masterCargo.size();i++) {
 					comboBoxCargo.addItem(masterCargo.get(i).getNome());
 				}
@@ -126,7 +126,7 @@ public class CadFuncionario extends JFrame implements ActionListener {
 		JComboBox<String>comboBoxDepartamento = new JComboBox<String>();
 		try {
 			departamentoController = new DepartamentoController();
-			List<Departamento> masterDepartamento =departamentoController.comboBoxDepartamento();
+			List<Departamento> masterDepartamento =departamentoController.getDepartamentos();
 			for (int i =0; i< masterDepartamento.size(); i++) {
 				comboBoxDepartamento.addItem(masterDepartamento.get(i).getNome());
 			}
@@ -135,14 +135,10 @@ public class CadFuncionario extends JFrame implements ActionListener {
 			e.printStackTrace();
 		}
 		JComboBox<String>comboBoxFilial = new JComboBox<String>();
-		  try { 
 			  filialControl = new FilialController();
 			  List<Filial> master =filialControl.comboBoxFilial();
 			  for (int i = 0; i < master.size(); i++) {
 			   comboBoxFilial.addItem(master.get(i).getNome());}
-			  }
-		  catch (SQLException e) { 
-		  e.printStackTrace(); }
 		 		
 
 	

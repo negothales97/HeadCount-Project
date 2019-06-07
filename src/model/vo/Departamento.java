@@ -33,7 +33,7 @@ public class Departamento {
 	public double getOrcamento() {
 		return orcamento;
 	}
-	public void setOrcamento(Float orcamento) {
+	public void setOrcamento(double orcamento) {
 		this.orcamento = orcamento;
 	}
 }

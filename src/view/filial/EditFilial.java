@@ -148,22 +148,17 @@ public class EditFilial extends JFrame implements ActionListener {
 
 		if (fonte == btnVoltar) {
 			janela.dispose();
-			try {
 				control.listaFilial();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
 		}
 		if (fonte == btnEditar) {
 			this.filial.setCnpj(txtCNPJ.getText());
 			this.filial.setNome(txtNome.getText());
 			this.filial.setInscEstadual(txtIE.getText());
 			Endereco endereco = new Endereco(txtRua.getText(), txtNumero.getText(), txtBairro.getText());
-			
 			this.filial.setEndereco(endereco);
-			control.updateFilial(filial);
+			control.updateFilial(this.filial);
 			janela.dispose();
-			JOptionPane.showMessageDialog(null, "Filial Editada com sucesso");
+			
 	}
 
 	}

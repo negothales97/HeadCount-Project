@@ -1,6 +1,7 @@
 package view.dependente;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -38,6 +39,7 @@ public class ListaDependente extends JFrame implements ActionListener {
 	private JButton btnRemover;
 
 	private JTable tblDependente;
+	private Component btnEditar;
 
 	public ListaDependente() throws SQLException {
 		String[] colunas = { "Codigo", "Nome", "CPF", "Funcionario" };
@@ -67,6 +69,7 @@ public class ListaDependente extends JFrame implements ActionListener {
 
 
 		btnNovo = new JButton("Novo");
+		btnEditar = new JButton("Editar");
 		btnRemover = new JButton("Remover");
 		btnSair = new JButton("Sair");
 
@@ -78,6 +81,7 @@ public class ListaDependente extends JFrame implements ActionListener {
 		gbc.insets = new Insets(5, 5, 5, 5);
 
 		panelGrid.add(btnNovo, gbc);
+		panelGrid.add(btnEditar, gbc);
 		panelGrid.add(btnSair, gbc);
 		panelGrid.add(btnRemover, gbc);
 		container.add(tblDependente, gbc);

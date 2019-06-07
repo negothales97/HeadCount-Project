@@ -54,7 +54,7 @@ public class ListaRelatorios extends JFrame implements ActionListener {
 		String[] colunas = { "Codigo", "Cargo" };
 		dao = new CargoDAO();
 
-		List<Cargo> filiais = dao.read();
+		List<Cargo> filiais = dao.getCargos();
 		Object[][] dados = new Object[filiais.size()][3];
 		for (int i = 0; i < filiais.size(); i++) {
 			Cargo cargo = filiais.get(i);
@@ -93,7 +93,7 @@ public class ListaRelatorios extends JFrame implements ActionListener {
 		cmbDepartamento.addItem("SELECIONE....");
 		try {
 			control = new DepartamentoController();
-			List<Departamento> master= control.comboBoxDepartamento();
+			List<Departamento> master= control.getDepartamentos();
 			for (int i = 0; i< master.size(); i++) {
 				cmbFilial.addItem(master.get(i).getNome());
 			}

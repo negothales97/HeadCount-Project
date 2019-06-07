@@ -88,11 +88,7 @@ public class HeadCount implements ActionListener {
 		Object fonte = e.getSource();
 		if (fonte == cadFil) {
 			controlFil = new FilialController();
-			try {
 				controlFil.listaFilial();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
 		} else if (fonte == cadFunc) {
 			controlFun = new FuncionarioController();
 			try {

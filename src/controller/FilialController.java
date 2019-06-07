@@ -10,17 +10,19 @@ import view.filial.EditFilial;
 import view.filial.ListaFilial;
 
 public class FilialController  {
-	private ListaFilial listaFilial = null;
-	private CadFilial cadFilial = null;
-	private EditFilial editFilial = null;
-	private FilialDAO dao = null; 
+	private ListaFilial listaFilial;
+	private CadFilial cadFilial;
+	private EditFilial editFilial;
+	private FilialDAO dao;
 	
 	public FilialController() {
 		dao = new FilialDAO();
 	}
-	public void listaFilial() throws SQLException {
+	public void listaFilial(){
 		listaFilial = new ListaFilial();
+		listaFilial.geraTela();
 	}
+	
 
 	public void novaFilial() {
 		cadFilial = new CadFilial();
@@ -58,20 +60,14 @@ public class FilialController  {
 		this.listaFilial();
 	}
 	
-	public List<Filial> comboBoxFilial() throws SQLException {
-		String[] colunas = { "Codigo", "Nome", "CNPJ", "Insc. Estadual" };
-
-		List<Filial> filiais = dao.read();
-		
-		Object[][] dados = new Object[filiais.size()][4];
-		for (int i = 0; i < filiais.size(); i++) {
-			Filial filial = filiais.get(i);
-			dados[i][0] = filial.getId();
-			dados[i][1] = filial.getNome();
-			dados[i][2] = filial.getCnpj();
-			dados[i][3] = filial.getInscEstadual();
-			
+	public List<Filial> comboBoxFilial(){
+		List<Filial> filiais = null;
+		try {
+			filiais = dao.getFiliais();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
+		
 		return filiais;
 	}
 		

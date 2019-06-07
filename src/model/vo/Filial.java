@@ -13,6 +13,13 @@ public class Filial {
 		this.InscEstadual = InscEstadual;
 	}
 	
+	public Filial(String nome, String cnpj, String InscEstadual, Endereco endereco) {
+		this.nome = nome;
+		this.cnpj = cnpj;
+		this.InscEstadual = InscEstadual;
+		this.endereco = endereco;
+	}
+
 	public int getId() {
 		return id;
 	}

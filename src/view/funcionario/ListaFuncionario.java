@@ -31,7 +31,6 @@ import model.vo.Funcionario;
 
 public class ListaFuncionario extends JFrame implements ActionListener {
 	private FuncionarioController control;
-	private DependenteDAO dao;
 	private JFrame janela;
 	private JPanel contentPanel;
 	private JPanel panelGrid;
@@ -40,20 +39,17 @@ public class ListaFuncionario extends JFrame implements ActionListener {
 	private GridBagLayout gbLayout;
 
 	private JButton btnNovo;
+	private JButton btnEditar;
 	private JButton btnSair;
 	private JButton btnRemover;
-	private JButton btnPesquisar;
-	private JTextField txtPesquisar;
 
 	private JTable tblFuncionario;
-
 	private JScrollPane barraRolagem;
 
 	public ListaFuncionario() throws SQLException {
 		String[] colunas = { "Matricula", "Nome", "CPF", "Data Nasc" };
-		FuncionarioDAO dao = new FuncionarioDAO();
-
-		List<Funcionario> funcionarios = dao.read();
+		control = new FuncionarioController();
+		List<Funcionario> funcionarios = control.getFuncionarios();
 		Object[][] dados = new Object[funcionarios.size()][4];
 		for (int i = 0; i < funcionarios.size(); i++) {
 			Funcionario funcionario = funcionarios.get(i);
@@ -78,25 +74,21 @@ public class ListaFuncionario extends JFrame implements ActionListener {
 		barraRolagem = new JScrollPane();
 
 		btnNovo = new JButton("Novo");
+		btnEditar = new JButton("Editar");
 		btnRemover = new JButton("Remover");
 		btnSair = new JButton("Sair");
-		btnPesquisar = new JButton("Pesquisar");
-
-		txtPesquisar = new JTextField(10);
 
 		tblFuncionario = new JTable(dados, colunas);
-		tblFuncionario.setSize(container.getWidth(), container.getHeight());
-		
+		barraRolagem = new JScrollPane(tblFuncionario);
 		GridBagConstraints gbc = new GridBagConstraints();
 
 		gbc.insets = new Insets(5, 5, 5, 5);
 
 		panelGrid.add(btnNovo, gbc);
-		panelGrid.add(btnSair, gbc);
+		panelGrid.add(btnEditar, gbc);
 		panelGrid.add(btnRemover, gbc);
-		panelGrid.add(txtPesquisar, gbc);
-		panelGrid.add(btnPesquisar, gbc);
-		container.add(tblFuncionario, gbc);
+		panelGrid.add(btnSair, gbc);
+		container.add(barraRolagem, gbc);
 
 		contentPanel.add(BorderLayout.NORTH, panelGrid);
 		contentPanel.add(BorderLayout.CENTER, container);
@@ -104,7 +96,7 @@ public class ListaFuncionario extends JFrame implements ActionListener {
 		btnNovo.addActionListener(this);
 		btnRemover.addActionListener(this);
 		btnSair.addActionListener(this);
-		btnPesquisar.addActionListener(this);
+		btnEditar.addActionListener(this);
 
 		janela.setContentPane(contentPanel);
 		janela.setTitle("Lista de Funcionarios");
@@ -133,13 +125,12 @@ public class ListaFuncionario extends JFrame implements ActionListener {
 				e1.printStackTrace();
 			}
 			janela.dispose();
-			JOptionPane.showMessageDialog(null, "Funcionario Removida com sucesso");
+			
 		}
 		if (fonte == btnSair) {
 			janela.dispose();
 		}
-		if (fonte == btnPesquisar) {
-			txtPesquisar.getText();
+		if (fonte == btnEditar) {
 		}
 
 	}

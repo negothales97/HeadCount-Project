@@ -32,6 +32,7 @@ public class FuncionarioController {
 
 	public void deletaFuncionario(int id) throws SQLException {
 		dao.delete(id);
+		this.listaFuncionario();
 	}
 	
 	public void registraCustoFuncionario() {
@@ -41,11 +42,11 @@ public class FuncionarioController {
 			e.printStackTrace();
 		}
 	}
-	public List<Funcionario> comboBoxFuncionario() throws SQLException {
+	public List<Funcionario> getFuncionarios() throws SQLException {
 		String[] colunas = { "ID", "Nome", "Centro de Custo", "Or�amento (R$)" };
 		dao = new FuncionarioDAO();
 
-		List<Funcionario> funcionarios = dao.read();
+		List<Funcionario> funcionarios = dao.getFuncionarios();
 		Object[][] dados = new Object[funcionarios.size()][4];
 		for (int i = 0; i < funcionarios.size(); i++) {
 			Funcionario funcionario = funcionarios.get(i);

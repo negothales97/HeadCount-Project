@@ -20,12 +20,10 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 
 import controller.CargoController;
-import model.dao.CargoDAO;
 import model.vo.Cargo;
 
 public class ListaCargo extends JFrame implements ActionListener {
 	private CargoController control;
-	private CargoDAO dao;
 	private JFrame janela;
 	private JPanel contentPanel;
 	private JPanel panelGrid;
@@ -36,17 +34,17 @@ public class ListaCargo extends JFrame implements ActionListener {
 	private JButton btnNovo;
 	private JButton btnSair;
 	private JButton btnRemover;
-	private JButton btnPesquisar;
-	private JTextField txtPesquisar;
+	private JButton btnEditar;
 
 	private JTable tblCargo;
+	private JScrollPane barraRolagem;
 
 
 	public ListaCargo() throws SQLException {
 		String[] colunas = { "Codigo", "Cargo" };
-		dao = new CargoDAO();
+		control = new CargoController();
 
-		List<Cargo> filiais = dao.read();
+		List<Cargo> filiais = control.getCargos();
 		Object[][] dados = new Object[filiais.size()][3];
 		for (int i = 0; i < filiais.size(); i++) {
 			Cargo cargo = filiais.get(i);
@@ -68,25 +66,23 @@ public class ListaCargo extends JFrame implements ActionListener {
 
 
 		btnNovo = new JButton("Novo");
+		btnEditar = new JButton("Editar");
 		btnRemover = new JButton("Remover");
 		btnSair = new JButton("Sair");
-		btnPesquisar = new JButton("Pesquisar");
-
-		txtPesquisar = new JTextField(10);
 
 		tblCargo = new JTable(dados, colunas);
-		tblCargo.setSize(container.getWidth(), container.getHeight());
+		barraRolagem = new JScrollPane(tblCargo);
 
 		GridBagConstraints gbc = new GridBagConstraints();
 
 		gbc.insets = new Insets(5, 5, 5, 5);
 
 		panelGrid.add(btnNovo, gbc);
-		panelGrid.add(btnSair, gbc);
+		panelGrid.add(btnEditar, gbc);
 		panelGrid.add(btnRemover, gbc);
-		panelGrid.add(txtPesquisar, gbc);
-		panelGrid.add(btnPesquisar, gbc);
-		container.add(tblCargo, gbc);
+		panelGrid.add(btnSair, gbc);
+		
+		container.add(barraRolagem, gbc);
 
 		contentPanel.add(BorderLayout.NORTH, panelGrid);
 		contentPanel.add(BorderLayout.CENTER, container);
@@ -94,7 +90,7 @@ public class ListaCargo extends JFrame implements ActionListener {
 		btnNovo.addActionListener(this);
 		btnRemover.addActionListener(this);
 		btnSair.addActionListener(this);
-		btnPesquisar.addActionListener(this);
+		btnEditar.addActionListener(this);
 
 		janela.setContentPane(contentPanel);
 		janela.setTitle("Lista de Cargos");
@@ -128,8 +124,10 @@ public class ListaCargo extends JFrame implements ActionListener {
 		if (fonte == btnSair) {
 			janela.dispose();
 		}
-		if (fonte == btnPesquisar) {
-			txtPesquisar.getText();
+		if (fonte == btnEditar) {
+			int id = Integer.parseInt(JOptionPane.showInputDialog("Informe o codigo a ser editado"));
+			control.editaCargo(id);
+			janela.dispose();
 		}
 
 	}
