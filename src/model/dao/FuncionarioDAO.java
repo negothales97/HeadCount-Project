@@ -17,19 +17,22 @@ import model.vo.Filial;
 import model.vo.Funcionario;
 
 public class FuncionarioDAO {
-	private final String INSERT	= "INSERT INTO Funcionario (nome,cpf,datanasc) values (?, ?, ?)";
-	private final String UPDATE	= "UPDATE FILIAL SET  matricula=?, nome=?, cpf=?, datanasc=? WHERE matricula=?";
+	private final String INSERT	= "INSERT INTO Funcionario (nome,cpf,datanasc, cargo_id, departamento_id, filial_id) values (?, ?, ?, ?, ?, ?)";
+	private final String UPDATE	= "UPDATE FUNCIONARIO SET   nome=?, cpf=?, datanasc=?,cargo_id=?,departamento_id=?,filial_id=? WHERE matricula=?";
 	private final String DELETE 		= "DELETE FROM FUNCIONARIO WHERE MATRICULA=?";
 	private final String LIST 			= "SELECT * FROM FUNCIONARIO";
 	private final String LISTBYID 		= "SELECT * FROM FUNCIONARIO WHERE MATRICULA = ?";
 
 
-	public void create(String nome,  String cpf, String datanasc) throws SQLException {
+	public void create(Funcionario funcionario) throws SQLException {
 		try (Connection con = Database.getConnection()) {
 			try (PreparedStatement stmt = con.prepareStatement(INSERT)) {
-				stmt.setString(1, nome);
-				stmt.setString(2, cpf);
-				stmt.setString(3, datanasc);
+				stmt.setString(1, funcionario.getNome());
+				stmt.setString(2, funcionario.getCpf());
+				stmt.setString(3, funcionario.getDatanasc());
+				stmt.setInt(4, funcionario.getCargo_id());
+				stmt.setInt(5, funcionario.getDepartamento_id());
+				stmt.setInt(6, funcionario.getFilial_id());
 				
 				stmt.execute();
 				JOptionPane.showMessageDialog(null, "Funcionario criado com sucesso");
@@ -41,12 +44,13 @@ public class FuncionarioDAO {
 	public void update(Funcionario funcionario) throws SQLException {
 		try (Connection con = Database.getConnection()) {
 			try (PreparedStatement stmt = con.prepareStatement(UPDATE)) {
-				stmt.setInt(1, funcionario.getMatricula());
-				stmt.setString(2, funcionario.getNome());
-				stmt.setString(3, funcionario.getCpf());
-				stmt.setString(4, funcionario.getDatanasc());
-				stmt.setInt(5, funcionario.getMatricula());
-
+				stmt.setString(1, funcionario.getNome());
+				stmt.setString(2, funcionario.getCpf());
+				stmt.setString(3, funcionario.getDatanasc());
+				stmt.setInt(4, funcionario.getCargo_id());
+				stmt.setInt(5, funcionario.getDepartamento_id());
+				stmt.setInt(6, funcionario.getFilial_id());
+				stmt.setInt(7, funcionario.getMatricula());
 				stmt.execute();
 				JOptionPane.showMessageDialog(null, "Funcionario editado com sucesso");
 			}catch (SQLException e) {
@@ -79,7 +83,10 @@ public class FuncionarioDAO {
 					String nome = rs.getString("nome");
 					String cpf = rs.getString("cpf");
 					String dataNasc = rs.getString("datanasc");
-					Funcionario funcionario = new Funcionario(matricula, nome, cpf, dataNasc);
+					int cargo_id = rs.getInt("cargo_id");
+					int departamento_id = rs.getInt("departamento_id");
+					int filial_id = rs.getInt("filial_id");
+					Funcionario funcionario = new Funcionario(matricula, nome, cpf, dataNasc, cargo_id, departamento_id, filial_id);
 
 					
 					funcionarios.add(funcionario);
@@ -102,8 +109,11 @@ public class FuncionarioDAO {
 				int matricula = rs.getInt("matricula");
 				String nome = rs.getString("nome");
 				String cpf = rs.getString("cpf");
-				String datanasc = rs.getString("datanasc");
-				funcionario = new Funcionario(matricula, nome, cpf, datanasc);
+				String dataNasc = rs.getString("datanasc");
+				int cargo_id = rs.getInt("cargo_id");
+				int departamento_id = rs.getInt("departamento_id");
+				int filial_id = rs.getInt("filial_id");
+				funcionario = new Funcionario(matricula, nome, cpf, dataNasc, cargo_id, departamento_id, filial_id);
 				
 			}catch (SQLException e) {
 	    		JOptionPane.showMessageDialog(null, "Erro ao buscar funcionario no banco de dados: " +e.getMessage());

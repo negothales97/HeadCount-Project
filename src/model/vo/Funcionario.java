@@ -1,23 +1,22 @@
 package model.vo;
 
 public class Funcionario {
+	int matricula;
 	String nome;
 	String cpf;
 	String datanasc;
-	String status;
 	int cargo_id;
-	int setor_id;
+	int departamento_id;
 	double salario;
 	int filial_id;
-	int matricula;
 	
-	public Funcionario(int matricula, String nome, String cpf, String datanasc) {
+	public Funcionario(int matricula, String nome, String cpf, String datanasc, int cargo_id, int departamento_id, int filial_id) {
 		this.nome = nome;
 		this.cpf = cpf;
 		this.datanasc = datanasc;
 		this.matricula = matricula;
 	}
-	public Funcionario( String nome, String cpf, String datanasc) {
+	public Funcionario( String nome, String cpf, String datanasc, int cargo_id, int departamento_id, int filial_id) {
 		this.nome = nome;
 		this.cpf = cpf;
 		this.datanasc = datanasc;
@@ -53,11 +52,11 @@ public class Funcionario {
 	public void setDatanasc(String datanasc) {
 		this.datanasc = datanasc;
 	}
-	public int getSetor_id() {
-		return setor_id;
+	public int getDepartamento_id() {
+		return departamento_id;
 	}
-	public void setSetor_id(int setor_id) {
-		this.setor_id = setor_id;
+	public void setDepartamento_id(int departamento_id) {
+		this.departamento_id = departamento_id;
 	}
 	public int getFilial_id() {
 		return filial_id;

@@ -4,9 +4,12 @@ import java.sql.SQLException;
 import java.util.List;
 
 import model.dao.FuncionarioDAO;
+import model.vo.Departamento;
 import model.vo.Funcionario;
+import view.departamento.EditDepartamento;
 import view.funcionario.CadFuncionario;
 import view.funcionario.CustoFuncionarioView;
+import view.funcionario.EditFuncionario;
 import view.funcionario.ListaFuncionario;
 
 public class FuncionarioController {
@@ -14,6 +17,7 @@ public class FuncionarioController {
 	private CadFuncionario cadFuncionario;
 	private FuncionarioDAO dao;
 	private CustoFuncionarioView custoFuncionario;
+	private EditFuncionario editFuncionario;
 	
 	public FuncionarioController() {
 		dao = new FuncionarioDAO();
@@ -27,7 +31,26 @@ public class FuncionarioController {
 	}
 	
 	public void criaFuncionario(Funcionario funcionario) throws SQLException {
-		dao.create(funcionario.getNome(), funcionario.getCpf(), funcionario.getDatanasc());
+		dao.create(funcionario);
+	}
+	public void editaFuncionario(int id) {
+		Funcionario funcionario;
+		try {
+			funcionario = dao.getFuncionario(id);
+			editFuncionario = new EditFuncionario(funcionario);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	public void updateFuncionario(Funcionario funcionario) {
+		try {
+			dao.update(funcionario);
+			this.listaFuncionario();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void deletaFuncionario(int id) throws SQLException {

@@ -1,7 +1,6 @@
 package view.funcionario;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -35,7 +34,7 @@ import model.vo.Endereco;
 import model.vo.Filial;
 import model.vo.Funcionario;
 
-public class CadFuncionario extends JFrame implements ActionListener {
+public class EditFuncionario extends JFrame implements ActionListener {
 	private JFrame janela;
 	private FuncionarioController control;
 	private Filial filial;
@@ -70,13 +69,14 @@ public class CadFuncionario extends JFrame implements ActionListener {
 	private JTextField txtNome;
 	private JTextField txtCPF;
 	private JTextField txtDataNasc;
+	private JTextField txtCargo;
 	private JTextField txtSalario;
 	private JTextField txtSetor;
-	private JComboBox<String> comboBoxCargo;
 	private JComboBox<String> comboBoxDepartamento;
+	private JComboBox<String> comboBoxCargo;
 	private JComboBox<String> comboBoxFilial;
 
-	public CadFuncionario() {
+	public EditFuncionario(Funcionario funcionario) {
 		janela = new JFrame();
 		contentPanel = new JPanel();
 		panelGridTop = new JPanel();
@@ -98,6 +98,7 @@ public class CadFuncionario extends JFrame implements ActionListener {
 		txtNome = new JTextField(30);
 		txtCPF = new JTextField(12);
 		txtDataNasc = new JTextField(8);
+		txtCargo = new JTextField(30);
 		txtSalario = new JTextField(20);
 		txtSetor = new JTextField(30);
 
@@ -141,6 +142,9 @@ public class CadFuncionario extends JFrame implements ActionListener {
 			  for (int i = 0; i < master.size(); i++) {
 			   comboBoxFilial.addItem(master.get(i).getNome());}
 		 		
+
+	
+
 		gbc.gridy = 1;
 		gbc.anchor = 13;
 		panelGridTop.add(lblNome, gbc);
@@ -226,12 +230,10 @@ public class CadFuncionario extends JFrame implements ActionListener {
 		if (fonte == btnSave) {
 			FuncionarioController col = new FuncionarioController();
 			Funcionario funcionario = new Funcionario(txtNome.getText(), txtCPF.getText(), txtDataNasc.getText(), comboBoxFilial.getSelectedIndex(),comboBoxDepartamento.getSelectedIndex(),comboBoxFilial.getSelectedIndex());
-			funcionario.setFilial_id(comboBoxFilial.getSelectedIndex());
-			funcionario.setCargo(comboBoxCargo.getSelectedIndex());
-			funcionario.setDepartamento_id(comboBoxDepartamento.getSelectedIndex());
 			try {
 				col.criaFuncionario(funcionario);
 				janela.dispose();
+				JOptionPane.showMessageDialog(null, "Funcionario Cadastrado com sucesso");
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
