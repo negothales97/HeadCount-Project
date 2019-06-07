@@ -125,7 +125,7 @@ public class DepartamentoDAO {
 		}
 	}
 	
-	public List<CustoDepartamento> readCustoDep() throws SQLException{
+	public List<CustoDepartamento> getCustoDep() throws SQLException{
 		List<CustoDepartamento> custosDepartamento = new ArrayList<>();
 		try (Connection con = Database.getConnection()){
 			String sql = "SELECT * FROM CUSTO_DEPARTAMENTO";

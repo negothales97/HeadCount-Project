@@ -22,6 +22,8 @@ import javax.swing.JTextField;
 
 import controller.DepartamentoController;
 import controller.FilialController;
+import model.vo.CustoDepartamento;
+import model.vo.CustoFuncionario;
 import model.vo.Departamento;
 import model.vo.Filial;
 
@@ -53,6 +55,7 @@ public class CustoDepartamentoView extends JFrame implements ActionListener {
 	private JScrollPane barraRolagem;
 	private DepartamentoController controlDepart;
 	private FilialController filialControl;
+	private Object[][] dados;
 
 	public CustoDepartamentoView() throws SQLException {
 		String[] colunas = { "Filial", "Departamento", "Observação", "Custo (R$)" };
@@ -92,9 +95,18 @@ public class CustoDepartamentoView extends JFrame implements ActionListener {
 				  
 				  cmbFilial.addItem(master.get(i).getNome());
 			  }
-		}
-		catch (Exception e) {
+		}catch (Exception e) {
 			e.printStackTrace();
+		}
+		List<CustoDepartamento> custos = controlDepart.getCustoDepartamentos();
+		Object[][] dados = new Object[custos.size()][4];
+		for (int i = 0; i < custos.size(); i++) {
+			CustoDepartamento custo = custos.get(i);
+			dados[i][0] = custo.getId();
+			dados[i][1] = custo.getFilial_id();
+			dados[i][1] = custo.getDepartamento_id();
+			dados[i][2] = custo.getObservacao();
+			dados[i][3] = custo.getCusto();
 		}
 		
 		txtObs = new JTextField(10);
@@ -104,8 +116,8 @@ public class CustoDepartamentoView extends JFrame implements ActionListener {
 		btnSair = new JButton("Sair");
 
 
-		tblDepartamento = new JTable();
-		tblDepartamento.setSize(container.getWidth(), container.getHeight());
+		tblDepartamento = new JTable(dados, colunas);
+		barraRolagem = new JScrollPane(tblDepartamento);
 
 		GridBagConstraints gbc = new GridBagConstraints();
 
@@ -121,7 +133,7 @@ public class CustoDepartamentoView extends JFrame implements ActionListener {
 		panelGrid.add(txtCusto, gbc);
 		panelGrid.add(btnSalvar, gbc);
 		panelGrid.add(btnSair, gbc);
-		container.add(tblDepartamento, gbc);
+		container.add(barraRolagem, gbc);
 		
 		contentPanel.add(BorderLayout.NORTH, panelGrid);
 		contentPanel.add(BorderLayout.CENTER, container);
@@ -131,7 +143,7 @@ public class CustoDepartamentoView extends JFrame implements ActionListener {
 
 		janela.setContentPane(contentPanel);
 		janela.setTitle("Lista de Departamentos");
-		janela.setSize(800, 600);
+		janela.setSize(900, 500);
 		janela.setVisible(true);
 		janela.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 

@@ -6,6 +6,8 @@ import java.util.List;
 
 import model.dao.DepartamentoDAO;
 import model.vo.Cargo;
+import model.vo.CustoDepartamento;
+import model.vo.CustoFuncionario;
 import model.vo.Departamento;
 import view.cargo.EditCargo;
 import view.departamento.CadDepartamento;
@@ -49,6 +51,11 @@ public class DepartamentoController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public List<CustoDepartamento> getCustoDepartamentos() throws SQLException {
+		List<CustoDepartamento> custos = dao.getCustoDep();
+		return custos;
 	}
 	
 	public void incluiCusto(int filial_id, int departamento_id, String obs, double custo) {

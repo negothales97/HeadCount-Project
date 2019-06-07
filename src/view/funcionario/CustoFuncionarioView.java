@@ -51,8 +51,11 @@ public class CustoFuncionarioView extends JFrame implements ActionListener {
 	private JScrollPane barraRolagem;
 
 	public CustoFuncionarioView() throws SQLException {
+		
+		control= new FuncionarioController();
 		String[] colunas = { "ID", "Nome", "Observacao", "Custo" };
 
+		
 		List<CustoFuncionario> custos = control.getCustoFuncionarios();
 		Object[][] dados = new Object[custos.size()][4];
 		for (int i = 0; i < custos.size(); i++) {

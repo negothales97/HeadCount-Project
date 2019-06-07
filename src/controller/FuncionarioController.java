@@ -72,8 +72,8 @@ public class FuncionarioController {
 	}
 	
 	public List<CustoFuncionario> getCustoFuncionarios() throws SQLException {
-		List<CustoFuncionario> funcionarios = dao.getCustoFunc();
-		return funcionarios;
+		List<CustoFuncionario> custos = dao.getCustoFunc();
+		return custos;
 	}
 	public void incluiCusto(int funcionario_id, String obs, double custo) {
 		try {

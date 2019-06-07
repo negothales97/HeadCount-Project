@@ -29,11 +29,12 @@ public class FuncionarioDAO {
 		
 		
 	}
-	private final String INSERT	= "INSERT INTO Funcionario (nome,cpf,datanasc, cargo_id, departamento_id, filial_id) values (?, ?, ?, ?, ?, ?)";
-	private final String UPDATE	= "UPDATE FUNCIONARIO SET   nome=?, cpf=?, datanasc=?,cargo_id=?,departamento_id=?,filial_id=? WHERE matricula=?";
-	private final String DELETE 		= "DELETE FROM FUNCIONARIO WHERE MATRICULA=?";
-	private final String LIST 			= "SELECT * FROM FUNCIONARIO";
-	private final String LISTBYID 		= "SELECT * FROM FUNCIONARIO WHERE MATRICULA = ?";
+	private final String INSERT		= "INSERT INTO Funcionario (nome,cpf,datanasc, cargo_id, departamento_id, filial_id) values (?, ?, ?, ?, ?, ?)";
+	private final String UPDATE		= "UPDATE FUNCIONARIO SET   nome=?, cpf=?, datanasc=?,cargo_id=?,departamento_id=?,filial_id=? WHERE matricula=?";
+	private final String DELETE 	= "DELETE FROM FUNCIONARIO WHERE MATRICULA=?";
+	private final String LIST 		= "SELECT * FROM FUNCIONARIO";
+	private final String LISTBYID   = "SELECT * FROM FUNCIONARIO WHERE MATRICULA = ?";
+	private final String CUSTOFUNC 	= "SELECT * FROM CUSTO_FUNCIONARIO";
 
 
 	public void create(Funcionario funcionario) throws SQLException {
@@ -145,6 +146,8 @@ public class FuncionarioDAO {
 				stmt.setDouble(3, custo);
 				
 				stmt.execute();
+			}catch (SQLException e) {
+	    		JOptionPane.showMessageDialog(null, "Erro ao buscar custos no banco de dados: " +e.getMessage());
 			}
 		}
 		
@@ -152,20 +155,21 @@ public class FuncionarioDAO {
 	public List<CustoFuncionario> getCustoFunc() throws SQLException{
 		List<CustoFuncionario> custoFuncs = new ArrayList<>();
 		try (Connection con = Database.getConnection()){
-			String sql = "SELECT * FROM CUSTO_FUNCIONARIO";
-			try (PreparedStatement stmt = con.prepareStatement(sql)){
+			try (PreparedStatement stmt = con.prepareStatement(CUSTOFUNC)){
 				stmt.execute();
 				ResultSet rs = stmt.getResultSet();
 				while (rs.next()) {
 					int id = rs.getInt("id");
+					System.out.println(id);
 					int funcionario_id = rs.getInt("funcionario_id");
 					String observacao = rs.getString("observacao");
 					double custo = rs.getDouble("custo");
 					
 					CustoFuncionario custoFunc = new CustoFuncionario(id, funcionario_id, observacao, custo);
 					custoFuncs.add(custoFunc);
-					
 				}
+			}catch (SQLException e) {
+	    		JOptionPane.showMessageDialog(null, "Erro ao buscar custo no banco de dados: " +e.getMessage());
 			}
 		}
 		return custoFuncs;

@@ -44,12 +44,10 @@ public class FilialDAO {
 				stmt.setString(3, filial.getInscEstadual());
 				
 				stmt.execute();
-				ResultSet resultSet = stmt.getGeneratedKeys();
-		        while (resultSet.next()) {
-		            id = resultSet.getInt("id");
-		            
-		        }
-		        resultSet.close();
+				ResultSet rs = stmt.getGeneratedKeys();
+		        rs.next();
+	            id = rs.getInt("id");
+		        rs.close();
 			}
 			
 			try(PreparedStatement stmt2 = con.prepareStatement(INSERTENDERECO)){
