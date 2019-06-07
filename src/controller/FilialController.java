@@ -16,7 +16,7 @@ public class FilialController  {
 	private FilialDAO dao = null; 
 	
 	public FilialController() {
-		dao = new FilialDAO();
+		dao = FilialDAO.getInstance();
 	}
 	public void listaFilial() throws SQLException {
 		listaFilial = new ListaFilial();
