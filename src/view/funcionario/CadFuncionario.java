@@ -60,8 +60,6 @@ public class CadFuncionario extends JFrame implements ActionListener {
 	private JLabel lblCPF;
 	private JLabel lblDataNasc;
 	private JLabel lblCargo;
-	private JLabel lblSalario;
-	private JLabel lblSetor;
 	private JLabel lblDepartamento;
 	private JLabel lblFilial;
 	private List<Filial> filiais;
@@ -70,8 +68,6 @@ public class CadFuncionario extends JFrame implements ActionListener {
 	private JTextField txtNome;
 	private JTextField txtCPF;
 	private JTextField txtDataNasc;
-	private JTextField txtSalario;
-	private JTextField txtSetor;
 	private JComboBox<String> comboBoxCargo;
 	private JComboBox<String> comboBoxDepartamento;
 	private JComboBox<String> comboBoxFilial;
@@ -98,14 +94,10 @@ public class CadFuncionario extends JFrame implements ActionListener {
 		txtNome = new JTextField(30);
 		txtCPF = new JTextField(12);
 		txtDataNasc = new JTextField(8);
-		txtSalario = new JTextField(20);
-		txtSetor = new JTextField(30);
 
 		lblNome = new JLabel("Nome");
 		lblCPF = new JLabel("CPF");
 		lblDataNasc = new JLabel("Data de Nascimento");
-		lblSalario = new JLabel("Salario");
-		lblSetor = new JLabel("Setor");
 		lblCargo = new JLabel("Cargo");
 		lblFilial = new JLabel("Filial");
 		lblDepartamento = new JLabel("Departamento");
@@ -165,18 +157,6 @@ public class CadFuncionario extends JFrame implements ActionListener {
 		gbc.anchor = 17;
 		panelGridTop.add(comboBoxCargo, gbc);
 
-		gbc.gridy = 5;
-		gbc.anchor = 13;
-		panelGridTop.add(lblSalario, gbc);
-		gbc.anchor = 17;
-		panelGridTop.add(txtSalario, gbc);
-
-		gbc.gridy = 6;
-		gbc.anchor = 13;
-		panelGridTop.add(lblSetor, gbc);
-		gbc.anchor = 17;
-		panelGridTop.add(txtSetor, gbc);
-		
 		gbc.gridy = 7;
 		gbc.anchor = 13;
 		panelGridTop.add(lblDepartamento, gbc);
@@ -189,8 +169,6 @@ public class CadFuncionario extends JFrame implements ActionListener {
 		gbc.anchor = 17;
 		panelGridTop.add(comboBoxFilial, gbc);
 		
-
-
 		panelGridBottom.add(btnSave, gbc);
 		panelGridBottom.add(btnVoltar, gbc);
 

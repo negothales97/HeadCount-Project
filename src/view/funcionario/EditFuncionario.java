@@ -37,8 +37,6 @@ import model.vo.Funcionario;
 public class EditFuncionario extends JFrame implements ActionListener {
 	private JFrame janela;
 	private FuncionarioController control;
-	private Filial filial;
-	private FilialController filialControl;
 	private DepartamentoController departamentoController;
 	private CargoController cargoController;
 	
@@ -59,8 +57,6 @@ public class EditFuncionario extends JFrame implements ActionListener {
 	private JLabel lblCPF;
 	private JLabel lblDataNasc;
 	private JLabel lblCargo;
-	private JLabel lblSalario;
-	private JLabel lblSetor;
 	private JLabel lblDepartamento;
 	private JLabel lblFilial;
 	private List<Filial> filiais;
@@ -69,14 +65,14 @@ public class EditFuncionario extends JFrame implements ActionListener {
 	private JTextField txtNome;
 	private JTextField txtCPF;
 	private JTextField txtDataNasc;
-	private JTextField txtCargo;
-	private JTextField txtSalario;
-	private JTextField txtSetor;
 	private JComboBox<String> comboBoxDepartamento;
 	private JComboBox<String> comboBoxCargo;
 	private JComboBox<String> comboBoxFilial;
+	private FilialController filialControl;
+	private Funcionario funcionario;
 
 	public EditFuncionario(Funcionario funcionario) {
+		this.funcionario = funcionario;
 		janela = new JFrame();
 		contentPanel = new JPanel();
 		panelGridTop = new JPanel();
@@ -92,29 +88,32 @@ public class EditFuncionario extends JFrame implements ActionListener {
 		btnSave = new JButton("Salvar");
 		btnVoltar = new JButton("Voltar");
 		
-	
-
+		comboBoxCargo = new JComboBox<String>();
+		comboBoxDepartamento = new JComboBox<String>();
+		comboBoxFilial = new JComboBox<String>();
 
 		txtNome = new JTextField(30);
 		txtCPF = new JTextField(12);
 		txtDataNasc = new JTextField(8);
-		txtCargo = new JTextField(30);
-		txtSalario = new JTextField(20);
-		txtSetor = new JTextField(30);
 
 		lblNome = new JLabel("Nome");
 		lblCPF = new JLabel("CPF");
 		lblDataNasc = new JLabel("Data de Nascimento");
-		lblSalario = new JLabel("Salario");
-		lblSetor = new JLabel("Setor");
 		lblCargo = new JLabel("Cargo");
 		lblFilial = new JLabel("Filial");
 		lblDepartamento = new JLabel("Departamento");
+		
+		txtNome.setText(funcionario.getNome());
+		txtCPF.setText(funcionario.getCpf());
+		txtDataNasc.setText(funcionario.getDatanasc());
+//		comboBoxCargo.setSelectedIndex(funcionario.getCargo_id());
+//		comboBoxDepartamento.setSelectedIndex(funcionario.getDepartamento_id());
+//		comboBoxFilial.setSelectedIndex(funcionario.getFilial_id());
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets(5, 5, 5, 5);
 		
-		comboBoxCargo = new JComboBox<String>();
+		
 		try {
 				cargoController = new CargoController();
 				List<Cargo> masterCargo = cargoController.getCargos();
@@ -123,12 +122,13 @@ public class EditFuncionario extends JFrame implements ActionListener {
 				}
 			
 		}catch (Exception e) {
+			e.printStackTrace();
 		}
 	
-		comboBoxDepartamento = new JComboBox<String>();
+		
 		try {
 			departamentoController = new DepartamentoController();
-			List<Departamento> masterDepartamento =departamentoController.getDepartamentos();
+			List<Departamento> masterDepartamento = departamentoController.getDepartamentos();
 			for (int i =0; i< masterDepartamento.size(); i++) {
 				comboBoxDepartamento.addItem(masterDepartamento.get(i).getNome());
 			}
@@ -136,11 +136,11 @@ public class EditFuncionario extends JFrame implements ActionListener {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		comboBoxFilial = new JComboBox<String>();
-			  filialControl = new FilialController();
-			  List<Filial> master =filialControl.comboBoxFilial();
-			  for (int i = 0; i < master.size(); i++) {
-			   comboBoxFilial.addItem(master.get(i).getNome());}
+		
+		filialControl = new FilialController();
+			List<Filial> master = filialControl.comboBoxFilial();
+			for (int i = 0; i < master.size(); i++) {
+				comboBoxFilial.addItem(master.get(i).getNome());}
 		 		
 
 	
@@ -168,18 +168,6 @@ public class EditFuncionario extends JFrame implements ActionListener {
 		panelGridTop.add(lblCargo, gbc);
 		gbc.anchor = 17;
 		panelGridTop.add(comboBoxCargo, gbc);
-
-		gbc.gridy = 5;
-		gbc.anchor = 13;
-		panelGridTop.add(lblSalario, gbc);
-		gbc.anchor = 17;
-		panelGridTop.add(txtSalario, gbc);
-
-		gbc.gridy = 6;
-		gbc.anchor = 13;
-		panelGridTop.add(lblSetor, gbc);
-		gbc.anchor = 17;
-		panelGridTop.add(txtSetor, gbc);
 		
 		gbc.gridy = 7;
 		gbc.anchor = 13;
@@ -193,8 +181,6 @@ public class EditFuncionario extends JFrame implements ActionListener {
 		gbc.anchor = 17;
 		panelGridTop.add(comboBoxFilial, gbc);
 		
-
-
 		panelGridBottom.add(btnSave, gbc);
 		panelGridBottom.add(btnVoltar, gbc);
 
@@ -206,7 +192,7 @@ public class EditFuncionario extends JFrame implements ActionListener {
 
 		janela.setContentPane(contentPanel);
 		janela.setTitle("Cadastro de Funcionarios");
-		janela.setSize(500, 350);
+		janela.setSize(600, 350);
 		janela.setVisible(true);
 		janela.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -230,14 +216,8 @@ public class EditFuncionario extends JFrame implements ActionListener {
 		if (fonte == btnSave) {
 			FuncionarioController col = new FuncionarioController();
 			Funcionario funcionario = new Funcionario(txtNome.getText(), txtCPF.getText(), txtDataNasc.getText(), comboBoxFilial.getSelectedIndex(),comboBoxDepartamento.getSelectedIndex(),comboBoxFilial.getSelectedIndex());
-			try {
-				col.criaFuncionario(funcionario);
-				janela.dispose();
-				JOptionPane.showMessageDialog(null, "Funcionario Cadastrado com sucesso");
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-
+			col.updateFuncionario(funcionario);
+			janela.dispose();
 		}
 	}
 	

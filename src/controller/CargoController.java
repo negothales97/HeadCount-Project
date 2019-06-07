@@ -18,7 +18,7 @@ public class CargoController {
 	private EditCargo editCargo; 
 	
 	public CargoController() {
-		dao = new CargoDAO();
+		dao = dao.getInstance();
 	}
 	public void listaCargo() throws SQLException {
 		listaCargo = new ListaCargo();
@@ -40,7 +40,6 @@ public class CargoController {
 	
 	public List<Cargo> getCargos() throws SQLException {
 			String[] colunas = { "Codigo", "Cargo" };
-			dao = new CargoDAO();
 
 			List<Cargo> cargos = dao.getCargos();
 		

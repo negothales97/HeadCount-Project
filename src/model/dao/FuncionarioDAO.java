@@ -17,6 +17,18 @@ import model.vo.Filial;
 import model.vo.Funcionario;
 
 public class FuncionarioDAO {
+	private FuncionarioDAO(){}
+	
+	private static FuncionarioDAO instancia =null;
+	
+	public static FuncionarioDAO getInstance() {
+		if (instancia ==null) {
+			instancia = new FuncionarioDAO();
+		}
+		return instancia;
+		
+		
+	}
 	private final String INSERT	= "INSERT INTO Funcionario (nome,cpf,datanasc, cargo_id, departamento_id, filial_id) values (?, ?, ?, ?, ?, ?)";
 	private final String UPDATE	= "UPDATE FUNCIONARIO SET   nome=?, cpf=?, datanasc=?,cargo_id=?,departamento_id=?,filial_id=? WHERE matricula=?";
 	private final String DELETE 		= "DELETE FROM FUNCIONARIO WHERE MATRICULA=?";
@@ -137,7 +149,7 @@ public class FuncionarioDAO {
 		}
 		
 	}
-	public List<CustoFuncionario> readCustoFunc() throws SQLException{
+	public List<CustoFuncionario> getCustoFunc() throws SQLException{
 		List<CustoFuncionario> custoFuncs = new ArrayList<>();
 		try (Connection con = Database.getConnection()){
 			String sql = "SELECT * FROM CUSTO_FUNCIONARIO";

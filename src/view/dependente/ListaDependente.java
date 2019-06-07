@@ -26,7 +26,6 @@ import model.vo.Dependente;
 
 public class ListaDependente extends JFrame implements ActionListener {
 	private DependenteController control;
-	private DependenteDAO dao;
 	private JFrame janela;
 	private JPanel contentPanel;
 	private JPanel panelGrid;
@@ -35,17 +34,17 @@ public class ListaDependente extends JFrame implements ActionListener {
 	private GridBagLayout gbLayout;
 
 	private JButton btnNovo;
+	private JButton btnEditar;
 	private JButton btnSair;
 	private JButton btnRemover;
 
 	private JTable tblDependente;
-	private Component btnEditar;
+	private JScrollPane barraRolagem;
 
 	public ListaDependente() throws SQLException {
 		String[] colunas = { "Codigo", "Nome", "CPF", "Funcionario" };
-		dao = new DependenteDAO();
-
-		List<Dependente> dependentes = dao.read();
+		control = new DependenteController();
+		List<Dependente> dependentes = control.getDependentes();
 		Object[][] dados = new Object[dependentes.size()][4];
 		for (int i = 0; i < dependentes.size(); i++) {
 			Dependente dependente = dependentes.get(i);
@@ -67,14 +66,13 @@ public class ListaDependente extends JFrame implements ActionListener {
 		contentPanel.setLayout(boderLayout);
 		container.setLayout(new FlowLayout());
 
-
 		btnNovo = new JButton("Novo");
 		btnEditar = new JButton("Editar");
 		btnRemover = new JButton("Remover");
 		btnSair = new JButton("Sair");
 
 		tblDependente = new JTable(dados, colunas);
-		tblDependente.setSize(container.getWidth(), container.getHeight());
+		barraRolagem = new JScrollPane(tblDependente);
 
 		GridBagConstraints gbc = new GridBagConstraints();
 
@@ -82,14 +80,15 @@ public class ListaDependente extends JFrame implements ActionListener {
 
 		panelGrid.add(btnNovo, gbc);
 		panelGrid.add(btnEditar, gbc);
-		panelGrid.add(btnSair, gbc);
 		panelGrid.add(btnRemover, gbc);
-		container.add(tblDependente, gbc);
+		panelGrid.add(btnSair, gbc);
+		container.add(barraRolagem, gbc);
 
 		contentPanel.add(BorderLayout.NORTH, panelGrid);
 		contentPanel.add(BorderLayout.CENTER, container);
 
 		btnNovo.addActionListener(this);
+		btnEditar.addActionListener(this);
 		btnRemover.addActionListener(this);
 		btnSair.addActionListener(this);
 
@@ -111,16 +110,21 @@ public class ListaDependente extends JFrame implements ActionListener {
 			janela.dispose();
 
 		}
+		if(fonte == btnEditar) {
+			int id = Integer.parseInt(JOptionPane.showInputDialog("Informe o codigo a ser editado"));
+			control.editaDependete(id);
+			janela.dispose();
+		}
 		if (fonte == btnRemover) {
 
 			int id = Integer.parseInt(JOptionPane.showInputDialog("Informe o codigo a ser removido"));
 			try {
 				control.deletaDependente(id);
+				
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
 			janela.dispose();
-			JOptionPane.showMessageDialog(null, "Dependente Removida com sucesso");
 		}
 		if (fonte == btnSair) {
 			janela.dispose();

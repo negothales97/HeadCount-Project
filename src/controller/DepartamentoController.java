@@ -17,12 +17,12 @@ public class DepartamentoController {
 	private ListaDepartamento listaDepartamento = null;
 	private CadDepartamento cadDepartamento 	= null;
 	private CustoDepartamentoView custoDepartamento = null;
-	private DepartamentoDAO dao 				= null;
+	private DepartamentoDAO dao;
 	private EditDepartamento editDepartamento;
 	
 
 	public DepartamentoController() {
-		dao = new DepartamentoDAO();
+		dao = dao.getInstance();
 	}
 
 	public void listaDepartamento() throws SQLException {
@@ -61,21 +61,10 @@ public class DepartamentoController {
 	}
 
 	public List<Departamento> getDepartamentos() throws SQLException {
-		String[] colunas = { "ID", "Nome", "Centro de Custo", "Orçamento (R$)" };
-		DepartamentoDAO dao = new DepartamentoDAO();
-
 		List<Departamento> departamentos = dao.getDepartamentos();
-		Object[][] dados = new Object[departamentos.size()][4];
-		for (int i = 0; i < departamentos.size(); i++) {
-			Departamento departamento = departamentos.get(i);
-			dados[i][0] = departamento.getId();
-			dados[i][1] = departamento.getNome();
-			dados[i][2] = departamento.getCentroCusto();
-			dados[i][3] = departamento.getOrcamento();
-
-		}
 		return departamentos;
 	}
+	
 	public void editaDepartamento(int id) {
 		Departamento departamento;
 		try {

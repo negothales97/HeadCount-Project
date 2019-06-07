@@ -18,6 +18,18 @@ import model.vo.Filial;
 
 
 public class DepartamentoDAO {
+	private DepartamentoDAO(){}
+	
+	private static DepartamentoDAO instancia =null;
+	
+	public static DepartamentoDAO getInstance() {
+		if (instancia ==null) {
+			instancia = new DepartamentoDAO();
+		}
+		return instancia;
+		
+		
+	}
 	private final String INSERT		= "INSERT INTO DEPARTAMENTO (nome, centrocusto, orcamento) values (?, ?, ?)";
 	private final String UPDATE		= "UPDATE DEPARTAMENTO SET nome=?, centrocusto=?, orcamento=? WHERE id=?";
 	private final String DELETE 	= "DELETE FROM DEPARTAMENTO WHERE id=?";

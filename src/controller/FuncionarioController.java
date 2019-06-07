@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import model.dao.FuncionarioDAO;
+import model.vo.CustoFuncionario;
 import model.vo.Departamento;
 import model.vo.Funcionario;
 import view.departamento.EditDepartamento;
@@ -20,7 +21,7 @@ public class FuncionarioController {
 	private EditFuncionario editFuncionario;
 	
 	public FuncionarioController() {
-		dao = new FuncionarioDAO();
+		dao = dao.getInstance();
 	}
 	public void listaFuncionario() throws SQLException {
 		listaFuncionario = new ListaFuncionario();
@@ -66,19 +67,12 @@ public class FuncionarioController {
 		}
 	}
 	public List<Funcionario> getFuncionarios() throws SQLException {
-		String[] colunas = { "ID", "Nome", "Centro de Custo", "Or�amento (R$)" };
-		dao = new FuncionarioDAO();
-
 		List<Funcionario> funcionarios = dao.getFuncionarios();
-		Object[][] dados = new Object[funcionarios.size()][4];
-		for (int i = 0; i < funcionarios.size(); i++) {
-			Funcionario funcionario = funcionarios.get(i);
-			dados[i][0] = funcionario.getMatricula();
-			dados[i][1] = funcionario.getNome();
-			dados[i][2] = funcionario.getCpf();
-			dados[i][3] = funcionario.getDatanasc();
-
-		}
+		return funcionarios;
+	}
+	
+	public List<CustoFuncionario> getCustoFuncionarios() throws SQLException {
+		List<CustoFuncionario> funcionarios = dao.getCustoFunc();
 		return funcionarios;
 	}
 	public void incluiCusto(int funcionario_id, String obs, double custo) {

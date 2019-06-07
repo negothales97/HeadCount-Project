@@ -106,7 +106,7 @@ public class HeadCount implements ActionListener {
 		} else if (fonte == cadDep) {
 			controlDep = new DependenteController();
 			try {
-				controlDep.ListaDependente();
+				controlDep.listaDependente();
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}

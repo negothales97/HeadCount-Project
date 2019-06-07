@@ -14,15 +14,12 @@ import model.vo.Endereco;
 import model.vo.Filial;
 
 public class FilialDAO {
-	private FilialDAO(){
-		
-	}
+	private FilialDAO(){}
 	
 	private static FilialDAO instancia =null;
 	
 	public static FilialDAO getInstance() {
 		if (instancia ==null) {
-			System.out.println("nova instancia");
 			instancia = new FilialDAO();
 		}
 		return instancia;

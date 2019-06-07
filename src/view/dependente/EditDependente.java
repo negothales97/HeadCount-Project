@@ -28,7 +28,7 @@ import controller.FuncionarioController;
 import model.vo.Dependente;
 import model.vo.Funcionario;
 
-public class CadDependente extends JFrame implements ActionListener {
+public class EditDependente extends JFrame implements ActionListener {
 	private JFrame janela;
 	private DependenteController control;
 	private Dependente filial;
@@ -53,8 +53,10 @@ public class CadDependente extends JFrame implements ActionListener {
 	private JTextField txtDataNasc;
 	private JComboBox<String> cmbFuncionario;
 	private FuncionarioController controlFunc;
+	private Dependente dependente ;
 
-	public CadDependente() {
+	public EditDependente(Dependente dependente) {
+		this.dependente = dependente;
 		janela = new JFrame();
 		contentPanel = new JPanel();
 		panelGridTop = new JPanel();
@@ -74,11 +76,17 @@ public class CadDependente extends JFrame implements ActionListener {
 		lblCPF = new JLabel("CPF");
 		lblDataNasc = new JLabel("Data Nascimento");
 		lblFuncionario = new JLabel("Parentesco");
+		
+		
 
 		txtNome = new JTextField(15);
 		txtCPF = new JTextField(11);
 		txtDataNasc = new JTextField(8);
 		cmbFuncionario = new JComboBox<String>();
+		
+		txtNome.setText(dependente.getNome());
+		txtCPF.setText(dependente.getCpf());
+		txtDataNasc.setText(dependente.getDataNasc());
 		
 		cmbFuncionario.addItem("SELECIONE....");
 		try {
@@ -147,14 +155,13 @@ public class CadDependente extends JFrame implements ActionListener {
 
 		}
 		if (fonte == btnSalvar) {
-			Dependente dependente = new Dependente(txtNome.getText(), txtCPF.getText(), txtDataNasc.getText(),cmbFuncionario.getSelectedIndex());
-
-			try {
-				control.criaDependente(dependente);
-				janela.dispose();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
+			this.dependente.setNome(txtNome.getText());
+			this.dependente.setCpf(txtCPF.getText());
+			this.dependente.setDataNasc(txtDataNasc.getText());
+			this.dependente.setFuncionario(cmbFuncionario.getSelectedIndex());
+			control.updateDependente(this.dependente);
+			janela.dispose();
+			
 		}
 
 	}

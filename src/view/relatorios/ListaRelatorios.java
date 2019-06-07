@@ -33,7 +33,6 @@ import model.vo.Funcionario;
 public class ListaRelatorios extends JFrame implements ActionListener {
 	private DepartamentoController control;
 	private FilialController controller;
-	private CargoDAO dao;
 	private JFrame janela;
 	private JPanel contentPanel;
 	private JPanel panelGrid;
@@ -52,15 +51,14 @@ public class ListaRelatorios extends JFrame implements ActionListener {
 
 	public ListaRelatorios() throws SQLException {
 		String[] colunas = { "Codigo", "Cargo" };
-		dao = new CargoDAO();
-
-		List<Cargo> filiais = dao.getCargos();
-		Object[][] dados = new Object[filiais.size()][3];
-		for (int i = 0; i < filiais.size(); i++) {
-			Cargo cargo = filiais.get(i);
-			dados[i][0] = cargo.getId();
-			dados[i][1] = cargo.getNome();
-		}
+//
+//		List<Cargo> filiais = control.getC();
+//		Object[][] dados = new Object[filiais.size()][3];
+//		for (int i = 0; i < filiais.size(); i++) {
+//			Cargo cargo = filiais.get(i);
+//			dados[i][0] = cargo.getId();
+//			dados[i][1] = cargo.getNome();
+//		}
 
 		janela = new JFrame();
 		contentPanel = new JPanel();
@@ -106,8 +104,7 @@ public class ListaRelatorios extends JFrame implements ActionListener {
 		btnFiltrar = new JButton("Filtrar");
 
 
-		tblCargo = new JTable(dados, colunas);
-		tblCargo.setSize(container.getWidth(), container.getHeight());
+//		tblCargo = new JTable(dados, colunas);
 
 		GridBagConstraints gbc = new GridBagConstraints();
 

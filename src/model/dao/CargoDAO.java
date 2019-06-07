@@ -15,6 +15,16 @@ import model.vo.Endereco;
 import model.vo.Filial;
 
 public class CargoDAO {
+	private CargoDAO(){}
+	
+	private static CargoDAO instancia =null;
+	
+	public static CargoDAO getInstance() {
+		if (instancia ==null) {
+			instancia = new CargoDAO();
+		}
+		return instancia;
+	}
 	private final String INSERT	= "INSERT INTO CARGO (nome) values (?)";
 	private final String UPDATE	= "UPDATE CARGO SET nome = ? WHERE id = ?";
 	private final String DELETE 		= "DELETE FROM CARGO WHERE id=?";

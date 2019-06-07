@@ -131,6 +131,9 @@ public class ListaFuncionario extends JFrame implements ActionListener {
 			janela.dispose();
 		}
 		if (fonte == btnEditar) {
+			int id = Integer.parseInt(JOptionPane.showInputDialog("Informe o codigo a ser editado"));
+			control.editaFuncionario(id);
+			janela.dispose();
 		}
 
 	}

@@ -16,7 +16,7 @@ public class Funcionario {
 		this.datanasc = datanasc;
 		this.matricula = matricula;
 	}
-	public Funcionario( String nome, String cpf, String datanasc, int cargo_id, int departamento_id, int filial_id) {
+	public Funcionario(String nome, String cpf, String datanasc, int cargo_id, int departamento_id, int filial_id) {
 		this.nome = nome;
 		this.cpf = cpf;
 		this.datanasc = datanasc;
