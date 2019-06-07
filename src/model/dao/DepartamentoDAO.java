@@ -43,6 +43,7 @@ public class DepartamentoDAO {
 				stmt.setString(1, departamento.getNome());
 				stmt.setString(2, departamento.getCentroCusto());
 				stmt.setDouble(3, departamento.getOrcamento());
+				stmt.execute();
 				JOptionPane.showMessageDialog(null, "Departamento criado com sucesso");
 			}catch (SQLException e) {
 	    		JOptionPane.showMessageDialog(null, "Erro ao criar departamento no banco de dados: " +e.getMessage());
