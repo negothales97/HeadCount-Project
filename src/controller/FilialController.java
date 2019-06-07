@@ -16,7 +16,7 @@ public class FilialController  {
 	private FilialDAO dao;
 	
 	public FilialController() {
-		dao = new FilialDAO();
+		dao = FilialDAO.getInstance();
 	}
 	public void listaFilial(){
 		listaFilial = new ListaFilial();

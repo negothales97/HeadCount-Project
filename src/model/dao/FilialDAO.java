@@ -14,6 +14,21 @@ import model.vo.Endereco;
 import model.vo.Filial;
 
 public class FilialDAO {
+	private FilialDAO(){
+		
+	}
+	
+	private static FilialDAO instancia =null;
+	
+	public static FilialDAO getInstance() {
+		if (instancia ==null) {
+			System.out.println("nova instancia");
+			instancia = new FilialDAO();
+		}
+		return instancia;
+		
+		
+	}
 	private int id;
 	private final String INSERTFILIAL	= "INSERT INTO FILIAL (nome, cnpj, insc_estadual) values (?, ?, ?)";
 	private final String INSERTENDERECO	= "INSERT INTO ENDERECO (rua, numero, bairro, filial_id) values (?, ?, ?, ?)";
