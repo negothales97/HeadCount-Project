@@ -7,6 +7,7 @@ public class Filial {
 	private String InscEstadual;
 	private Endereco endereco;
 	
+	
 	public Filial(String nome, String cnpj, String InscEstadual) {
 		this.nome = nome;
 		this.cnpj = cnpj;

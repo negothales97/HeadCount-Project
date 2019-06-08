@@ -10,6 +10,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.xml.crypto.Data;
 
+import model.connection.DAOException;
 import model.connection.Database;
 import model.vo.Cargo;
 import model.vo.CustoDepartamento;
@@ -25,26 +26,26 @@ public class DepartamentoDAO {
 	private final String LIST 		= "SELECT * FROM DEPARTAMENTO";
 	private final String LISTBYID 	= "SELECT * FROM DEPARTAMENTO WHERE ID = ?";
 
-	public void create(Departamento departamento) throws SQLException {
+	public void create(Departamento departamento) throws DAOException {
 		try (Connection con = Database.getInstance().getConnection()) {
 
-			try (PreparedStatement stmt = con.prepareStatement(INSERT)) {
+			PreparedStatement stmt = con.prepareStatement(INSERT);
 				stmt.setString(1, departamento.getNome());
 				stmt.setString(2, departamento.getCentroCusto());
 				stmt.setDouble(3, departamento.getOrcamento());
 				stmt.execute();
 				JOptionPane.showMessageDialog(null, "Departamento criado com sucesso");
+		
 			}catch (SQLException e) {
 	    		JOptionPane.showMessageDialog(null, "Erro ao criar departamento no banco de dados: " +e.getMessage());
 			}	
-		}
 	}
 	
-	public void update(Departamento departamento) throws SQLException {
+	public void update(Departamento departamento) throws DAOException {
 		try (Connection con = Database.getInstance().getConnection()) {
 			String sql = "UPDATE DEPARTAMENTO SET nome=?, centrocusto=?, orcamento=? WHERE id=?";
 
-			try (PreparedStatement stmt = con.prepareStatement(sql)) {
+			PreparedStatement stmt = con.prepareStatement(sql);
 				stmt.setString(1, departamento.getNome());
 				stmt.setString(2, departamento.getCentroCusto());
 				stmt.setDouble(3, departamento.getOrcamento());
@@ -52,33 +53,33 @@ public class DepartamentoDAO {
 
 				stmt.execute();
 				JOptionPane.showMessageDialog(null, "Departamento editado com sucesso");
+			
 			}catch (SQLException e) {
 	    		JOptionPane.showMessageDialog(null, "Erro ao editar departamento no banco de dados: " +e.getMessage());
-			}	
-		}
+			}
 	}
 	
 	
 	
-	public void delete(int id) throws SQLException {
+	public void delete(int id) throws DAOException {
 		try (Connection con = Database.getInstance().getConnection()) {
 			String sql = "DELETE FROM DEPARTAMENTO WHERE id=?";
 
-			try (PreparedStatement stmt = con.prepareStatement(sql)) {
+			PreparedStatement stmt = con.prepareStatement(sql);
 				stmt.setInt(1, id);
 				stmt.execute();
 				JOptionPane.showMessageDialog(null, "Departamento removido com sucesso");
+				
 			}catch (SQLException e) {
 	    		JOptionPane.showMessageDialog(null, "Erro ao deletar departamento no banco de dados: " +e.getMessage());
-			}	
-		}
+			}
 	}
 
 	
-	public List<Departamento> getDepartamentos() throws SQLException {
+	public List<Departamento> getDepartamentos() throws DAOException {
 		List<Departamento> departamentos = new ArrayList<>();
 		try (Connection con = Database.getInstance().getConnection()) {
-			try (PreparedStatement stmt = con.prepareStatement(LIST)) {
+			PreparedStatement stmt = con.prepareStatement(LIST);
 				stmt.execute();
 				ResultSet rs = stmt.getResultSet();
 				while (rs.next()) {
@@ -90,15 +91,19 @@ public class DepartamentoDAO {
 					
 					departamento.setId(id);
 					departamentos.add(departamento);
+					
 				}
 			}
-
+			catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return departamentos;
+		
 	}
-	public Departamento getDepartamento(int id) throws SQLException {
+	public Departamento getDepartamento(int id) throws DAOException {
 		try (Connection con = Database.getInstance().getConnection()){
-			try(PreparedStatement stmt = con.prepareStatement(LISTBYID)){
+			PreparedStatement stmt = con.prepareStatement(LISTBYID);
 				stmt.setInt(1, id);
 				stmt.execute();
 				ResultSet rs = stmt.getResultSet();
@@ -111,14 +116,20 @@ public class DepartamentoDAO {
 				departamento.setId(idDepartamento);
 				return departamento;
 			}
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		return null;
+		
+
 	}
 	
-	public List<CustoDepartamento> getCustoDep() throws SQLException{
+	public List<CustoDepartamento> getCustoDep() throws DAOException{
 		List<CustoDepartamento> custosDepartamento = new ArrayList<>();
 		try (Connection con = Database.getInstance().getConnection()){
 			String sql = "SELECT * FROM CUSTO_DEPARTAMENTO";
-			try (PreparedStatement stmt = con.prepareStatement(sql)){
+			PreparedStatement stmt = con.prepareStatement(sql);
 				stmt.execute();
 				ResultSet rs = stmt.getResultSet();
 				while (rs.next()) {
@@ -130,26 +141,32 @@ public class DepartamentoDAO {
 					
 					CustoDepartamento custoDep = new CustoDepartamento(id, filial_id, departamento_id, observacao, custo);
 					custosDepartamento.add(custoDep);
-					
+					return custosDepartamento;
 				}
 			}
+			catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		return custosDepartamento;
+		return null;
 	}
 	
 	
 	
-	public void custoDep(int filial_id, int departamento_id, String obs, double custo) throws SQLException{
+	public void custoDep(int filial_id, int departamento_id, String obs, double custo) throws DAOException{
 		try(Connection con = Database.getInstance().getConnection()){
 			String sql = "INSERT INTO CUSTO_DEPARTAMENTO (filial_id, departamento_id, observacao, custo) values (?, ?, ?, ?)";
-			try(PreparedStatement stmt = con.prepareStatement(sql)){
+			PreparedStatement stmt = con.prepareStatement(sql);
 				stmt.setInt(1, filial_id);
 				stmt.setInt(2, departamento_id);
 				stmt.setString(3, obs);
 				stmt.setDouble(4, custo);
 				
 				stmt.execute();
-			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
