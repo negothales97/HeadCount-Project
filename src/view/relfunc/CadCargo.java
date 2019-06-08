@@ -1,4 +1,4 @@
-package view.relatorios;
+package view.relfunc;
 
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
