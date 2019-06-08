@@ -18,13 +18,14 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 import controller.FilialController;
 import model.dao.FilialDAO;
 import model.vo.Filial;
 
 public class ListaFilial extends JFrame implements ActionListener {
-	private FilialController control;
+	private static FilialController control;
 	private JFrame janela;
 	private JPanel contentPanel;
 	private JPanel panelGrid;
@@ -34,12 +35,12 @@ public class ListaFilial extends JFrame implements ActionListener {
 	private JButton btnEditar;
 	private JButton btnRemover;
 	private JButton btnSair;
-
+	
+	private DefaultTableModel modelo = new DefaultTableModel();
 	private JTable tblFilial;
-	private JScrollPane barraRolagem;
-	private String[] colunas = { "Codigo", "Nome", "CNPJ", "Insc. Estadual", "Rua", "Num", "Bairro" };
 	private List<Filial> filiais;
 	private Object[][] dados;
+	private JScrollPane barraRolagem;
 
 	public ListaFilial() {
 		
@@ -74,9 +75,9 @@ public class ListaFilial extends JFrame implements ActionListener {
 		btnRemover = new JButton("Remover");
 		btnSair = new JButton("Sair");
 		btnEditar = new JButton ("Editar");
-
-		tblFilial = new JTable(dados, colunas);
+		
 		barraRolagem = new JScrollPane(tblFilial);
+
 
 		GridBagConstraints gbc = new GridBagConstraints();
 
@@ -102,7 +103,44 @@ public class ListaFilial extends JFrame implements ActionListener {
 		janela.setVisible(true);
 		janela.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
+	
+	private void geraTabela() {
 
+		tblFilial = new JTable(modelo);
+		modelo.addColumn("Codigo");
+		modelo.addColumn("Nome");
+		modelo.addColumn("CNPJ");
+		modelo.addColumn("Insc. Estadual");
+		modelo.addColumn("Rua");
+		modelo.addColumn("Num");
+		modelo.addColumn("Bairro");
+
+		tblFilial.getColumnModel().getColumn(0).setPreferredWidth(10);
+		tblFilial.getColumnModel().getColumn(1).setPreferredWidth(100);
+		tblFilial.getColumnModel().getColumn(2).setPreferredWidth(100);
+		tblFilial.getColumnModel().getColumn(3).setPreferredWidth(100);
+		tblFilial.getColumnModel().getColumn(4).setPreferredWidth(100);
+		tblFilial.getColumnModel().getColumn(5).setPreferredWidth(60);
+		tblFilial.getColumnModel().getColumn(5).setPreferredWidth(100);
+		pesquisar(modelo);
+	}
+
+	public static void pesquisar(DefaultTableModel modelo) {
+		modelo.setNumRows(0);
+		control = new FilialController();
+		for (Filial f : control.getFiliais()) {
+			modelo.addRow(new Object[] {
+					f.getId(),
+					f.getNome(),
+					f.getCnpj(),
+					f.getInscEstadual(),
+					f.getEndereco().getRua(),
+					f.getEndereco().getNumero(),
+					f.getEndereco().getBairro(),
+					
+			});
+		}
+	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object fonte = e.getSource();
