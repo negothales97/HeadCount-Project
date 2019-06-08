@@ -23,7 +23,6 @@ public class DependenteDAO {
 		}
 		return instancia;
 		
-		
 	}
 	private int id;
 	private final String INSERT		= "INSERT INTO DEPENDENTE (nome, cpf, datanasc, funcionario_id) values (?, ?, ?, ?)";

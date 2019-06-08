@@ -14,13 +14,15 @@ import view.departamento.CadDepartamento;
 import view.departamento.CustoDepartamentoView;
 import view.departamento.EditDepartamento;
 import view.departamento.ListaDepartamento;
+import view.departamento.RelCustoDepartamento;
 
 public class DepartamentoController {
 	private ListaDepartamento listaDepartamento = null;
 	private CadDepartamento cadDepartamento 	= null;
-	private CustoDepartamentoView custoDepartamento = null;
+	private CustoDepartamentoView custoDepartamento;
 	private DepartamentoDAO dao;
 	private EditDepartamento editDepartamento;
+	private RelCustoDepartamento relDep;
 	
 
 	public DepartamentoController() {
@@ -81,6 +83,14 @@ public class DepartamentoController {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public void relDepartamento() {
+		try {
+			relDep = new RelCustoDepartamento();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void updateDepartamento(Departamento departamento) {

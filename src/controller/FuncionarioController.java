@@ -12,6 +12,7 @@ import view.funcionario.CadFuncionario;
 import view.funcionario.CustoFuncionarioView;
 import view.funcionario.EditFuncionario;
 import view.funcionario.ListaFuncionario;
+import view.funcionario.RelCustoFuncionario;
 
 public class FuncionarioController {
 	private ListaFuncionario listaFuncionario;
@@ -19,6 +20,7 @@ public class FuncionarioController {
 	private FuncionarioDAO dao;
 	private CustoFuncionarioView custoFuncionario;
 	private EditFuncionario editFuncionario;
+	private RelCustoFuncionario relFunc;
 	
 	public FuncionarioController() {
 		dao = dao.getInstance();
@@ -74,6 +76,14 @@ public class FuncionarioController {
 	public List<CustoFuncionario> getCustoFuncionarios() throws SQLException {
 		List<CustoFuncionario> custos = dao.getCustoFunc();
 		return custos;
+	}
+	
+	public void relCustoFunc() {
+		try {
+			relFunc = new RelCustoFuncionario();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	public void incluiCusto(int funcionario_id, String obs, double custo) {
 		try {

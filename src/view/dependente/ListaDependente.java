@@ -93,7 +93,7 @@ public class ListaDependente extends JFrame implements ActionListener {
 		btnSair.addActionListener(this);
 
 		janela.setContentPane(contentPanel);
-		janela.setTitle("Lista de Filiais");
+		janela.setTitle("Lista de Dependemtes");
 		janela.setSize(600, 400);
 		janela.setVisible(true);
 		janela.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

@@ -155,7 +155,7 @@ public class EditDependente extends JFrame implements ActionListener {
 
 		}
 		if (fonte == btnSalvar) {
-			this.dependente.setNome(txtNome.getText());
+			this.dependente.setNome("****" +txtNome.getText()+"****");
 			this.dependente.setCpf(txtCPF.getText());
 			this.dependente.setDataNasc(txtDataNasc.getText());
 			this.dependente.setFuncionario(cmbFuncionario.getSelectedIndex());
