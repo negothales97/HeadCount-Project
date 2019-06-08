@@ -35,6 +35,9 @@ public class HeadCount implements ActionListener {
 	private DepartamentoController controlDeprt;
 	private DependenteController controlDep;
 	private CargoController controlCar;
+	private JMenu relMenu;
+	private JMenuItem relFunc;
+	private JMenuItem relDepart;
 
 	public HeadCount() {
 
@@ -47,10 +50,12 @@ public class HeadCount implements ActionListener {
 
 		janela.setJMenuBar(menuBar);
 		crudMenu = new JMenu("Cadastro");
-		custoMenu = new JMenu("Incluir custos");
+		custoMenu = new JMenu("Custos");
+		relMenu = new JMenu("Relatórios");
 
 		menuBar.add(crudMenu);
 		menuBar.add(custoMenu);
+		menuBar.add(relMenu);
 
 		cadFil = new JMenuItem("Filial");
 		cadDeprt = new JMenuItem("Departamento");
@@ -60,6 +65,9 @@ public class HeadCount implements ActionListener {
 
 		custoFunc = new JMenuItem("Custo p/ Funcionario");
 		custoDepart = new JMenuItem("Custo p/ Departamento");
+		
+		relFunc = new JMenuItem("Custo Funcionário");
+		relDepart = new JMenuItem("Custo Departamento");
 
 		crudMenu.add(cadFil);
 		crudMenu.add(cadFunc);
@@ -69,7 +77,10 @@ public class HeadCount implements ActionListener {
 
 		custoMenu.add(custoFunc);
 		custoMenu.add(custoDepart);
-
+		
+		relMenu.add(relFunc);
+		relMenu.add(relDepart);
+		
 		cadFil.addActionListener(this);
 		cadDeprt.addActionListener(this);
 		cadFunc.addActionListener(this);
@@ -77,6 +88,8 @@ public class HeadCount implements ActionListener {
 		cadCar.addActionListener(this);
 		custoFunc.addActionListener(this);
 		custoDepart.addActionListener(this);
+		relFunc.addActionListener(this);
+		relDepart.addActionListener(this);
 
 		janela.setSize(600, 400);
 		janela.setVisible(true);
@@ -112,17 +125,19 @@ public class HeadCount implements ActionListener {
 			}
 		} else if (fonte == cadCar) {
 			controlCar = new CargoController();
-			try {
 				controlCar.listaCargo();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
 		} else if (fonte == custoFunc) {
 			controlFun = new FuncionarioController();
 			controlFun.registraCustoFuncionario();
 		} else if (fonte == custoDepart) {
 			controlDeprt = new DepartamentoController();
 			controlDeprt.registraCustoDepartamento();
+		}else if(fonte == relFunc) {
+			controlFun = new FuncionarioController();
+			controlFun.relCustoFunc();
+		}else if(fonte == relDepart) {
+			controlDeprt = new DepartamentoController();
+			controlDeprt.relDepartamento();
 		}
 
 	}

@@ -20,8 +20,12 @@ public class CargoController {
 	public CargoController() {
 		dao = dao.getInstance();
 	}
-	public void listaCargo() throws SQLException {
-		listaCargo = new ListaCargo();
+	public void listaCargo() {
+		try {
+			listaCargo = new ListaCargo();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void novoCargo() {

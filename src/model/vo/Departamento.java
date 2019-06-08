@@ -36,4 +36,8 @@ public class Departamento {
 	public void setOrcamento(double orcamento) {
 		this.orcamento = orcamento;
 	}
+	
+	public String toString(){
+		return getNome();
+	}
 }

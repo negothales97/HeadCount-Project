@@ -90,11 +90,7 @@ public class CadCargo extends JFrame implements ActionListener {
 
 		if (fonte == btnVoltar) {
 			janela.dispose();
-			try {
-				control.listaCargo();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
+			control.listaCargo();
 
 		}
 		if (fonte == btnSalvar) {

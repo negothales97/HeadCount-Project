@@ -69,7 +69,7 @@ public class CadFuncionario extends JFrame implements ActionListener {
 	private JTextField txtCPF;
 	private JTextField txtDataNasc;
 	private JComboBox<String> comboBoxCargo;
-	private JComboBox<String> comboBoxDepartamento;
+	private JComboBox<Departamento> comboBoxDepartamento;
 	private JComboBox<String> comboBoxFilial;
 
 	public CadFuncionario() {
@@ -116,12 +116,12 @@ public class CadFuncionario extends JFrame implements ActionListener {
 		}catch (Exception e) {
 		}
 	
-		comboBoxDepartamento = new JComboBox<String>();
+		comboBoxDepartamento = new JComboBox<>();
 		try {
 			departamentoController = new DepartamentoController();
 			List<Departamento> masterDepartamento =departamentoController.getDepartamentos();
 			for (int i =0; i< masterDepartamento.size(); i++) {
-				comboBoxDepartamento.addItem(masterDepartamento.get(i).getNome());
+				comboBoxDepartamento.addItem(masterDepartamento.get(i));
 			}
 		}
 		catch (Exception e) {
