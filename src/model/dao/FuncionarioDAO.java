@@ -27,7 +27,7 @@ public class FuncionarioDAO {
 	private final String LISTBYID = "SELECT * FROM FUNCIONARIO WHERE MATRICULA = ?";
 	private final String CUSTOFUNC = "SELECT * FROM CUSTO_FUNCIONARIO";
 	private final String LISTRELFUNC = "SELECT f.matricula, f.nome, sum(c.custo) as total_custo from custo_funcionario as c "
-			+ "join funcionario as f on c.funcionario_id = f.matricula WHERE filial_id=?, departamento_id=?"
+			+ "join funcionario as f on c.funcionario_id = f.matricula WHERE filial_id=? and departamento_id=? "
 			+ "group by f.matricula, f.nome ";
 
 	public void create(Funcionario funcionario) throws SQLException {
