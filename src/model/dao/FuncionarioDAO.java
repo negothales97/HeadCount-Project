@@ -1,5 +1,6 @@
 package model.dao;
 
+import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,13 +19,16 @@ import model.vo.Funcionario;
 
 public class FuncionarioDAO {
 	
-	private final String INSERT		= "INSERT INTO Funcionario (nome,cpf,datanasc, cargo_id, departamento_id, filial_id) values (?, ?, ?, ?, ?, ?)";
-	private final String UPDATE		= "UPDATE FUNCIONARIO SET   nome=?, cpf=?, datanasc=?,cargo_id=?,departamento_id=?,filial_id=? WHERE matricula=?";
-	private final String DELETE 	= "DELETE FROM FUNCIONARIO WHERE MATRICULA=?";
-	private final String LIST 		= "SELECT * FROM FUNCIONARIO";
-	private final String LISTBYID   = "SELECT * FROM FUNCIONARIO WHERE MATRICULA = ?";
-	private final String CUSTOFUNC 	= "SELECT * FROM CUSTO_FUNCIONARIO";
 
+	private final String INSERT = "INSERT INTO Funcionario (nome,cpf,datanasc, cargo_id, departamento_id, filial_id) values (?, ?, ?, ?, ?, ?)";
+	private final String UPDATE = "UPDATE FUNCIONARIO SET   nome=?, cpf=?, datanasc=?,cargo_id=?,departamento_id=?,filial_id=? WHERE matricula=?";
+	private final String DELETE = "DELETE FROM FUNCIONARIO WHERE MATRICULA=?";
+	private final String LIST = "SELECT * FROM FUNCIONARIO";
+	private final String LISTBYID = "SELECT * FROM FUNCIONARIO WHERE MATRICULA = ?";
+	private final String CUSTOFUNC = "SELECT * FROM CUSTO_FUNCIONARIO";
+	private final String LISTRELFUNC = "SELECT f.matricula, f.nome, sum(c.custo) as total_custo from custo_funcionario as c "
+			+ "join funcionario as f on c.funcionario_id = f.matricula WHERE filial_id=?, departamento_id=?"
+			+ "group by f.matricula, f.nome ";
 
 	public void create(Funcionario funcionario) throws SQLException {
 		try (Connection con = Database.getInstance().getConnection()) {
@@ -35,14 +39,15 @@ public class FuncionarioDAO {
 				stmt.setInt(4, funcionario.getCargo_id());
 				stmt.setInt(5, funcionario.getDepartamento_id());
 				stmt.setInt(6, funcionario.getFilial_id());
-				
+
 				stmt.execute();
 				JOptionPane.showMessageDialog(null, "Funcionario criado com sucesso");
-			}catch (SQLException e) {
-	    		JOptionPane.showMessageDialog(null, "Erro ao criar Funcionario no banco de dados: " +e.getMessage());
+			} catch (SQLException e) {
+				JOptionPane.showMessageDialog(null, "Erro ao criar Funcionario no banco de dados: " + e.getMessage());
 			}
 		}
 	}
+
 	public void update(Funcionario funcionario) throws SQLException {
 		try (Connection con = Database.getInstance().getConnection()) {
 			try (PreparedStatement stmt = con.prepareStatement(UPDATE)) {
@@ -55,8 +60,8 @@ public class FuncionarioDAO {
 				stmt.setInt(7, funcionario.getMatricula());
 				stmt.execute();
 				JOptionPane.showMessageDialog(null, "Funcionario editado com sucesso");
-			}catch (SQLException e) {
-	    		JOptionPane.showMessageDialog(null, "Erro ao editar Funcionario no banco de dados: " +e.getMessage());
+			} catch (SQLException e) {
+				JOptionPane.showMessageDialog(null, "Erro ao editar Funcionario no banco de dados: " + e.getMessage());
 			}
 		}
 	}
@@ -68,8 +73,8 @@ public class FuncionarioDAO {
 				stmt.setInt(1, matricula);
 				stmt.execute();
 				JOptionPane.showMessageDialog(null, "Funcionario Removido com sucesso");
-			}catch (SQLException e) {
-	    		JOptionPane.showMessageDialog(null, "Erro ao remover Funcionario no banco de dados: " +e.getMessage());
+			} catch (SQLException e) {
+				JOptionPane.showMessageDialog(null, "Erro ao remover Funcionario no banco de dados: " + e.getMessage());
 			}
 		}
 	}
@@ -88,19 +93,20 @@ public class FuncionarioDAO {
 					int cargo_id = rs.getInt("cargo_id");
 					int departamento_id = rs.getInt("departamento_id");
 					int filial_id = rs.getInt("filial_id");
-					Funcionario funcionario = new Funcionario(matricula, nome, cpf, dataNasc, cargo_id, departamento_id, filial_id);
+					Funcionario funcionario = new Funcionario(matricula, nome, cpf, dataNasc, cargo_id, departamento_id,
+							filial_id);
 
-					
 					funcionarios.add(funcionario);
 				}
-			}catch (SQLException e) {
-	    		JOptionPane.showMessageDialog(null, "Erro ao listar Funcionario no banco de dados: " +e.getMessage());
+			} catch (SQLException e) {
+				JOptionPane.showMessageDialog(null, "Erro ao listar Funcionario no banco de dados: " + e.getMessage());
 			}
 
 		}
 		return funcionarios;
 	}
-	public Funcionario getFuncionario(int id) throws SQLException{
+
+	public Funcionario getFuncionario(int id) throws SQLException {
 		Funcionario funcionario = null;
 		try (Connection con = Database.getInstance().getConnection()){
 			try(PreparedStatement stmt = con.prepareStatement(LISTBYID)){
@@ -116,32 +122,32 @@ public class FuncionarioDAO {
 				int departamento_id = rs.getInt("departamento_id");
 				int filial_id = rs.getInt("filial_id");
 				funcionario = new Funcionario(matricula, nome, cpf, dataNasc, cargo_id, departamento_id, filial_id);
-				
-			}catch (SQLException e) {
-	    		JOptionPane.showMessageDialog(null, "Erro ao buscar funcionario no banco de dados: " +e.getMessage());
+
+			} catch (SQLException e) {
+				JOptionPane.showMessageDialog(null, "Erro ao buscar funcionario no banco de dados: " + e.getMessage());
 			}
-			
+
 		}
 		return funcionario;
 	}
 
-
 	public void custoFunc(int funcionario_id, String obs, double custo) throws SQLException {
 		try(Connection con = Database.getInstance().getConnection()){
 			String sql = "INSERT INTO CUSTO_FUNCIONARIO (funcionario_id, observacao, custo) values (?, ?, ?)";
-			try(PreparedStatement stmt = con.prepareStatement(sql)){
+			try (PreparedStatement stmt = con.prepareStatement(sql)) {
 				stmt.setInt(1, funcionario_id);
 				stmt.setString(2, obs);
 				stmt.setDouble(3, custo);
-				
+
 				stmt.execute();
-			}catch (SQLException e) {
-	    		JOptionPane.showMessageDialog(null, "Erro ao buscar custos no banco de dados: " +e.getMessage());
+			} catch (SQLException e) {
+				JOptionPane.showMessageDialog(null, "Erro ao buscar custos no banco de dados: " + e.getMessage());
 			}
 		}
-		
+
 	}
-	public List<CustoFuncionario> getCustoFunc() throws SQLException{
+
+	public List<CustoFuncionario> getCustoFunc() throws SQLException {
 		List<CustoFuncionario> custoFuncs = new ArrayList<>();
 		try (Connection con = Database.getInstance().getConnection()){
 			try (PreparedStatement stmt = con.prepareStatement(CUSTOFUNC)){
@@ -153,14 +159,40 @@ public class FuncionarioDAO {
 					int funcionario_id = rs.getInt("funcionario_id");
 					String observacao = rs.getString("observacao");
 					double custo = rs.getDouble("custo");
-					
+
 					CustoFuncionario custoFunc = new CustoFuncionario(id, funcionario_id, observacao, custo);
 					custoFuncs.add(custoFunc);
 				}
-			}catch (SQLException e) {
-	    		JOptionPane.showMessageDialog(null, "Erro ao buscar custo no banco de dados: " +e.getMessage());
+			} catch (SQLException e) {
+				JOptionPane.showMessageDialog(null, "Erro ao buscar custo no banco de dados: " + e.getMessage());
 			}
 		}
 		return custoFuncs;
+	}
+
+	public List<String> getRelFuncionarios(int filial_id, int departamento_id) throws SQLException {
+		List<String> relFuncionarios = new ArrayList<>();
+		try (Connection con = Database.getInstance().getConnection()) {
+			try (PreparedStatement stmt = con.prepareStatement(LISTRELFUNC)) {
+				stmt.setInt(1, filial_id);
+				stmt.setInt(2, departamento_id);
+				stmt.execute();
+				ResultSet rs = stmt.getResultSet();
+				while (rs.next()) {
+					String matricula = String.valueOf(rs.getInt("matricula"));		
+					relFuncionarios.add(matricula);
+					
+					String nome = rs.getString("nome");
+					relFuncionarios.add(nome);
+					
+					String total_custo = String.valueOf(rs.getDouble("total_custo"));
+					relFuncionarios.add(total_custo);	
+					
+				}
+			} catch (SQLException e) {
+				JOptionPane.showMessageDialog(null, "Erro ao buscar custo no banco de dados: " + e.getMessage());
+			}
+		}
+		return relFuncionarios;
 	}
 }

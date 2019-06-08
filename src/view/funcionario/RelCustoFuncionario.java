@@ -16,12 +16,15 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import controller.DepartamentoController;
 import controller.FilialController;
+import controller.FuncionarioController;
 import model.vo.Departamento;
 import model.vo.Filial;
+import model.vo.Funcionario;
 
 public class RelCustoFuncionario extends JFrame implements ActionListener {
 
@@ -34,24 +37,26 @@ public class RelCustoFuncionario extends JFrame implements ActionListener {
 	private BorderLayout boderLayout;
 	private GridBagLayout gbLayout;
 
-	private JComboBox<String> cmbFilial;
-	private JComboBox<String> cmbDepartamento;
+	private JComboBox<Filial> cmbFilial;
+	private JComboBox<Departamento> cmbDepartamento;
 
 	private JLabel lblFilial;
 	private JLabel lblDepartamento;
 	
 	private JButton btnFiltrar;
+	
+	private String[] colunas = { "Matricula", "Funcionario", "Custo (R$)" };
 
 	private JTable tblFuncionario;
 
+	private FuncionarioController controlFuncionario;
 	private DepartamentoController controlDepart;
 	private FilialController filialControl;
 
+	private JScrollPane barraRolagem;
+
 	public RelCustoFuncionario() throws SQLException {
 
-		String[] colunas = { "Filial", "Departamento", "Observação", "Custo (R$)" };
-
-		Object[][] dados = new Object[1][4];
 
 		janela = new JFrame();
 		contentPanel = new JPanel();
@@ -70,30 +75,24 @@ public class RelCustoFuncionario extends JFrame implements ActionListener {
 		
 		btnFiltrar = new JButton("Filtrar");
 
-		cmbFilial = new JComboBox<String>();
-		cmbDepartamento = new JComboBox<String>();
-
-		cmbFilial.addItem("SELECIONE....");
-		cmbDepartamento.addItem("SELECIONE....");
-
+		cmbFilial = new JComboBox<>();
+		cmbDepartamento = new JComboBox<>();
 
 		try {
 			controlDepart = new DepartamentoController();
 			List<Departamento> masterDepartamento = controlDepart.getDepartamentos();
 			for (int i = 0; i < masterDepartamento.size(); i++) {
-				cmbDepartamento.addItem(masterDepartamento.get(i).getNome());
+				cmbDepartamento.addItem(masterDepartamento.get(i));
 			}
 			filialControl = new FilialController();
-			List<Filial> master = filialControl.comboBoxFilial();
+			List<Filial> master = filialControl.getFiliais();
 			for (int i = 0; i < master.size(); i++) {
 
-				cmbFilial.addItem(master.get(i).getNome());
+				cmbFilial.addItem(master.get(i));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		tblFuncionario = new JTable(dados, colunas);
 
 		GridBagConstraints gbc = new GridBagConstraints();
 
@@ -105,10 +104,9 @@ public class RelCustoFuncionario extends JFrame implements ActionListener {
 		panelGrid.add(cmbDepartamento, gbc);
 		panelGrid.add(btnFiltrar, gbc);
 
-		container.add(tblFuncionario);
-
 		contentPanel.add(BorderLayout.NORTH, panelGrid);
 		contentPanel.add(BorderLayout.CENTER, container);
+		btnFiltrar.addActionListener(this);
 
 		janela.setContentPane(contentPanel);
 		janela.setTitle("Relatorio do Custo de Funcionario");
@@ -121,8 +119,22 @@ public class RelCustoFuncionario extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object fonte = e.getSource();
-		controlDepart = new DepartamentoController();
-
+		controlFuncionario = new FuncionarioController();
+		
+		if (fonte == btnFiltrar) {
+			Filial filial = (Filial) cmbFilial.getSelectedItem();
+			Departamento departamento = (Departamento) cmbDepartamento.getSelectedItem();
+			List<String> relFuncionario = controlFuncionario.getRelFuncionarios(filial.getId(), departamento.getId());
+			String[][] dados = new String[(relFuncionario.size())/3][3];
+			for (int i = 0; i < relFuncionario.size(); i = i +3) {
+				dados[i][0] = relFuncionario.get(i);
+				dados[i][1] = relFuncionario.get(i+1);
+				dados[i][2] = relFuncionario.get(i+2);
+			}
+			tblFuncionario = new JTable(dados, colunas);
+			barraRolagem = new JScrollPane(tblFuncionario);
+			container.add(barraRolagem);
+		}
 	}
 
 }

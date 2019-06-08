@@ -138,7 +138,7 @@ public class EditFuncionario extends JFrame implements ActionListener {
 		}
 		
 		filialControl = new FilialController();
-			List<Filial> master = filialControl.comboBoxFilial();
+			List<Filial> master = filialControl.getFiliais();
 			for (int i = 0; i < master.size(); i++) {
 				comboBoxFilial.addItem(master.get(i).getNome());}
 		 		

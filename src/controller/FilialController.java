@@ -60,7 +60,7 @@ public class FilialController  {
 		this.listaFilial();
 	}
 	
-	public List<Filial> comboBoxFilial(){
+	public List<Filial> getFiliais(){
 		List<Filial> filiais = null;
 		try {
 			filiais = dao.getFiliais();
