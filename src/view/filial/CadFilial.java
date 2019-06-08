@@ -150,7 +150,6 @@ public class CadFilial extends JFrame implements ActionListener {
 
 			control.criaFilial(filial);
 			janela.dispose();
-			JOptionPane.showMessageDialog(null, "Filial Cadastrada com sucesso");
 			
 		}
 

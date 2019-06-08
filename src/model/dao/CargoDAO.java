@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import model.connection.DAOException;
 import model.connection.Database;
 import model.vo.Cargo;
 import model.vo.Endereco;
@@ -22,46 +23,47 @@ public class CargoDAO {
 	private final String LIST 			= "SELECT * FROM CARGO";
 	private final String LISTBYID 		= "SELECT * FROM CARGO WHERE ID = ?";
 
-	public void create(Cargo cargo) throws SQLException {
+	public void create(Cargo cargo) throws DAOException {
 		try (Connection con = Database.getInstance().getConnection()) {
 
-			try (PreparedStatement stmt = con.prepareStatement(INSERT)) {
+			PreparedStatement stmt = con.prepareStatement(INSERT); 
 
 				stmt.setString(1, cargo.getNome());
 				
 				stmt.execute();
-			}catch (SQLException e) {
-	    		JOptionPane.showMessageDialog(null, "Erro ao criar cargo no banco de dados: " +e.getMessage());
-			}
+			
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, "Erro criar cargo: " +e.getMessage());
 		}
 	}
-	public void update(Cargo cargo) throws SQLException {
+	public void update(Cargo cargo) throws DAOException {
 		try (Connection con = Database.getInstance().getConnection()) {
-			try (PreparedStatement stmt = con.prepareStatement(UPDATE)) {
+			PreparedStatement stmt = con.prepareStatement(UPDATE);
 				stmt.setString(1, cargo.getNome());
 				stmt.setInt(2, cargo.getId());
 				stmt.execute();
 				JOptionPane.showMessageDialog(null, "Atualizado com sucesso");
-			}catch (SQLException e) {
-	    		JOptionPane.showMessageDialog(null, "Erro ao editar cargo no banco de dados: " +e.getMessage());
 			}
+		catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, "Erro ao editar cargo no banco de dados: " +e.getMessage());
 		}
-	}
-	public void delete(int id) throws SQLException {
+}
+	public void delete(int id) throws DAOException {
 		try (Connection con = Database.getInstance().getConnection()) {
-			try (PreparedStatement stmt = con.prepareStatement(DELETE)) {
+			PreparedStatement stmt = con.prepareStatement(DELETE);
 				stmt.setInt(1, id);
 				stmt.execute();
-			}catch (SQLException e) {
-	    		JOptionPane.showMessageDialog(null, "Erro ao deletar cargo no banco de dados: " +e.getMessage());
-			}
+			
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, "Erro ao deletar cargo no banco de dados: " +e.getMessage());
+			
 		}
 	}
 
-	public List<Cargo> getCargos() throws SQLException {
+	public List<Cargo> getCargos() throws DAOException {
 		List<Cargo> cargos = new ArrayList<>();
 		try (Connection con = Database.getInstance().getConnection()) {
-			try (PreparedStatement stmt = con.prepareStatement(LIST)) {
+			PreparedStatement stmt = con.prepareStatement(LIST);
 				stmt.execute();
 				ResultSet rs = stmt.getResultSet();
 				while (rs.next()) {
@@ -71,19 +73,19 @@ public class CargoDAO {
 
 					cargo.setId(id);
 					cargos.add(cargo);
+					
 				}
-			}catch (SQLException e) {
-	    		JOptionPane.showMessageDialog(null, "Erro ao listar cargos no banco de dados: " +e.getMessage());
-			}
 
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, "Erro ao listar cargos no banco de dados: " +e.getMessage());
 		}
 		return cargos;
 	}
 
-	public Cargo getCargo(int id) throws SQLException{
+	public Cargo getCargo(int id) throws DAOException{
 		Cargo cargo = null;
 		try (Connection con = Database.getInstance().getConnection()){
-			try(PreparedStatement stmt = con.prepareStatement(LISTBYID)){
+			PreparedStatement stmt = con.prepareStatement(LISTBYID);
 				stmt.setInt(1, id);
 				stmt.execute();
 				ResultSet rs = stmt.getResultSet();
@@ -92,12 +94,13 @@ public class CargoDAO {
 				String nome = rs.getString("nome");
 				cargo = new Cargo(nome);
 				cargo.setId(idCargo);
+				return cargo;
 				
+			
 			}catch (SQLException e) {
 	    		JOptionPane.showMessageDialog(null, "Erro ao buscar cargo no banco de dados: " +e.getMessage());
 			}
-		}
-		return cargo;
+		return null;
 	}
 
 	
