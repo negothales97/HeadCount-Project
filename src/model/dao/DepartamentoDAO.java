@@ -18,26 +18,16 @@ import model.vo.Filial;
 
 
 public class DepartamentoDAO {
-	private DepartamentoDAO(){}
 	
-	private static DepartamentoDAO instancia =null;
-	
-	public static DepartamentoDAO getInstance() {
-		if (instancia ==null) {
-			instancia = new DepartamentoDAO();
-		}
-		return instancia;
-		
-		
-	}
 	private final String INSERT		= "INSERT INTO DEPARTAMENTO (nome, centrocusto, orcamento) values (?, ?, ?)";
 	private final String UPDATE		= "UPDATE DEPARTAMENTO SET nome=?, centrocusto=?, orcamento=? WHERE id=?";
 	private final String DELETE 	= "DELETE FROM DEPARTAMENTO WHERE id=?";
 	private final String LIST 		= "SELECT * FROM DEPARTAMENTO";
 	private final String LISTBYID 	= "SELECT * FROM DEPARTAMENTO WHERE ID = ?";
+	private final String LISTBYNOME = "SELECT * FROM DEPARTAMENTO WHERE nome= ?";
 
 	public void create(Departamento departamento) throws SQLException {
-		try (Connection con = Database.getConnection()) {
+		try (Connection con = Database.getInstance().getConnection()) {
 
 			try (PreparedStatement stmt = con.prepareStatement(INSERT)) {
 				stmt.setString(1, departamento.getNome());
@@ -52,7 +42,7 @@ public class DepartamentoDAO {
 	}
 	
 	public void update(Departamento departamento) throws SQLException {
-		try (Connection con = Database.getConnection()) {
+		try (Connection con = Database.getInstance().getConnection()) {
 			String sql = "UPDATE DEPARTAMENTO SET nome=?, centrocusto=?, orcamento=? WHERE id=?";
 
 			try (PreparedStatement stmt = con.prepareStatement(sql)) {
@@ -72,7 +62,7 @@ public class DepartamentoDAO {
 	
 	
 	public void delete(int id) throws SQLException {
-		try (Connection con = Database.getConnection()) {
+		try (Connection con = Database.getInstance().getConnection()) {
 			String sql = "DELETE FROM DEPARTAMENTO WHERE id=?";
 
 			try (PreparedStatement stmt = con.prepareStatement(sql)) {
@@ -88,7 +78,7 @@ public class DepartamentoDAO {
 	
 	public List<Departamento> getDepartamentos() throws SQLException {
 		List<Departamento> departamentos = new ArrayList<>();
-		try (Connection con = Database.getConnection()) {
+		try (Connection con = Database.getInstance().getConnection()) {
 			try (PreparedStatement stmt = con.prepareStatement(LIST)) {
 				stmt.execute();
 				ResultSet rs = stmt.getResultSet();
@@ -108,7 +98,7 @@ public class DepartamentoDAO {
 		return departamentos;
 	}
 	public Departamento getDepartamento(int id) throws SQLException {
-		try (Connection con = Database.getConnection()){
+		try (Connection con = Database.getInstance().getConnection()){
 			try(PreparedStatement stmt = con.prepareStatement(LISTBYID)){
 				stmt.setInt(1, id);
 				stmt.execute();
@@ -125,9 +115,27 @@ public class DepartamentoDAO {
 		}
 	}
 	
+	public Departamento getIDDepartamento(String NomeDepartamento) throws SQLException {
+		try (Connection con = Database.getConnection()){
+			try(PreparedStatement stmt = con.prepareStatement(LISTBYNOME)){
+				stmt.setString(1, NomeDepartamento);
+				stmt.execute();
+				ResultSet rs = stmt.getResultSet();
+				rs.next();
+				int idDepartamento = rs.getInt("id");
+				String nome = rs.getString("nome");
+				String centrocusto = rs.getString("centrocusto");
+				double orcamento= rs.getDouble("orcamento");
+				Departamento departamento = new Departamento(nome, centrocusto, orcamento);
+				departamento.setId(idDepartamento);
+				return departamento;
+			}
+		}
+	}
+	
 	public List<CustoDepartamento> getCustoDep() throws SQLException{
 		List<CustoDepartamento> custosDepartamento = new ArrayList<>();
-		try (Connection con = Database.getConnection()){
+		try (Connection con = Database.getInstance().getConnection()){
 			String sql = "SELECT * FROM CUSTO_DEPARTAMENTO";
 			try (PreparedStatement stmt = con.prepareStatement(sql)){
 				stmt.execute();
@@ -151,7 +159,7 @@ public class DepartamentoDAO {
 	
 	
 	public void custoDep(int filial_id, int departamento_id, String obs, double custo) throws SQLException{
-		try(Connection con = Database.getConnection()){
+		try(Connection con = Database.getInstance().getConnection()){
 			String sql = "INSERT INTO CUSTO_DEPARTAMENTO (filial_id, departamento_id, observacao, custo) values (?, ?, ?, ?)";
 			try(PreparedStatement stmt = con.prepareStatement(sql)){
 				stmt.setInt(1, filial_id);

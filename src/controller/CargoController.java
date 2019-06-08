@@ -18,7 +18,7 @@ public class CargoController {
 	private EditCargo editCargo; 
 	
 	public CargoController() {
-		dao = dao.getInstance();
+		dao = new CargoDAO();
 	}
 	public void listaCargo() {
 		try {

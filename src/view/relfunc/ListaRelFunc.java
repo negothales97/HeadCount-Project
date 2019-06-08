@@ -1,4 +1,4 @@
-package view.relatorios;
+package view.relfunc;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -24,13 +24,14 @@ import controller.CargoController;
 import controller.DepartamentoController;
 import controller.FilialController;
 import controller.FuncionarioController;
+import controller.RelFuncController;
 import model.dao.CargoDAO;
 import model.vo.Cargo;
 import model.vo.Departamento;
 import model.vo.Filial;
 import model.vo.Funcionario;
 
-public class ListaRelatorios extends JFrame implements ActionListener {
+public class ListaRelFunc extends JFrame implements ActionListener {
 	private DepartamentoController control;
 	private FilialController controller;
 	private JFrame janela;
@@ -49,7 +50,7 @@ public class ListaRelatorios extends JFrame implements ActionListener {
 	private JTable tblCargo;
 
 
-	public ListaRelatorios() throws SQLException {
+	public ListaRelFunc() throws SQLException {
 		String[] colunas = { "Codigo", "Cargo" };
 //
 //		List<Cargo> filiais = control.getC();
@@ -133,8 +134,7 @@ public class ListaRelatorios extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object fonte = e.getSource();
-		control = new DepartamentoController();
-		controller = new FilialController();
+		control = new RelFuncController();
 
 		if (fonte == btnSair) {
 			janela.dispose();
@@ -142,7 +142,7 @@ public class ListaRelatorios extends JFrame implements ActionListener {
 		if (fonte == btnFiltrar) {
 			String departamento = cmbDepartamento.getSelectedItem().toString();
 			String filial = cmbFilial.getSelectedItem().toString();
-			
+			control.listaRelFunc(departamento, filial);
 		}
 
 	}

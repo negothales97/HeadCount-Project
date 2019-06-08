@@ -20,8 +20,10 @@ import javax.swing.JTable;
 
 import controller.DepartamentoController;
 import controller.FilialController;
+import controller.FuncionarioController;
 import model.vo.Departamento;
 import model.vo.Filial;
+import model.vo.Funcionario;
 
 public class RelCustoFuncionario extends JFrame implements ActionListener {
 
@@ -44,6 +46,7 @@ public class RelCustoFuncionario extends JFrame implements ActionListener {
 
 	private JTable tblFuncionario;
 
+	private FuncionarioController controlFuncionario;
 	private DepartamentoController controlDepart;
 	private FilialController filialControl;
 
@@ -121,8 +124,19 @@ public class RelCustoFuncionario extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object fonte = e.getSource();
-		controlDepart = new DepartamentoController();
-
+		controlFuncionario = new FuncionarioController();
+		
+		if (fonte == btnFiltrar) {
+			String txtDepartamento = cmbDepartamento.getSelectedItem().toString();
+			String txtFilial = cmbFilial.getSelectedItem().toString();
+			List<String> relFuncionario = controlFuncionario.getRelFuncionarios(txtFilial, txtDepartamento);
+			String[][] dados = new String[(relFuncionario.size())/3][3];
+			for (int i = 0; i < relFuncionario.size(); i = i +3) {
+				dados[i][0] = relFuncionario.get(i);
+				dados[i][1] = relFuncionario.get(i+1);
+				dados[i][2] = relFuncionario.get(i+2);
+			}
+		}
 	}
 
 }
