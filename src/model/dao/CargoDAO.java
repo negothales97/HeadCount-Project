@@ -15,16 +15,7 @@ import model.vo.Endereco;
 import model.vo.Filial;
 
 public class CargoDAO {
-	private CargoDAO(){}
-	
-	private static CargoDAO instancia =null;
-	
-	public static CargoDAO getInstance() {
-		if (instancia ==null) {
-			instancia = new CargoDAO();
-		}
-		return instancia;
-	}
+
 	private final String INSERT	= "INSERT INTO CARGO (nome) values (?)";
 	private final String UPDATE	= "UPDATE CARGO SET nome = ? WHERE id = ?";
 	private final String DELETE 		= "DELETE FROM CARGO WHERE id=?";
@@ -32,7 +23,7 @@ public class CargoDAO {
 	private final String LISTBYID 		= "SELECT * FROM CARGO WHERE ID = ?";
 
 	public void create(Cargo cargo) throws SQLException {
-		try (Connection con = Database.getConnection()) {
+		try (Connection con = Database.getInstance().getConnection()) {
 
 			try (PreparedStatement stmt = con.prepareStatement(INSERT)) {
 
@@ -45,7 +36,7 @@ public class CargoDAO {
 		}
 	}
 	public void update(Cargo cargo) throws SQLException {
-		try (Connection con = Database.getConnection()) {
+		try (Connection con = Database.getInstance().getConnection()) {
 			try (PreparedStatement stmt = con.prepareStatement(UPDATE)) {
 				stmt.setString(1, cargo.getNome());
 				stmt.setInt(2, cargo.getId());
@@ -57,7 +48,7 @@ public class CargoDAO {
 		}
 	}
 	public void delete(int id) throws SQLException {
-		try (Connection con = Database.getConnection()) {
+		try (Connection con = Database.getInstance().getConnection()) {
 			try (PreparedStatement stmt = con.prepareStatement(DELETE)) {
 				stmt.setInt(1, id);
 				stmt.execute();
@@ -69,7 +60,7 @@ public class CargoDAO {
 
 	public List<Cargo> getCargos() throws SQLException {
 		List<Cargo> cargos = new ArrayList<>();
-		try (Connection con = Database.getConnection()) {
+		try (Connection con = Database.getInstance().getConnection()) {
 			try (PreparedStatement stmt = con.prepareStatement(LIST)) {
 				stmt.execute();
 				ResultSet rs = stmt.getResultSet();
@@ -91,7 +82,7 @@ public class CargoDAO {
 
 	public Cargo getCargo(int id) throws SQLException{
 		Cargo cargo = null;
-		try (Connection con = Database.getConnection()){
+		try (Connection con = Database.getInstance().getConnection()){
 			try(PreparedStatement stmt = con.prepareStatement(LISTBYID)){
 				stmt.setInt(1, id);
 				stmt.execute();

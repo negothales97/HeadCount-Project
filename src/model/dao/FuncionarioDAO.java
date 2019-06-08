@@ -18,18 +18,7 @@ import model.vo.Filial;
 import model.vo.Funcionario;
 
 public class FuncionarioDAO {
-	private FuncionarioDAO() {
-	}
-
-	private static FuncionarioDAO instancia = null;
-
-	public static FuncionarioDAO getInstance() {
-		if (instancia == null) {
-			instancia = new FuncionarioDAO();
-		}
-		return instancia;
-
-	}
+	
 
 	private final String INSERT = "INSERT INTO Funcionario (nome,cpf,datanasc, cargo_id, departamento_id, filial_id) values (?, ?, ?, ?, ?, ?)";
 	private final String UPDATE = "UPDATE FUNCIONARIO SET   nome=?, cpf=?, datanasc=?,cargo_id=?,departamento_id=?,filial_id=? WHERE matricula=?";
@@ -40,7 +29,7 @@ public class FuncionarioDAO {
 	private final String LISTRELFUNC = "SELECT f.matricula, f.nome, sum(c.custo) as total_custo from custo_funcionario as c join funcionario as f on c.funcionario_id = f.matricula group by f.matricula, f.nome WHERE filial_id=?, departamento_id=?";
 
 	public void create(Funcionario funcionario) throws SQLException {
-		try (Connection con = Database.getConnection()) {
+		try (Connection con = Database.getInstance().getConnection()) {
 			try (PreparedStatement stmt = con.prepareStatement(INSERT)) {
 				stmt.setString(1, funcionario.getNome());
 				stmt.setString(2, funcionario.getCpf());
@@ -58,7 +47,7 @@ public class FuncionarioDAO {
 	}
 
 	public void update(Funcionario funcionario) throws SQLException {
-		try (Connection con = Database.getConnection()) {
+		try (Connection con = Database.getInstance().getConnection()) {
 			try (PreparedStatement stmt = con.prepareStatement(UPDATE)) {
 				stmt.setString(1, funcionario.getNome());
 				stmt.setString(2, funcionario.getCpf());
@@ -76,7 +65,7 @@ public class FuncionarioDAO {
 	}
 
 	public void delete(int matricula) throws SQLException {
-		try (Connection con = Database.getConnection()) {
+		try (Connection con = Database.getInstance().getConnection()) {
 
 			try (PreparedStatement stmt = con.prepareStatement(DELETE)) {
 				stmt.setInt(1, matricula);
@@ -90,7 +79,7 @@ public class FuncionarioDAO {
 
 	public List<Funcionario> getFuncionarios() throws SQLException {
 		List<Funcionario> funcionarios = new ArrayList<>();
-		try (Connection con = Database.getConnection()) {
+		try (Connection con = Database.getInstance().getConnection()) {
 			try (PreparedStatement stmt = con.prepareStatement(LIST)) {
 				stmt.execute();
 				ResultSet rs = stmt.getResultSet();
@@ -117,8 +106,8 @@ public class FuncionarioDAO {
 
 	public Funcionario getFuncionario(int id) throws SQLException {
 		Funcionario funcionario = null;
-		try (Connection con = Database.getConnection()) {
-			try (PreparedStatement stmt = con.prepareStatement(LISTBYID)) {
+		try (Connection con = Database.getInstance().getConnection()){
+			try(PreparedStatement stmt = con.prepareStatement(LISTBYID)){
 				stmt.setInt(1, id);
 				stmt.execute();
 				ResultSet rs = stmt.getResultSet();
@@ -141,7 +130,7 @@ public class FuncionarioDAO {
 	}
 
 	public void custoFunc(int funcionario_id, String obs, double custo) throws SQLException {
-		try (Connection con = Database.getConnection()) {
+		try(Connection con = Database.getInstance().getConnection()){
 			String sql = "INSERT INTO CUSTO_FUNCIONARIO (funcionario_id, observacao, custo) values (?, ?, ?)";
 			try (PreparedStatement stmt = con.prepareStatement(sql)) {
 				stmt.setInt(1, funcionario_id);
@@ -158,8 +147,8 @@ public class FuncionarioDAO {
 
 	public List<CustoFuncionario> getCustoFunc() throws SQLException {
 		List<CustoFuncionario> custoFuncs = new ArrayList<>();
-		try (Connection con = Database.getConnection()) {
-			try (PreparedStatement stmt = con.prepareStatement(CUSTOFUNC)) {
+		try (Connection con = Database.getInstance().getConnection()){
+			try (PreparedStatement stmt = con.prepareStatement(CUSTOFUNC)){
 				stmt.execute();
 				ResultSet rs = stmt.getResultSet();
 				while (rs.next()) {

@@ -26,7 +26,7 @@ public class DepartamentoController {
 	
 
 	public DepartamentoController() {
-		dao = dao.getInstance();
+		dao = new DepartamentoDAO();
 	}
 
 	public void listaDepartamento() throws SQLException {
