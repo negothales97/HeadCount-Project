@@ -34,6 +34,7 @@ public class FilialDAO {
 	private final String DELETE 		= "DELETE FROM FILIAL WHERE id=?; DELETE FROM ENDERECO WHERE filial_id=?";
 	private final String LIST 			= "SELECT * FROM FILIAL INNER JOIN ENDERECO ON FILIAL.ID = ENDERECO.FILIAL_ID";
 	private final String LISTBYID 		= "SELECT * FROM FILIAL INNER JOIN ENDERECO ON FILIAL.ID = ENDERECO.FILIAL_ID WHERE FILIAL.ID = ?";
+	private final String LISTBYNOME 	= "SELECT * FROM FILIAL INNER JOIN ENDERECO ON FILIAL.ID = ENDERECO.FILIAL_ID WHERE FILIAL.nome = ?";
 
 	public void create(Filial filial) throws SQLException {
 		try (Connection con = Database.getConnection()) {
@@ -152,8 +153,26 @@ public class FilialDAO {
 			}
 		}
 	}
-
 	
-
-	
+	public Filial getIDFilial(String NomeFilial) throws SQLException{
+		try (Connection con = Database.getConnection()){
+			try(PreparedStatement stmt = con.prepareStatement(LISTBYNOME)){
+				stmt.setString(1, NomeFilial);
+				stmt.execute();
+				
+				ResultSet rs = stmt.getResultSet();
+				rs.next();
+				int idFilial = rs.getInt("id");
+				String nome = rs.getString("nome");
+				String cnpj = rs.getString("cnpj");
+				String inscEstadual = rs.getString("insc_estadual");
+				String rua = rs.getString("rua");
+				String numero = rs.getString("numero");
+				String bairro = rs.getString("bairro");
+				Filial filial = new Filial(nome, cnpj, inscEstadual, new Endereco(rua, numero, bairro));
+				filial.setId(idFilial);
+				return filial;
+			}
+		}
+	}	
 }
