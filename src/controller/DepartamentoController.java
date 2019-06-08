@@ -86,11 +86,8 @@ public class DepartamentoController {
 	}
 	
 	public void relDepartamento() {
-		try {
-			relDep = new RelCustoDepartamento();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		relDep = new RelCustoDepartamento();
+		relDep.criaJanela();
 	}
 
 	public void updateDepartamento(Departamento departamento) {

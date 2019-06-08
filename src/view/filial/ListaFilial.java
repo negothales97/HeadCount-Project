@@ -48,7 +48,7 @@ public class ListaFilial extends JFrame implements ActionListener {
 	public void geraTela() {
 		
 		control = new FilialController();
-		filiais = control.comboBoxFilial();
+		filiais = control.getFiliais();
 		dados = new Object[filiais.size()][7];
 		for (int i = 0; i < filiais.size(); i++) {
 			Filial filial = filiais.get(i);
