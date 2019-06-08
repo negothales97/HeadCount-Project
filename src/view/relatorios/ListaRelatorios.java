@@ -77,7 +77,7 @@ public class ListaRelatorios extends JFrame implements ActionListener {
 		cmbFilial.addItem("SELECIONE....");
 		try {
 			controller = new FilialController();
-			List<Filial> master= controller.comboBoxFilial();
+			List<Filial> master= controller.getFiliais();
 			for (int i = 0; i< master.size(); i++) {
 				cmbFilial.addItem(master.get(i).getNome());
 			}

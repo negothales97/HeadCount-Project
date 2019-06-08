@@ -84,7 +84,7 @@ public class RelCustoFuncionario extends JFrame implements ActionListener {
 				cmbDepartamento.addItem(masterDepartamento.get(i).getNome());
 			}
 			filialControl = new FilialController();
-			List<Filial> master = filialControl.comboBoxFilial();
+			List<Filial> master = filialControl.getFiliais();
 			for (int i = 0; i < master.size(); i++) {
 
 				cmbFilial.addItem(master.get(i).getNome());
