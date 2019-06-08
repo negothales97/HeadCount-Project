@@ -9,7 +9,6 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
-import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,11 +16,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import controller.FilialController;
-import model.dao.FilialDAO;
 import model.vo.Filial;
 
 public class ListaFilial extends JFrame implements ActionListener {
@@ -38,30 +35,21 @@ public class ListaFilial extends JFrame implements ActionListener {
 	
 	private DefaultTableModel modelo = new DefaultTableModel();
 	private JTable tblFilial;
-	private List<Filial> filiais;
-	private Object[][] dados;
 	private JScrollPane barraRolagem;
 
 	public ListaFilial() {
-		
+		super("Filiais");
+
+		geraTabela();
+		geraTela();
 	}
 	
 	public void geraTela() {
+		btnNovo = new JButton("Novo");
+		btnRemover = new JButton("Remover");
+		btnSair = new JButton("Sair");
+		btnEditar = new JButton ("Editar");
 		
-		control = new FilialController();
-		filiais = control.getFiliais();
-		dados = new Object[filiais.size()][7];
-		for (int i = 0; i < filiais.size(); i++) {
-			Filial filial = filiais.get(i);
-			dados[i][0] = filial.getId();
-			dados[i][1] = filial.getNome();
-			dados[i][2] = filial.getCnpj();
-			dados[i][3] = filial.getInscEstadual();
-			dados[i][4] = filial.getEndereco().getRua();
-			dados[i][5] = filial.getEndereco().getNumero();
-			dados[i][6] = filial.getEndereco().getBairro();
-			
-		}
 		janela = new JFrame();
 		contentPanel = new JPanel();
 		panelGrid = new JPanel();
@@ -71,10 +59,7 @@ public class ListaFilial extends JFrame implements ActionListener {
 		contentPanel.setLayout(new BorderLayout());
 		container.setLayout(new FlowLayout());
 
-		btnNovo = new JButton("Novo");
-		btnRemover = new JButton("Remover");
-		btnSair = new JButton("Sair");
-		btnEditar = new JButton ("Editar");
+		
 		
 		barraRolagem = new JScrollPane(tblFilial);
 
@@ -98,10 +83,10 @@ public class ListaFilial extends JFrame implements ActionListener {
 		btnSair.addActionListener(this);
 		
 		janela.setContentPane(contentPanel);
-		janela.setTitle("Lista de Filiais");
-		janela.setSize(700, 400);
-		janela.setVisible(true);
 		janela.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		janela.setTitle("Lista de Filiais");
+		janela.setSize(700, 300);
+		janela.setVisible(true);
 	}
 	
 	private void geraTabela() {
@@ -115,13 +100,13 @@ public class ListaFilial extends JFrame implements ActionListener {
 		modelo.addColumn("Num");
 		modelo.addColumn("Bairro");
 
-		tblFilial.getColumnModel().getColumn(0).setPreferredWidth(10);
+		tblFilial.getColumnModel().getColumn(0).setPreferredWidth(100);
 		tblFilial.getColumnModel().getColumn(1).setPreferredWidth(100);
 		tblFilial.getColumnModel().getColumn(2).setPreferredWidth(100);
-		tblFilial.getColumnModel().getColumn(3).setPreferredWidth(100);
+		tblFilial.getColumnModel().getColumn(3).setPreferredWidth(150);
 		tblFilial.getColumnModel().getColumn(4).setPreferredWidth(100);
-		tblFilial.getColumnModel().getColumn(5).setPreferredWidth(60);
 		tblFilial.getColumnModel().getColumn(5).setPreferredWidth(100);
+		tblFilial.getColumnModel().getColumn(6).setPreferredWidth(150);
 		pesquisar(modelo);
 	}
 
@@ -152,21 +137,28 @@ public class ListaFilial extends JFrame implements ActionListener {
 
 		}
 		if(fonte== btnEditar) {
-			int id = Integer.parseInt(JOptionPane.showInputDialog("Informe o codigo a ser editado"));
-			control.editaFilial(id);
-			janela.dispose();
-			
+            int linhaSelecionada = -1;
+            linhaSelecionada = tblFilial.getSelectedRow();
+            if (linhaSelecionada >= 0) {
+            	int id = (int) tblFilial.getValueAt(linhaSelecionada, 0);
+            	control.editaFilial(id);
+            	janela.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, 
+                "É necesário selecionar uma linha.");
+            }
 		}
 		if (fonte == btnRemover) {
-
-			int id = Integer.parseInt(JOptionPane.showInputDialog("Informe o codigo a ser removido"));
-			try {
-				control.deletaFilial(id);
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-			janela.dispose();
-			JOptionPane.showMessageDialog(null, "Filial Removida com sucesso");
+			int linhaSelecionada = -1;
+            linhaSelecionada = tblFilial.getSelectedRow();
+            if (linhaSelecionada >= 0) {
+            	int id = (int) tblFilial.getValueAt(linhaSelecionada, 0);
+            	control.deletaFilial(id);
+            	janela.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, 
+                "É necesário selecionar uma linha.");
+            }
 		}
 		if (fonte == btnSair) {
 			janela.dispose();

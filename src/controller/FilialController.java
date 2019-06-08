@@ -3,6 +3,7 @@ package controller;
 import java.sql.SQLException;
 import java.util.List;
 
+import model.connection.DAOException;
 import model.dao.FilialDAO;
 import model.vo.Filial;
 import view.filial.CadFilial;
@@ -20,7 +21,6 @@ public class FilialController  {
 	}
 	public void listaFilial(){
 		listaFilial = new ListaFilial();
-		listaFilial.geraTela();
 	}
 	
 
@@ -55,8 +55,12 @@ public class FilialController  {
 		}
 	}
 
-	public void deletaFilial(int id) throws SQLException {
-		dao.delete(id);
+	public void deletaFilial(int id) {
+		try {
+			dao.delete(id);
+		} catch (DAOException e) {
+			e.printStackTrace();
+		}
 		this.listaFilial();
 	}
 	
