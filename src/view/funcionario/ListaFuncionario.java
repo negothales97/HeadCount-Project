@@ -19,6 +19,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import controller.DependenteController;
 import controller.FilialController;
@@ -30,7 +32,7 @@ import model.vo.Filial;
 import model.vo.Funcionario;
 
 public class ListaFuncionario extends JFrame implements ActionListener {
-	private FuncionarioController control;
+	private static FuncionarioController control;
 	private JFrame janela;
 	private JPanel contentPanel;
 	private JPanel panelGrid;
@@ -45,43 +47,32 @@ public class ListaFuncionario extends JFrame implements ActionListener {
 
 	private JTable tblFuncionario;
 	private JScrollPane barraRolagem;
+	private DefaultTableModel modelo = new DefaultTableModel();
 
-	public ListaFuncionario() throws SQLException {
-		String[] colunas = { "Matricula", "Nome", "CPF", "Data Nasc" };
-		control = new FuncionarioController();
-		List<Funcionario> funcionarios = control.getFuncionarios();
-		Object[][] dados = new Object[funcionarios.size()][4];
-		for (int i = 0; i < funcionarios.size(); i++) {
-			Funcionario funcionario = funcionarios.get(i);
-			dados[i][0] = funcionario.getMatricula();
-			dados[i][1] = funcionario.getNome();
-			dados[i][2] = funcionario.getCpf();
-			dados[i][3] = funcionario.getDatanasc();
-		}
-
+	public ListaFuncionario(){
+		
+		super("Funcionarios");
+		geraTabela();
+		geraTela();
+	}
+	
+	public void geraTela() {
+		btnNovo = new JButton("Novo");
+		btnRemover = new JButton("Remover");
+		btnSair = new JButton("Sair");
+		btnEditar = new JButton ("Editar");
+		
 		janela = new JFrame();
 		contentPanel = new JPanel();
 		panelGrid = new JPanel();
 		container = new JPanel();
-
-		boderLayout = new BorderLayout();
-		gbLayout = new GridBagLayout();
-
-		panelGrid.setLayout(gbLayout);
-		contentPanel.setLayout(boderLayout);
+		
+		panelGrid.setLayout(new GridBagLayout());
+		contentPanel.setLayout(new BorderLayout());
 		container.setLayout(new FlowLayout());
-
-		barraRolagem = new JScrollPane();
-
-		btnNovo = new JButton("Novo");
-		btnEditar = new JButton("Editar");
-		btnRemover = new JButton("Remover");
-		btnSair = new JButton("Sair");
-
-		tblFuncionario = new JTable(dados, colunas);
+		
 		barraRolagem = new JScrollPane(tblFuncionario);
 		GridBagConstraints gbc = new GridBagConstraints();
-
 		gbc.insets = new Insets(5, 5, 5, 5);
 
 		panelGrid.add(btnNovo, gbc);
@@ -94,16 +85,41 @@ public class ListaFuncionario extends JFrame implements ActionListener {
 		contentPanel.add(BorderLayout.CENTER, container);
 
 		btnNovo.addActionListener(this);
+		btnEditar.addActionListener(this);
 		btnRemover.addActionListener(this);
 		btnSair.addActionListener(this);
-		btnEditar.addActionListener(this);
-
+		
 		janela.setContentPane(contentPanel);
-		janela.setTitle("Lista de Funcionarios");
-		janela.setSize(600, 400);
-		janela.setVisible(true);
 		janela.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		janela.setTitle("Lista de Funcionários");
+		janela.setSize(700, 300);
+		janela.setVisible(true);
+	}
+	private void geraTabela() {
+		tblFuncionario = new JTable(modelo );
+		modelo.addColumn("Matricula");
+		modelo.addColumn("Nome");
+		modelo.addColumn("CPF");
+		modelo.addColumn("Data Nasc");
 
+		tblFuncionario.getColumnModel().getColumn(0).setPreferredWidth(100);
+		tblFuncionario.getColumnModel().getColumn(1).setPreferredWidth(100);
+		tblFuncionario.getColumnModel().getColumn(2).setPreferredWidth(100);
+		tblFuncionario.getColumnModel().getColumn(3).setPreferredWidth(150);
+		pesquisar(modelo);
+	}
+	
+	public static void pesquisar(DefaultTableModel modelo) {
+		modelo.setNumRows(0);
+		control = new FuncionarioController();
+		for (Funcionario f : control.getFuncionarios()) {
+			modelo.addRow(new Object[] {
+					f.getMatricula(),
+					f.getNome(),
+					f.getCpf(),
+					f.getDatanasc(),
+			});
+		}
 	}
 
 	@Override
@@ -117,23 +133,32 @@ public class ListaFuncionario extends JFrame implements ActionListener {
 
 		}
 		if (fonte == btnRemover) {
-
-			int id = Integer.parseInt(JOptionPane.showInputDialog("Informe o codigo a ser removido"));
-			try {
-				control.deletaFuncionario(id);
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-			janela.dispose();
+			int linhaSelecionada = -1;
+            linhaSelecionada = tblFuncionario.getSelectedRow();
+            if (linhaSelecionada >= 0) {
+            	int id = (int) tblFuncionario.getValueAt(linhaSelecionada, 0);
+            	control.deletaFuncionario(id);
+            	janela.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, 
+                "É necesário selecionar uma linha.");
+            }
 			
 		}
 		if (fonte == btnSair) {
 			janela.dispose();
 		}
 		if (fonte == btnEditar) {
-			int id = Integer.parseInt(JOptionPane.showInputDialog("Informe o codigo a ser editado"));
-			control.editaFuncionario(id);
-			janela.dispose();
+			int linhaSelecionada = -1;
+            linhaSelecionada = tblFuncionario.getSelectedRow();
+            if (linhaSelecionada >= 0) {
+            	int id = (int) tblFuncionario.getValueAt(linhaSelecionada, 0);
+            	control.editaFuncionario(id);
+            	janela.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, 
+                "É necesário selecionar uma linha.");
+            }
 		}
 
 	}

@@ -193,12 +193,7 @@ public class CadFuncionario extends JFrame implements ActionListener {
 
 		if (fonte == btnVoltar) {
 			janela.dispose();
-			try {
-				control.listaFuncionario();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-
+			control.listaFuncionario();
 		}
 
 		if (fonte == btnSave) {
@@ -207,12 +202,8 @@ public class CadFuncionario extends JFrame implements ActionListener {
 			funcionario.setFilial_id(comboBoxFilial.getSelectedIndex());
 			funcionario.setCargo(comboBoxCargo.getSelectedIndex());
 			funcionario.setDepartamento_id(comboBoxDepartamento.getSelectedIndex());
-			try {
-				col.criaFuncionario(funcionario);
-				janela.dispose();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
+			col.criaFuncionario(funcionario);
+			janela.dispose();
 
 		}
 	}

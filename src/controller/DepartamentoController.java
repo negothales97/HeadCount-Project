@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.connection.DAOException;
 import model.dao.DepartamentoDAO;
 import model.vo.Cargo;
 import model.vo.CustoDepartamento;
@@ -17,8 +18,8 @@ import view.departamento.ListaDepartamento;
 import view.departamento.RelCustoDepartamento;
 
 public class DepartamentoController {
-	private ListaDepartamento listaDepartamento = null;
-	private CadDepartamento cadDepartamento 	= null;
+	private ListaDepartamento listaDepartamento;
+	private CadDepartamento cadDepartamento;
 	private CustoDepartamentoView custoDepartamento;
 	private DepartamentoDAO dao;
 	private EditDepartamento editDepartamento;
@@ -29,7 +30,7 @@ public class DepartamentoController {
 		dao = new DepartamentoDAO();
 	}
 
-	public void listaDepartamento() throws SQLException {
+	public void listaDepartamento(){
 		listaDepartamento = new ListaDepartamento();
 	}
 
@@ -37,13 +38,21 @@ public class DepartamentoController {
 		cadDepartamento = new CadDepartamento();
 	}
 
-	public void criaDepartamento(Departamento departamento) throws SQLException {
-		dao.create(departamento);
+	public void criaDepartamento(Departamento departamento){
+		try {
+			dao.create(departamento);
+		} catch (DAOException e) {
+			e.printStackTrace();
+		}
 		this.listaDepartamento();
 	}
 
-	public void deletaDepartamento(int id) throws SQLException {
-		dao.delete(id);
+	public void deletaDepartamento(int id){
+		try {
+			dao.delete(id);
+		} catch (DAOException e) {
+			e.printStackTrace();
+		}
 		this.listaDepartamento();
 	}
 
@@ -55,8 +64,13 @@ public class DepartamentoController {
 		}
 	}
 	
-	public List<CustoDepartamento> getCustoDepartamentos() throws SQLException {
-		List<CustoDepartamento> custos = dao.getCustoDep();
+	public List<CustoDepartamento> getCustoDepartamentos(){
+		List<CustoDepartamento> custos = null;
+		try {
+			custos = dao.getCustoDep();
+		} catch (DAOException e) {
+			e.printStackTrace();
+		}
 		return custos;
 	}
 	
@@ -69,8 +83,13 @@ public class DepartamentoController {
 		}
 	}
 
-	public List<Departamento> getDepartamentos() throws SQLException {
-		List<Departamento> departamentos = dao.getDepartamentos();
+	public List<Departamento> getDepartamentos(){
+		List<Departamento> departamentos = null;
+		try {
+			departamentos = dao.getDepartamentos();
+		} catch (DAOException e) {
+			e.printStackTrace();
+		}
 		return departamentos;
 	}
 	

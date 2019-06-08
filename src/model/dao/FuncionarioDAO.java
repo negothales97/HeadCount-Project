@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import model.connection.DAOException;
 import model.connection.Database;
 import model.vo.Cargo;
 import model.vo.CustoDepartamento;

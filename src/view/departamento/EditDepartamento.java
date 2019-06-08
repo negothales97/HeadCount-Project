@@ -115,12 +115,7 @@ public class EditDepartamento extends JFrame implements ActionListener {
 
 		if (fonte == btnVoltar) {
 			janela.dispose();
-			try {
-				control.listaDepartamento();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-
+			control.listaDepartamento();
 		}
 		if (fonte == btnSalvar) {
 			double orcamento = Double.parseDouble(txtOrcamento.getText());

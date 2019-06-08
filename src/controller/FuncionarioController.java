@@ -5,6 +5,7 @@ import java.util.List;
 
 import model.dao.FuncionarioDAO;
 import model.dao.FilialDAO;
+import model.connection.DAOException;
 import model.dao.DepartamentoDAO;
 import model.vo.CustoFuncionario;
 import model.vo.Departamento;
@@ -31,7 +32,7 @@ public class FuncionarioController {
 		FuncionarioDAO = new FuncionarioDAO();
 	}
 
-	public void listaFuncionario() throws SQLException {
+	public void listaFuncionario(){
 		listaFuncionario = new ListaFuncionario();
 	}
 
@@ -39,8 +40,12 @@ public class FuncionarioController {
 		cadFuncionario = new CadFuncionario();
 	}
 
-	public void criaFuncionario(Funcionario funcionario) throws SQLException {
-		FuncionarioDAO.create(funcionario);
+	public void criaFuncionario(Funcionario funcionario){
+		try {
+			FuncionarioDAO.create(funcionario);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void editaFuncionario(int id) {
@@ -63,8 +68,12 @@ public class FuncionarioController {
 		}
 	}
 
-	public void deletaFuncionario(int id) throws SQLException {
-		FuncionarioDAO.delete(id);
+	public void deletaFuncionario(int id) {
+		try {
+			FuncionarioDAO.delete(id);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		this.listaFuncionario();
 	}
 
@@ -76,13 +85,23 @@ public class FuncionarioController {
 		}
 	}
 
-	public List<Funcionario> getFuncionarios() throws SQLException {
-		List<Funcionario> funcionarios = FuncionarioDAO.getFuncionarios();
+	public List<Funcionario> getFuncionarios() {
+		List<Funcionario> funcionarios = null;
+		try {
+			funcionarios = FuncionarioDAO.getFuncionarios();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return funcionarios;
 	}
 
-	public List<CustoFuncionario> getCustoFuncionarios() throws SQLException {
-		List<CustoFuncionario> custos = FuncionarioDAO.getCustoFunc();
+	public List<CustoFuncionario> getCustoFuncionarios(){
+		List<CustoFuncionario> custos = null;
+		try {
+			custos = FuncionarioDAO.getCustoFunc();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return custos;
 	}
 

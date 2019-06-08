@@ -110,24 +110,15 @@ public class CadDepartamento extends JFrame implements ActionListener {
 
 		if (fonte == btnVoltar) {
 			janela.dispose();
-			try {
-				control.listaDepartamento();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-
+			control.listaDepartamento();
 		}
 		if (fonte == btnSalvar) {
 			double orcamento = Double.parseDouble(txtOrcamento.getText());
 			Departamento departamento = new Departamento(txtNome.getText(), txtCentroCusto.getText(), orcamento);
 			control = new DepartamentoController();
-			try {
-				control.criaDepartamento(departamento);
-				janela.dispose();
-				JOptionPane.showMessageDialog(null, "Departamento Cadastrado com sucesso");
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
+			control.criaDepartamento(departamento);
+			janela.dispose();
+			JOptionPane.showMessageDialog(null, "Departamento Cadastrado com sucesso");
 		}
 
 	}

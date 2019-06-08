@@ -18,18 +18,18 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import controller.CargoController;
 import model.vo.Cargo;
 
 public class ListaCargo extends JFrame implements ActionListener {
-	private CargoController control;
+	private static CargoController control;
 	private JFrame janela;
 	private JPanel contentPanel;
 	private JPanel panelGrid;
 	private Container container;
-	private BorderLayout boderLayout;
-	private GridBagLayout gbLayout;
 	
 	private JButton btnNovo;
 	private JButton btnSair;
@@ -38,66 +38,75 @@ public class ListaCargo extends JFrame implements ActionListener {
 
 	private JTable tblCargo;
 	private JScrollPane barraRolagem;
+	private DefaultTableModel modelo = new DefaultTableModel();
 
 
-	public ListaCargo() throws SQLException {
-		String[] colunas = { "Codigo", "Cargo" };
-		control = new CargoController();
-
-		List<Cargo> filiais = control.getCargos();
-		Object[][] dados = new Object[filiais.size()][3];
-		for (int i = 0; i < filiais.size(); i++) {
-			Cargo cargo = filiais.get(i);
-			dados[i][0] = cargo.getId();
-			dados[i][1] = cargo.getNome();
-		}
-
+	public ListaCargo() {
+		super("Cargos");
+		geraTabela();
+		geraTela();
+	}
+	
+	public void geraTela() {
+		btnNovo = new JButton("Novo");
+		btnEditar = new JButton("Editar");
+		btnRemover = new JButton("Remover");
+		btnSair = new JButton("Sair");
+		
 		janela = new JFrame();
 		contentPanel = new JPanel();
 		panelGrid = new JPanel();
 		container = new JPanel();
 
-		boderLayout = new BorderLayout();
-		gbLayout = new GridBagLayout();
-
-		panelGrid.setLayout(gbLayout);
-		contentPanel.setLayout(boderLayout);
+		panelGrid.setLayout(new GridBagLayout());
+		contentPanel.setLayout(new BorderLayout());
 		container.setLayout(new FlowLayout());
-
-
-		btnNovo = new JButton("Novo");
-		btnEditar = new JButton("Editar");
-		btnRemover = new JButton("Remover");
-		btnSair = new JButton("Sair");
-
-		tblCargo = new JTable(dados, colunas);
+		
 		barraRolagem = new JScrollPane(tblCargo);
-
 		GridBagConstraints gbc = new GridBagConstraints();
-
 		gbc.insets = new Insets(5, 5, 5, 5);
-
+		
 		panelGrid.add(btnNovo, gbc);
 		panelGrid.add(btnEditar, gbc);
 		panelGrid.add(btnRemover, gbc);
 		panelGrid.add(btnSair, gbc);
+		container.add(barraRolagem,gbc);
 		
-		container.add(barraRolagem, gbc);
-
 		contentPanel.add(BorderLayout.NORTH, panelGrid);
 		contentPanel.add(BorderLayout.CENTER, container);
 
 		btnNovo.addActionListener(this);
+		btnEditar.addActionListener(this);
 		btnRemover.addActionListener(this);
 		btnSair.addActionListener(this);
-		btnEditar.addActionListener(this);
-
+		
 		janela.setContentPane(contentPanel);
-		janela.setTitle("Lista de Cargos");
-		janela.setSize(600, 400);
-		janela.setVisible(true);
 		janela.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
+		janela.setTitle("Lista de Cargos");
+		janela.setSize(500, 300);
+		janela.setVisible(true);
+	}
+	
+	private void geraTabela() {
+		tblCargo = new JTable(modelo);
+		modelo.addColumn("Codigo");
+		modelo.addColumn("Cargo");
+		
+		tblCargo.getColumnModel().getColumn(0).setPreferredWidth(50);
+		tblCargo.getColumnModel().getColumn(1).setPreferredWidth(70);
+		pesquisar(modelo);
+		
+	}
+	
+	public static void pesquisar(DefaultTableModel modelo) {
+		modelo.setNumRows(0);
+		control = new CargoController();
+		for (Cargo c : control.getCargos()) {
+			modelo.addRow(new Object[] {
+					c.getId(),
+					c.getNome(),
+			});
+		}
 	}
 
 	@Override
@@ -111,23 +120,31 @@ public class ListaCargo extends JFrame implements ActionListener {
 
 		}
 		if (fonte == btnRemover) {
-
-			int id = Integer.parseInt(JOptionPane.showInputDialog("Informe o codigo a ser removido"));
-			try {
-				control.deletaCargo(id);
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-			janela.dispose();
-			JOptionPane.showMessageDialog(null, "Cargo removido com sucesso");
+			int linhaSelecionada = -1;
+            linhaSelecionada = tblCargo.getSelectedRow();
+            if (linhaSelecionada >= 0) {
+            	int id = (int) tblCargo.getValueAt(linhaSelecionada, 0);
+            	control.deletaCargo(id);
+            	janela.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, 
+                "É necesário selecionar uma linha.");
+            }
 		}
 		if (fonte == btnSair) {
 			janela.dispose();
 		}
 		if (fonte == btnEditar) {
-			int id = Integer.parseInt(JOptionPane.showInputDialog("Informe o codigo a ser editado"));
-			control.editaCargo(id);
-			janela.dispose();
+			int linhaSelecionada = -1;
+            linhaSelecionada = tblCargo.getSelectedRow();
+            if (linhaSelecionada >= 0) {
+            	int id = (int) tblCargo.getValueAt(linhaSelecionada, 0);
+            	control.editaCargo(id);
+            	janela.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, 
+                "É necesário selecionar uma linha.");
+            }
 		}
 
 	}

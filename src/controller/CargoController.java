@@ -3,6 +3,7 @@ package controller;
 import java.sql.SQLException;
 import java.util.List;
 
+import model.connection.DAOException;
 import model.dao.CargoDAO;
 import model.vo.Cargo;
 import model.vo.Filial;
@@ -21,39 +22,39 @@ public class CargoController {
 		dao = new CargoDAO();
 	}
 	public void listaCargo() {
-		try {
-			listaCargo = new ListaCargo();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		listaCargo = new ListaCargo();
 	}
 
 	public void novoCargo() {
 		cadCargo = new CadCargo();
 	}
 	
-	public void criaCargo(Cargo cargo) throws SQLException {
-		dao.create(cargo);
+	public void criaCargo(Cargo cargo){
+		try {
+			dao.create(cargo);
+		} catch (DAOException e) {
+			e.printStackTrace();
+		}
 		this.listaCargo();
 	}
 
-	public void deletaCargo(int id) throws SQLException {
-		dao.delete(id);
+	public void deletaCargo(int id) {
+		try {
+			dao.delete(id);
+		} catch (DAOException e) {
+			e.printStackTrace();
+		}
 		this.listaCargo();
 	}
 	
-	public List<Cargo> getCargos() throws SQLException {
-			String[] colunas = { "Codigo", "Cargo" };
-
-			List<Cargo> cargos = dao.getCargos();
-		
-			Object[][] dados = new Object[cargos.size()][4];
-			for (int i = 0; i < cargos.size(); i++) {
-				Cargo cargo = cargos.get(i);
-				dados[i][0] = cargo.getId();
-				dados[i][1] = cargo.getNome();
-			
+	public List<Cargo> getCargos(){
+			List<Cargo> cargos = null;
+			try {
+				cargos = dao.getCargos();
+			} catch (DAOException e) {
+				e.printStackTrace();
 			}
+		
 			return cargos;
 	}
 	

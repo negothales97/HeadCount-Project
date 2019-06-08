@@ -58,14 +58,9 @@ public class ListaFilial extends JFrame implements ActionListener {
 		panelGrid.setLayout(new GridBagLayout());
 		contentPanel.setLayout(new BorderLayout());
 		container.setLayout(new FlowLayout());
-
-		
 		
 		barraRolagem = new JScrollPane(tblFilial);
-
-
 		GridBagConstraints gbc = new GridBagConstraints();
-
 		gbc.insets = new Insets(5, 5, 5, 5);
 
 		panelGrid.add(btnNovo, gbc);

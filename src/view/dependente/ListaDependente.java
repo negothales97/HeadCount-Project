@@ -19,13 +19,17 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import controller.DependenteController;
+import controller.FilialController;
 import model.dao.DependenteDAO;
 import model.vo.Dependente;
+import model.vo.Filial;
 
 public class ListaDependente extends JFrame implements ActionListener {
-	private DependenteController control;
+	private static DependenteController control;
 	private JFrame janela;
 	private JPanel contentPanel;
 	private JPanel panelGrid;
@@ -40,42 +44,34 @@ public class ListaDependente extends JFrame implements ActionListener {
 
 	private JTable tblDependente;
 	private JScrollPane barraRolagem;
+	private DefaultTableModel modelo = new DefaultTableModel();
 
-	public ListaDependente() throws SQLException {
-		String[] colunas = { "Codigo", "Nome", "CPF", "Funcionario" };
-		control = new DependenteController();
-		List<Dependente> dependentes = control.getDependentes();
-		Object[][] dados = new Object[dependentes.size()][4];
-		for (int i = 0; i < dependentes.size(); i++) {
-			Dependente dependente = dependentes.get(i);
-			dados[i][0] = dependente.getId();
-			dados[i][1] = dependente.getNome();
-			dados[i][2] = dependente.getCpf();
-			dados[i][3] = dependente.getFuncionario();
-		}
+	public ListaDependente(){
+		super("Dependentes");
+		geraTabela();
+		geraTela();
+		
+		
 
+	}
+
+	public void geraTela() {
+		btnNovo = new JButton("Novo");
+		btnRemover = new JButton("Remover");
+		btnSair = new JButton("Sair");
+		btnEditar = new JButton ("Editar");
+		
 		janela = new JFrame();
 		contentPanel = new JPanel();
 		panelGrid = new JPanel();
 		container = new JPanel();
-
-		boderLayout = new BorderLayout();
-		gbLayout = new GridBagLayout();
-
-		panelGrid.setLayout(gbLayout);
-		contentPanel.setLayout(boderLayout);
+		
+		panelGrid.setLayout(new GridBagLayout());
+		contentPanel.setLayout(new BorderLayout());
 		container.setLayout(new FlowLayout());
-
-		btnNovo = new JButton("Novo");
-		btnEditar = new JButton("Editar");
-		btnRemover = new JButton("Remover");
-		btnSair = new JButton("Sair");
-
-		tblDependente = new JTable(dados, colunas);
+		
 		barraRolagem = new JScrollPane(tblDependente);
-
 		GridBagConstraints gbc = new GridBagConstraints();
-
 		gbc.insets = new Insets(5, 5, 5, 5);
 
 		panelGrid.add(btnNovo, gbc);
@@ -91,15 +87,41 @@ public class ListaDependente extends JFrame implements ActionListener {
 		btnEditar.addActionListener(this);
 		btnRemover.addActionListener(this);
 		btnSair.addActionListener(this);
-
+		
 		janela.setContentPane(contentPanel);
-		janela.setTitle("Lista de Dependemtes");
-		janela.setSize(600, 400);
-		janela.setVisible(true);
 		janela.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
+		janela.setTitle("Lista de Dependentes");
+		janela.setSize(700, 300);
+		janela.setVisible(true);
 	}
+	
+	private void geraTabela() {
+		tblDependente = new JTable(modelo);
+		modelo.addColumn("Codigo");
+		modelo.addColumn("Nome");
+		modelo.addColumn("CPF");
+		modelo.addColumn("Funcionario");
 
+		tblDependente.getColumnModel().getColumn(0).setPreferredWidth(100);
+		tblDependente.getColumnModel().getColumn(1).setPreferredWidth(100);
+		tblDependente.getColumnModel().getColumn(2).setPreferredWidth(100);
+		tblDependente.getColumnModel().getColumn(3).setPreferredWidth(150);
+		pesquisar(modelo);
+	}
+	
+	public static void pesquisar(DefaultTableModel modelo) {
+		modelo.setNumRows(0);
+		control = new DependenteController();
+		for (Dependente d : control.getDependentes()) {
+			modelo.addRow(new Object[] {
+					d.getId(),
+					d.getNome(),
+					d.getCpf(),
+					d.getFuncionario(),
+					
+			});
+		}
+	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object fonte = e.getSource();
@@ -111,20 +133,28 @@ public class ListaDependente extends JFrame implements ActionListener {
 
 		}
 		if(fonte == btnEditar) {
-			int id = Integer.parseInt(JOptionPane.showInputDialog("Informe o codigo a ser editado"));
-			control.editaDependete(id);
-			janela.dispose();
+			int linhaSelecionada = -1;
+            linhaSelecionada = tblDependente.getSelectedRow();
+            if (linhaSelecionada >= 0) {
+            	int id = (int) tblDependente.getValueAt(linhaSelecionada, 0);
+            	control.editaDependete(id);
+            	janela.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, 
+                "É necesário selecionar uma linha.");
+            }
 		}
 		if (fonte == btnRemover) {
-
-			int id = Integer.parseInt(JOptionPane.showInputDialog("Informe o codigo a ser removido"));
-			try {
-				control.deletaDependente(id);
-				
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-			janela.dispose();
+			int linhaSelecionada = -1;
+            linhaSelecionada = tblDependente.getSelectedRow();
+            if (linhaSelecionada >= 0) {
+            	int id = (int) tblDependente.getValueAt(linhaSelecionada, 0);
+            	control.deletaDependente(id);
+            	janela.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, 
+                "É necesário selecionar uma linha.");
+            }
 		}
 		if (fonte == btnSair) {
 			janela.dispose();

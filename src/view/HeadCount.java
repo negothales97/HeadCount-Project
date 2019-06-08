@@ -104,25 +104,13 @@ public class HeadCount implements ActionListener {
 				controlFil.listaFilial();
 		} else if (fonte == cadFunc) {
 			controlFun = new FuncionarioController();
-			try {
-				controlFun.listaFuncionario();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
+			controlFun.listaFuncionario();
 		} else if (fonte == cadDeprt) {
 			controlDeprt = new DepartamentoController();
-			try {
-				controlDeprt.listaDepartamento();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
+			controlDeprt.listaDepartamento();
 		} else if (fonte == cadDep) {
 			controlDep = new DependenteController();
-			try {
-				controlDep.listaDependente();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
+			controlDep.listaDependente();
 		} else if (fonte == cadCar) {
 			controlCar = new CargoController();
 				controlCar.listaCargo();

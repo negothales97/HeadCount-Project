@@ -205,12 +205,7 @@ public class EditFuncionario extends JFrame implements ActionListener {
 
 		if (fonte == btnVoltar) {
 			janela.dispose();
-			try {
-				control.listaFuncionario();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-
+			control.listaFuncionario();
 		}
 
 		if (fonte == btnSave) {

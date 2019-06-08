@@ -3,6 +3,7 @@ package controller;
 import java.sql.SQLException;
 import java.util.List;
 
+import model.connection.DAOException;
 import model.dao.DependenteDAO;
 import model.dao.FilialDAO;
 import model.vo.Cargo;
@@ -21,7 +22,7 @@ public class DependenteController {
 	public DependenteController() {
 		dao = new DependenteDAO();
 	}
-	public void listaDependente() throws SQLException {
+	public void listaDependente() {
 		listaDependente = new ListaDependente();
 	}
 
@@ -29,13 +30,21 @@ public class DependenteController {
 		cadDependente = new CadDependente();
 	}
 	
-	public void criaDependente(Dependente dependente) throws SQLException {
-		dao.create(dependente);
+	public void criaDependente(Dependente dependente) {
+		try {
+			dao.create(dependente);
+		} catch (DAOException e) {
+			e.printStackTrace();
+		}
 		this.listaDependente();
 	}
 
-	public void deletaDependente(int id) throws SQLException {
-		dao.delete(id);
+	public void deletaDependente(int id){
+		try {
+			dao.delete(id);
+		} catch (DAOException e) {
+			e.printStackTrace();
+		}
 		this.listaDependente();
 	}
 	public List<Dependente> getDependentes() {

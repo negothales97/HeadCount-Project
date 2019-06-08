@@ -95,14 +95,9 @@ public class CadCargo extends JFrame implements ActionListener {
 		}
 		if (fonte == btnSalvar) {
 			cargo = new Cargo(txtCargo.getText());
-			
-			try {
-				control.criaCargo(cargo);
-				janela.dispose();
-				JOptionPane.showMessageDialog(null, "Cargo cadastrado com sucesso");
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
+			control.criaCargo(cargo);
+			janela.dispose();
+			JOptionPane.showMessageDialog(null, "Cargo cadastrado com sucesso");
 		}
 
 	}

@@ -139,22 +139,13 @@ public class CadDependente extends JFrame implements ActionListener {
 
 		if (fonte == btnVoltar) {
 			janela.dispose();
-			try {
-				control.listaDependente();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
+			control.listaDependente();
 
 		}
 		if (fonte == btnSalvar) {
 			Dependente dependente = new Dependente(txtNome.getText(), txtCPF.getText(), txtDataNasc.getText(),cmbFuncionario.getSelectedIndex());
-
-			try {
-				control.criaDependente(dependente);
-				janela.dispose();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
+			control.criaDependente(dependente);
+			janela.dispose();
 		}
 
 	}

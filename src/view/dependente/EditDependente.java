@@ -147,12 +147,7 @@ public class EditDependente extends JFrame implements ActionListener {
 
 		if (fonte == btnVoltar) {
 			janela.dispose();
-			try {
-				control.listaDependente();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-
+			control.listaDependente();
 		}
 		if (fonte == btnSalvar) {
 			this.dependente.setNome("****" +txtNome.getText()+"****");
