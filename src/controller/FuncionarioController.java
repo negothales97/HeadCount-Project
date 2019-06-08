@@ -24,7 +24,8 @@ public class FuncionarioController {
 	private DepartamentoDAO DepartamentoDAO;
 	private CustoFuncionarioView custoFuncionario;
 	private EditFuncionario editFuncionario;
-	private RelCustoFuncionario relFunc;	
+	private RelCustoFuncionario relFunc;
+	private FuncionarioDAO dao;	
 
 	public FuncionarioController() {
 		FuncionarioDAO = new FuncionarioDAO();
@@ -102,10 +103,16 @@ public class FuncionarioController {
 			e.printStackTrace();
 		}
 	}
-	public List<String> getRelFuncionarios(String filial, String departamento) throws SQLException {
-		int filial_id = FilialDAO.getIDFilial(filial).getId();
-		int departamento_id = DepartamentoDAO.getIDDepartamento(departamento).getId();
-		List<String> relFuncionarios = FuncionarioDAO.getRelFuncionarios(filial_id, departamento_id);		
+	public List<String> getRelFuncionarios(int filial, int departamento){
+		List<String> relFuncionarios = null;
+		try {
+			relFuncionarios = FuncionarioDAO.getRelFuncionarios(filial, departamento);
+			for (String string : relFuncionarios) {
+				System.out.println(string);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
 		return relFuncionarios;
 	}
 }

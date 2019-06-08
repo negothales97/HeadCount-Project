@@ -24,7 +24,6 @@ public class DepartamentoDAO {
 	private final String DELETE 	= "DELETE FROM DEPARTAMENTO WHERE id=?";
 	private final String LIST 		= "SELECT * FROM DEPARTAMENTO";
 	private final String LISTBYID 	= "SELECT * FROM DEPARTAMENTO WHERE ID = ?";
-	private final String LISTBYNOME = "SELECT * FROM DEPARTAMENTO WHERE nome= ?";
 
 	public void create(Departamento departamento) throws SQLException {
 		try (Connection con = Database.getInstance().getConnection()) {
@@ -101,24 +100,6 @@ public class DepartamentoDAO {
 		try (Connection con = Database.getInstance().getConnection()){
 			try(PreparedStatement stmt = con.prepareStatement(LISTBYID)){
 				stmt.setInt(1, id);
-				stmt.execute();
-				ResultSet rs = stmt.getResultSet();
-				rs.next();
-				int idDepartamento = rs.getInt("id");
-				String nome = rs.getString("nome");
-				String centrocusto = rs.getString("centrocusto");
-				double orcamento= rs.getDouble("orcamento");
-				Departamento departamento = new Departamento(nome, centrocusto, orcamento);
-				departamento.setId(idDepartamento);
-				return departamento;
-			}
-		}
-	}
-	
-	public Departamento getIDDepartamento(String NomeDepartamento) throws SQLException {
-		try (Connection con = Database.getInstance().getConnection()){
-			try(PreparedStatement stmt = con.prepareStatement(LISTBYNOME)){
-				stmt.setString(1, NomeDepartamento);
 				stmt.execute();
 				ResultSet rs = stmt.getResultSet();
 				rs.next();

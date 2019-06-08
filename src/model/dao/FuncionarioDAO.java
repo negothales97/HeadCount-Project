@@ -26,7 +26,9 @@ public class FuncionarioDAO {
 	private final String LIST = "SELECT * FROM FUNCIONARIO";
 	private final String LISTBYID = "SELECT * FROM FUNCIONARIO WHERE MATRICULA = ?";
 	private final String CUSTOFUNC = "SELECT * FROM CUSTO_FUNCIONARIO";
-	private final String LISTRELFUNC = "SELECT f.matricula, f.nome, sum(c.custo) as total_custo from custo_funcionario as c join funcionario as f on c.funcionario_id = f.matricula group by f.matricula, f.nome WHERE filial_id=?, departamento_id=?";
+	private final String LISTRELFUNC = "SELECT f.matricula, f.nome, sum(c.custo) as total_custo from custo_funcionario as c "
+			+ "join funcionario as f on c.funcionario_id = f.matricula WHERE filial_id=?, departamento_id=?"
+			+ "group by f.matricula, f.nome ";
 
 	public void create(Funcionario funcionario) throws SQLException {
 		try (Connection con = Database.getInstance().getConnection()) {
@@ -177,10 +179,10 @@ public class FuncionarioDAO {
 				stmt.execute();
 				ResultSet rs = stmt.getResultSet();
 				while (rs.next()) {
-					String matricula = String.valueOf(rs.getInt("f.matricula"));									
+					String matricula = String.valueOf(rs.getInt("matricula"));		
 					relFuncionarios.add(matricula);
 					
-					String nome = rs.getString("f.nome");
+					String nome = rs.getString("nome");
 					relFuncionarios.add(nome);
 					
 					String total_custo = String.valueOf(rs.getDouble("total_custo"));
