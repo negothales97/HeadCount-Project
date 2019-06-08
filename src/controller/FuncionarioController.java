@@ -23,7 +23,7 @@ public class FuncionarioController {
 	private RelCustoFuncionario relFunc;
 	
 	public FuncionarioController() {
-		dao = dao.getInstance();
+		dao = new FuncionarioDAO();
 	}
 	public void listaFuncionario() throws SQLException {
 		listaFuncionario = new ListaFuncionario();

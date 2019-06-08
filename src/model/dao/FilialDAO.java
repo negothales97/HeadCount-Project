@@ -14,18 +14,7 @@ import model.vo.Endereco;
 import model.vo.Filial;
 
 public class FilialDAO {
-	private FilialDAO(){}
 	
-	private static FilialDAO instancia =null;
-	
-	public static FilialDAO getInstance() {
-		if (instancia ==null) {
-			instancia = new FilialDAO();
-		}
-		return instancia;
-		
-		
-	}
 	private int id;
 	private final String INSERTFILIAL	= "INSERT INTO FILIAL (nome, cnpj, insc_estadual) values (?, ?, ?)";
 	private final String INSERTENDERECO	= "INSERT INTO ENDERECO (rua, numero, bairro, filial_id) values (?, ?, ?, ?)";
@@ -36,7 +25,7 @@ public class FilialDAO {
 	private final String LISTBYID 		= "SELECT * FROM FILIAL INNER JOIN ENDERECO ON FILIAL.ID = ENDERECO.FILIAL_ID WHERE FILIAL.ID = ?";
 
 	public void create(Filial filial) throws SQLException {
-		try (Connection con = Database.getConnection()) {
+		try (Connection con = Database.getInstance().getConnection()) {
 
 			try (PreparedStatement stmt = con.prepareStatement(INSERTFILIAL, PreparedStatement.RETURN_GENERATED_KEYS)) {
 				stmt.setString(1, filial.getNome());
@@ -66,7 +55,7 @@ public class FilialDAO {
 	
 	public void update(Filial filial) throws SQLException {
 		
-		try (Connection con = Database.getConnection()) {
+		try (Connection con = Database.getInstance().getConnection()) {
 			try (PreparedStatement stmt = con.prepareStatement(UPDATEFILIAL)) {
 				stmt.setString(1, filial.getNome());
 				stmt.setString(2, filial.getCnpj());
@@ -91,7 +80,7 @@ public class FilialDAO {
 		}
 	}
 	public void delete(int id) throws SQLException {
-		try (Connection con = Database.getConnection()) {
+		try (Connection con = Database.getInstance().getConnection()) {
 			try (PreparedStatement stmt = con.prepareStatement(DELETE)) {
 				stmt.setInt(1, id);
 				stmt.setInt(2, id);
@@ -104,7 +93,7 @@ public class FilialDAO {
 	
 	public List<Filial> getFiliais() throws SQLException {
 		List<Filial> filiais = new ArrayList<>();
-		try (Connection con = Database.getConnection()) {
+		try (Connection con = Database.getInstance().getConnection()) {
 			try (PreparedStatement stmt = con.prepareStatement(LIST)) {
 				stmt.execute();
 				ResultSet rs = stmt.getResultSet();
@@ -132,7 +121,7 @@ public class FilialDAO {
 	}
 	
 	public Filial getFilial(int id) throws SQLException{
-		try (Connection con = Database.getConnection()){
+		try (Connection con = Database.getInstance().getConnection()){
 			try(PreparedStatement stmt = con.prepareStatement(LISTBYID)){
 				stmt.setInt(1, id);
 				stmt.execute();

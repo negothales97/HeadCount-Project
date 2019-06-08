@@ -19,7 +19,7 @@ public class DependenteController {
 	private EditDependente editDependente; 
 	
 	public DependenteController() {
-		dao = dao.getInstance();
+		dao = new DependenteDAO();
 	}
 	public void listaDependente() throws SQLException {
 		listaDependente = new ListaDependente();
