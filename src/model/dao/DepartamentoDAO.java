@@ -116,7 +116,7 @@ public class DepartamentoDAO {
 	}
 	
 	public Departamento getIDDepartamento(String NomeDepartamento) throws SQLException {
-		try (Connection con = Database.getConnection()){
+		try (Connection con = Database.getInstance().getConnection()){
 			try(PreparedStatement stmt = con.prepareStatement(LISTBYNOME)){
 				stmt.setString(1, NomeDepartamento);
 				stmt.execute();

@@ -144,7 +144,7 @@ public class FilialDAO {
 	}
 	
 	public Filial getIDFilial(String NomeFilial) throws SQLException{
-		try (Connection con = Database.getConnection()){
+		try (Connection con = Database.getInstance().getConnection()){
 			try(PreparedStatement stmt = con.prepareStatement(LISTBYNOME)){
 				stmt.setString(1, NomeFilial);
 				stmt.execute();

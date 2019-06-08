@@ -127,14 +127,19 @@ public class RelCustoFuncionario extends JFrame implements ActionListener {
 		controlFuncionario = new FuncionarioController();
 		
 		if (fonte == btnFiltrar) {
-			String txtDepartamento = cmbDepartamento.getSelectedItem().toString();
-			String txtFilial = cmbFilial.getSelectedItem().toString();
-			List<String> relFuncionario = controlFuncionario.getRelFuncionarios(txtFilial, txtDepartamento);
-			String[][] dados = new String[(relFuncionario.size())/3][3];
-			for (int i = 0; i < relFuncionario.size(); i = i +3) {
-				dados[i][0] = relFuncionario.get(i);
-				dados[i][1] = relFuncionario.get(i+1);
-				dados[i][2] = relFuncionario.get(i+2);
+			try {
+				String txtDepartamento = cmbDepartamento.getSelectedItem().toString();
+				String txtFilial = cmbFilial.getSelectedItem().toString();
+				List<String> relFuncionario = controlFuncionario.getRelFuncionarios(txtFilial, txtDepartamento);
+				String[][] dados = new String[(relFuncionario.size())/3][3];
+				for (int i = 0; i < relFuncionario.size(); i = i +3) {
+					dados[i][0] = relFuncionario.get(i);
+					dados[i][1] = relFuncionario.get(i+1);
+					dados[i][2] = relFuncionario.get(i+2);
+				}
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
 		}
 	}

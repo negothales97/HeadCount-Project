@@ -170,7 +170,7 @@ public class FuncionarioDAO {
 
 	public List<String> getRelFuncionarios(int filial_id, int departamento_id) throws SQLException {
 		List<String> relFuncionarios = new ArrayList<>();
-		try (Connection con = Database.getConnection()) {
+		try (Connection con = Database.getInstance().getConnection()) {
 			try (PreparedStatement stmt = con.prepareStatement(LISTRELFUNC)) {
 				stmt.setInt(1, filial_id);
 				stmt.setInt(2, departamento_id);
