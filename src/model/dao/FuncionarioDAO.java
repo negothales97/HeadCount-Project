@@ -46,11 +46,10 @@ public class FuncionarioDAO {
 		} catch (SQLException e) {
 				JOptionPane.showMessageDialog(null, "Erro ao criar Funcionario no banco de dados: " + e.getMessage());
 		}
-	}
 
-	public void update(Funcionario funcionario) throws SQLException {
+	public void update(Funcionario funcionario) throws DAOException {
 		try (Connection con = Database.getInstance().getConnection()) {
-			try (PreparedStatement stmt = con.prepareStatement(UPDATE)) {
+			PreparedStatement stmt = con.prepareStatement(UPDATE);
 				stmt.setString(1, funcionario.getNome());
 				stmt.setString(2, funcionario.getCpf());
 				stmt.setString(3, funcionario.getDatanasc());
@@ -64,12 +63,11 @@ public class FuncionarioDAO {
 				JOptionPane.showMessageDialog(null, "Erro ao editar Funcionario no banco de dados: " + e.getMessage());
 			}
 		}
-	}
 
-	public void delete(int matricula) throws SQLException {
+	public void delete(int matricula) throws DAOException {
 		try (Connection con = Database.getInstance().getConnection()) {
 
-			try (PreparedStatement stmt = con.prepareStatement(DELETE)) {
+			PreparedStatement stmt = con.prepareStatement(DELETE);
 				stmt.setInt(1, matricula);
 				stmt.execute();
 				JOptionPane.showMessageDialog(null, "Funcionario Removido com sucesso");
@@ -77,12 +75,12 @@ public class FuncionarioDAO {
 				JOptionPane.showMessageDialog(null, "Erro ao remover Funcionario no banco de dados: " + e.getMessage());
 			}
 		}
-	}
+	
 
-	public List<Funcionario> getFuncionarios() throws SQLException {
+	public List<Funcionario> getFuncionarios() throws DAOException {
 		List<Funcionario> funcionarios = new ArrayList<>();
 		try (Connection con = Database.getInstance().getConnection()) {
-			try (PreparedStatement stmt = con.prepareStatement(LIST)) {
+			PreparedStatement stmt = con.prepareStatement(LIST);
 				stmt.execute();
 				ResultSet rs = stmt.getResultSet();
 				while (rs.next()) {
@@ -102,14 +100,14 @@ public class FuncionarioDAO {
 				JOptionPane.showMessageDialog(null, "Erro ao listar Funcionario no banco de dados: " + e.getMessage());
 			}
 
-		}
+		
 		return funcionarios;
 	}
 
-	public Funcionario getFuncionario(int id) throws SQLException {
+	public Funcionario getFuncionario(int id) throws DAOException {
 		Funcionario funcionario = null;
 		try (Connection con = Database.getInstance().getConnection()){
-			try(PreparedStatement stmt = con.prepareStatement(LISTBYID)){
+			PreparedStatement stmt = con.prepareStatement(LISTBYID);
 				stmt.setInt(1, id);
 				stmt.execute();
 				ResultSet rs = stmt.getResultSet();
@@ -127,14 +125,13 @@ public class FuncionarioDAO {
 				JOptionPane.showMessageDialog(null, "Erro ao buscar funcionario no banco de dados: " + e.getMessage());
 			}
 
-		}
 		return funcionario;
 	}
 
-	public void custoFunc(int funcionario_id, String obs, double custo) throws SQLException {
+	public void custoFunc(int funcionario_id, String obs, double custo) throws DAOException {
 		try(Connection con = Database.getInstance().getConnection()){
 			String sql = "INSERT INTO CUSTO_FUNCIONARIO (funcionario_id, observacao, custo) values (?, ?, ?)";
-			try (PreparedStatement stmt = con.prepareStatement(sql)) {
+			PreparedStatement stmt = con.prepareStatement(sql);
 				stmt.setInt(1, funcionario_id);
 				stmt.setString(2, obs);
 				stmt.setDouble(3, custo);
@@ -145,12 +142,12 @@ public class FuncionarioDAO {
 			}
 		}
 
-	}
+	
 
-	public List<CustoFuncionario> getCustoFunc() throws SQLException {
+	public List<CustoFuncionario> getCustoFunc() throws DAOException {
 		List<CustoFuncionario> custoFuncs = new ArrayList<>();
 		try (Connection con = Database.getInstance().getConnection()){
-			try (PreparedStatement stmt = con.prepareStatement(CUSTOFUNC)){
+			PreparedStatement stmt = con.prepareStatement(CUSTOFUNC);
 				stmt.execute();
 				ResultSet rs = stmt.getResultSet();
 				while (rs.next()) {
@@ -166,14 +163,13 @@ public class FuncionarioDAO {
 			} catch (SQLException e) {
 				JOptionPane.showMessageDialog(null, "Erro ao buscar custo no banco de dados: " + e.getMessage());
 			}
-		}
 		return custoFuncs;
 	}
 
-	public List<String> getRelFuncionarios(int filial_id, int departamento_id) throws SQLException {
+	public List<String> getRelFuncionarios(int filial_id, int departamento_id) throws DAOException {
 		List<String> relFuncionarios = new ArrayList<>();
 		try (Connection con = Database.getInstance().getConnection()) {
-			try (PreparedStatement stmt = con.prepareStatement(LISTRELFUNC)) {
+			PreparedStatement stmt = con.prepareStatement(LISTRELFUNC);
 				stmt.setInt(1, filial_id);
 				stmt.setInt(2, departamento_id);
 				stmt.execute();
@@ -192,7 +188,7 @@ public class FuncionarioDAO {
 			} catch (SQLException e) {
 				JOptionPane.showMessageDialog(null, "Erro ao buscar custo no banco de dados: " + e.getMessage());
 			}
-		}
+		
 		return relFuncionarios;
 	}
 }
