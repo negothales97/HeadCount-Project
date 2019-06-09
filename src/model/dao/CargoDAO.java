@@ -17,11 +17,11 @@ import model.vo.Filial;
 
 public class CargoDAO {
 
-	private final String INSERT	= "INSERT INTO CARGO (nome) values (?)";
-	private final String UPDATE	= "UPDATE CARGO SET nome = ? WHERE id = ?";
-	private final String DELETE 		= "DELETE FROM CARGO WHERE id=?";
-	private final String LIST 			= "SELECT * FROM CARGO";
-	private final String LISTBYID 		= "SELECT * FROM CARGO WHERE ID = ?";
+	private final String INSERT		= "INSERT INTO CARGO (nome) values (?)";
+	private final String UPDATE		= "UPDATE CARGO SET nome = ? WHERE id = ?";
+	private final String DELETE 	= "DELETE FROM CARGO WHERE id=?";
+	private final String LIST 		= "SELECT * FROM CARGO";
+	private final String LISTBYID 	= "SELECT * FROM CARGO WHERE ID = ?";
 
 	public void create(Cargo cargo) throws DAOException {
 		try (Connection con = Database.getInstance().getConnection()) {
