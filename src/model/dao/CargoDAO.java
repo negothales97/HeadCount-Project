@@ -22,6 +22,7 @@ public class CargoDAO {
 	private final String DELETE 	= "DELETE FROM CARGO WHERE id=?";
 	private final String LIST 		= "SELECT * FROM CARGO";
 	private final String LISTBYID 	= "SELECT * FROM CARGO WHERE ID = ?";
+	private final String SEARCH 	= "SELECT * from cargo WHERE nome LIKE ?";
 
 	public void create(Cargo cargo) throws DAOException {
 		try (Connection con = Database.getInstance().getConnection()) {
@@ -101,6 +102,28 @@ public class CargoDAO {
     		JOptionPane.showMessageDialog(null, "Erro ao buscar cargo no banco de dados: " +e.getMessage());
 		}
 		return null;
+	}
+	
+	public List<Cargo> pesquisar(String search) throws DAOException {
+		List<Cargo> cargos = new ArrayList<>();
+		try (Connection con = Database.getInstance().getConnection()) {
+			PreparedStatement stmt = con.prepareStatement(SEARCH);
+			stmt.setString(1, "%"+ search+"%");
+			stmt.execute();
+			ResultSet rs = stmt.getResultSet();
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				String nome = rs.getString("nome");
+				Cargo cargo = new Cargo(nome);
+				cargo.setId(id);
+				cargos.add(cargo);
+				
+			}
+
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, "Erro ao listar cargos no banco de dados: " +e.getMessage());
+		}
+		return cargos;
 	}
 
 	

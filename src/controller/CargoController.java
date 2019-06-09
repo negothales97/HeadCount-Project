@@ -58,6 +58,16 @@ public class CargoController {
 			return cargos;
 	}
 	
+	public List<Cargo> pesquisaCargos(String nome){
+		List<Cargo> cargos = null;
+		try {
+			cargos = dao.pesquisar(nome);
+		} catch (DAOException e) {
+			e.printStackTrace();
+		}
+		return cargos;
+	}
+	
 	public void editaCargo(int id) {
 		try {
 			Cargo cargo = dao.getCargo(id);
