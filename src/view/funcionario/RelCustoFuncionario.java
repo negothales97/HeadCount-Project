@@ -18,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 import controller.DepartamentoController;
 import controller.FilialController;
@@ -29,45 +30,45 @@ import model.vo.Funcionario;
 public class RelCustoFuncionario extends JFrame implements ActionListener {
 
 	private JFrame janela;
-
 	private JPanel contentPanel;
 	private JPanel panelGrid;
-
 	private Container container;
-	private BorderLayout boderLayout;
-	private GridBagLayout gbLayout;
 
+	private JButton btnFiltrar;
 	private JComboBox<Filial> cmbFilial;
 	private JComboBox<Departamento> cmbDepartamento;
 
 	private JLabel lblFilial;
 	private JLabel lblDepartamento;
-	
-	private JButton btnFiltrar;
-	
+		
 	private String[] colunas = { "Matricula", "Funcionario", "Custo (R$)" };
 
 	private JTable tblFuncionario;
+	private JScrollPane barraRolagem;
+	private DefaultTableModel modelo = new DefaultTableModel();
 
-	private FuncionarioController controlFuncionario;
+	private static FuncionarioController controlFuncionario;
 	private DepartamentoController controlDepart;
 	private FilialController filialControl;
 
-	private JScrollPane barraRolagem;
+	
 
-	public RelCustoFuncionario() throws SQLException {
+	public RelCustoFuncionario()  {
+		super("Relatório de custos de funcionários");
+		geraTabela();
+		geraTela();		
+	}
 
 
+		
+	public void geraTela() {
 		janela = new JFrame();
 		contentPanel = new JPanel();
 		panelGrid = new JPanel();
 		container = new JPanel();
 
-		boderLayout = new BorderLayout();
-		gbLayout = new GridBagLayout();
-
-		panelGrid.setLayout(gbLayout);
-		contentPanel.setLayout(boderLayout);
+		panelGrid.setLayout(new GridBagLayout());
+		contentPanel.setLayout(new BorderLayout());
 		container.setLayout(new FlowLayout());
 
 		lblFilial = new JLabel("Filial");
@@ -94,8 +95,8 @@ public class RelCustoFuncionario extends JFrame implements ActionListener {
 			e.printStackTrace();
 		}
 
+		barraRolagem = new JScrollPane(tblFuncionario);
 		GridBagConstraints gbc = new GridBagConstraints();
-
 		gbc.insets = new Insets(5, 5, 5, 5);
 
 		panelGrid.add(lblFilial, gbc);
@@ -103,19 +104,68 @@ public class RelCustoFuncionario extends JFrame implements ActionListener {
 		panelGrid.add(lblDepartamento, gbc);
 		panelGrid.add(cmbDepartamento, gbc);
 		panelGrid.add(btnFiltrar, gbc);
+		container.add(barraRolagem, gbc);
 
 		contentPanel.add(BorderLayout.NORTH, panelGrid);
 		contentPanel.add(BorderLayout.CENTER, container);
+		
 		btnFiltrar.addActionListener(this);
 
 		janela.setContentPane(contentPanel);
-		janela.setTitle("Relatorio do Custo de Funcionario");
-		janela.setSize(800, 600);
-		janela.setVisible(true);
 		janela.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
+		janela.setTitle("Lista de Funcionários");
+		janela.setSize(700, 300);
+		janela.setVisible(true);
 	}
+	
+	public void geraTabela() {
+		tblFuncionario = new JTable(modelo);
+		modelo.addColumn("Matricula");
+		modelo.addColumn("Nome");
+		modelo.addColumn("Custo");		
 
+		tblFuncionario.getColumnModel().getColumn(0).setPreferredWidth(100);
+		tblFuncionario.getColumnModel().getColumn(1).setPreferredWidth(100);
+		tblFuncionario.getColumnModel().getColumn(2).setPreferredWidth(100);
+		pesquisar(modelo);
+	}
+	
+	public static void pesquisar(DefaultTableModel modelo) {
+		modelo.setNumRows(0);
+		controlFuncionario = new FuncionarioController();
+		List <String> custosFuncionarios = controlFuncionario.getCustosTodosFuncionarios();
+		for (int i = 0; i < custosFuncionarios.size(); i = i +3) {
+			modelo.addRow(new Object [] {
+					custosFuncionarios.get(i),
+					custosFuncionarios.get(i+1),
+					custosFuncionarios.get(i+2)
+			});
+		}
+	}
+	
+	public void AtualizaTabela(int filial, int departamento) {
+		LimpaTabela();
+		PopulaTabela(filial,departamento);		
+	}
+	
+	public void LimpaTabela() {
+		while (modelo.getRowCount() > 0) {
+			modelo.removeRow(0);
+		}
+			
+	}
+	
+	public void PopulaTabela(int filial, int departamento) {
+		List<String> relFuncionario = controlFuncionario.getRelFuncionarios(filial, departamento);
+		for (int i = 0; i < relFuncionario.size(); i = i +3) {
+			modelo.addRow(new Object [] {
+					relFuncionario.get(i),
+					relFuncionario.get(i+1),
+					relFuncionario.get(i+2)
+			});
+		}
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object fonte = e.getSource();
@@ -124,16 +174,7 @@ public class RelCustoFuncionario extends JFrame implements ActionListener {
 		if (fonte == btnFiltrar) {
 			Filial filial = (Filial) cmbFilial.getSelectedItem();
 			Departamento departamento = (Departamento) cmbDepartamento.getSelectedItem();
-			List<String> relFuncionario = controlFuncionario.getRelFuncionarios(filial.getId(), departamento.getId());
-			String[][] dados = new String[(relFuncionario.size())/3][3];
-			for (int i = 0; i < relFuncionario.size(); i = i +3) {
-				dados[i][0] = relFuncionario.get(i);
-				dados[i][1] = relFuncionario.get(i+1);
-				dados[i][2] = relFuncionario.get(i+2);
-			}
-			tblFuncionario = new JTable(dados, colunas);
-			barraRolagem = new JScrollPane(tblFuncionario);
-			container.add(barraRolagem);
+			AtualizaTabela(filial.getId(), departamento.getId());
 		}
 	}
 

@@ -56,4 +56,8 @@ public class Dependente {
 		this.funcionario_id = funcionario_id;
 
 	}
+	
+	public String toString(){
+		return getNome();
+	}
 }
