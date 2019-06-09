@@ -51,7 +51,7 @@ public class CadDependente extends JFrame implements ActionListener {
 	private JTextField txtNome;
 	private JTextField txtCPF;
 	private JTextField txtDataNasc;
-	private JComboBox<String> cmbFuncionario;
+	private JComboBox<Funcionario> cmbFuncionario;
 	private FuncionarioController controlFunc;
 
 	public CadDependente() {
@@ -78,14 +78,13 @@ public class CadDependente extends JFrame implements ActionListener {
 		txtNome = new JTextField(15);
 		txtCPF = new JTextField(11);
 		txtDataNasc = new JTextField(8);
-		cmbFuncionario = new JComboBox<String>();
+		cmbFuncionario = new JComboBox<>();	
 		
-		cmbFuncionario.addItem("SELECIONE....");
 		try {
 			controlFunc = new FuncionarioController();
 			List<Funcionario> master= controlFunc.getFuncionarios();
 			for (int i = 0; i< master.size(); i++) {
-				cmbFuncionario.addItem(master.get(i).getNome());
+				cmbFuncionario.addItem(master.get(i));
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -143,7 +142,8 @@ public class CadDependente extends JFrame implements ActionListener {
 
 		}
 		if (fonte == btnSalvar) {
-			Dependente dependente = new Dependente(txtNome.getText(), txtCPF.getText(), txtDataNasc.getText(),cmbFuncionario.getSelectedIndex());
+			Funcionario funcionario = (Funcionario) cmbFuncionario.getSelectedItem();
+			Dependente dependente = new Dependente(txtNome.getText(), txtCPF.getText(), txtDataNasc.getText(), funcionario.getMatricula());
 			control.criaDependente(dependente);
 			janela.dispose();
 		}

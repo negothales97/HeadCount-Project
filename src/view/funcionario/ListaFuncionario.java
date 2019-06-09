@@ -37,8 +37,6 @@ public class ListaFuncionario extends JFrame implements ActionListener {
 	private JPanel contentPanel;
 	private JPanel panelGrid;
 	private Container container;
-	private BorderLayout boderLayout;
-	private GridBagLayout gbLayout;
 
 	private JButton btnNovo;
 	private JButton btnEditar;
@@ -96,7 +94,7 @@ public class ListaFuncionario extends JFrame implements ActionListener {
 		janela.setVisible(true);
 	}
 	private void geraTabela() {
-		tblFuncionario = new JTable(modelo );
+		tblFuncionario = new JTable(modelo);
 		modelo.addColumn("Matricula");
 		modelo.addColumn("Nome");
 		modelo.addColumn("CPF");

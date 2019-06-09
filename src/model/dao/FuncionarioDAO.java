@@ -30,6 +30,9 @@ public class FuncionarioDAO {
 	private final String LISTRELFUNC = "SELECT f.matricula, f.nome, sum(c.custo) as total_custo from custo_funcionario as c "
 			+ "join funcionario as f on c.funcionario_id = f.matricula WHERE filial_id=? and departamento_id=? "
 			+ "group by f.matricula, f.nome ";
+	private final String LISTCUSFUNC = "SELECT f.matricula, f.nome, sum(c.custo) as total_custo from custo_funcionario as c "
+			+ "join funcionario as f on c.funcionario_id = f.matricula "
+			+ "group by f.matricula, f.nome ";
 
 	public void create(Funcionario funcionario) throws DAOException {
 		try (Connection con = Database.getInstance().getConnection()) {
@@ -192,4 +195,29 @@ public class FuncionarioDAO {
 		
 		return relFuncionarios;
 	}
+	
+	public List<String> getCustosTodosFuncionarios() throws DAOException {
+		List<String> relFuncionarios = new ArrayList<>();
+		try (Connection con = Database.getInstance().getConnection()) {
+			PreparedStatement stmt = con.prepareStatement(LISTCUSFUNC);				
+				stmt.execute();
+				ResultSet rs = stmt.getResultSet();
+				while (rs.next()) {
+					String matricula = String.valueOf(rs.getInt("matricula"));		
+					relFuncionarios.add(matricula);
+					
+					String nome = rs.getString("nome");
+					relFuncionarios.add(nome);
+					
+					String total_custo = String.valueOf(rs.getDouble("total_custo"));
+					relFuncionarios.add(total_custo);	
+					
+				}
+			} catch (SQLException e) {
+				JOptionPane.showMessageDialog(null, "Erro ao buscar custo no banco de dados: " + e.getMessage());
+			}
+		
+		return relFuncionarios;
+	}
+	
 }

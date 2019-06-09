@@ -106,11 +106,7 @@ public class FuncionarioController {
 	}
 
 	public void relCustoFunc() {
-		try {
-			relFunc = new RelCustoFuncionario();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		relFunc = new RelCustoFuncionario();
 	}
 
 	public void incluiCusto(int funcionario_id, String obs, double custo) {
@@ -122,16 +118,25 @@ public class FuncionarioController {
 			e.printStackTrace();
 		}
 	}
+	
 	public List<String> getRelFuncionarios(int filial, int departamento){
 		List<String> relFuncionarios = null;
 		try {
 			relFuncionarios = FuncionarioDAO.getRelFuncionarios(filial, departamento);
-			for (String string : relFuncionarios) {
-				System.out.println(string);
-			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}		
 		return relFuncionarios;
 	}
+	
+	public List<String> getCustosTodosFuncionarios(){
+		List<String> custosFuncionarios = null;
+		try {
+			custosFuncionarios = FuncionarioDAO.getCustosTodosFuncionarios();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+		return custosFuncionarios;
+	}
+	
 }
