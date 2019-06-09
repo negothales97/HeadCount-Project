@@ -86,20 +86,20 @@ public class CargoDAO {
 		Cargo cargo = null;
 		try (Connection con = Database.getInstance().getConnection()){
 			PreparedStatement stmt = con.prepareStatement(LISTBYID);
-				stmt.setInt(1, id);
-				stmt.execute();
-				ResultSet rs = stmt.getResultSet();
-				rs.next();
-				int idCargo = rs.getInt("id");
-				String nome = rs.getString("nome");
-				cargo = new Cargo(nome);
-				cargo.setId(idCargo);
-				return cargo;
+			stmt.setInt(1, id);
+			stmt.execute();
+			ResultSet rs = stmt.getResultSet();
+			rs.next();
+			int idCargo = rs.getInt("id");
+			String nome = rs.getString("nome");
+			cargo = new Cargo(nome);
+			cargo.setId(idCargo);
+			return cargo;
 				
 			
-			}catch (SQLException e) {
-	    		JOptionPane.showMessageDialog(null, "Erro ao buscar cargo no banco de dados: " +e.getMessage());
-			}
+		}catch (SQLException e) {
+    		JOptionPane.showMessageDialog(null, "Erro ao buscar cargo no banco de dados: " +e.getMessage());
+		}
 		return null;
 	}
 

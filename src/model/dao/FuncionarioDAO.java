@@ -31,9 +31,9 @@ public class FuncionarioDAO {
 			+ "join funcionario as f on c.funcionario_id = f.matricula WHERE filial_id=? and departamento_id=? "
 			+ "group by f.matricula, f.nome ";
 
-	public void create(Funcionario funcionario) throws SQLException {
+	public void create(Funcionario funcionario) throws DAOException {
 		try (Connection con = Database.getInstance().getConnection()) {
-			try (PreparedStatement stmt = con.prepareStatement(INSERT)) {
+			PreparedStatement stmt = con.prepareStatement(INSERT);
 				stmt.setString(1, funcionario.getNome());
 				stmt.setString(2, funcionario.getCpf());
 				stmt.setString(3, funcionario.getDatanasc());
@@ -43,9 +43,8 @@ public class FuncionarioDAO {
 
 				stmt.execute();
 				JOptionPane.showMessageDialog(null, "Funcionario criado com sucesso");
-			} catch (SQLException e) {
+		} catch (SQLException e) {
 				JOptionPane.showMessageDialog(null, "Erro ao criar Funcionario no banco de dados: " + e.getMessage());
-			}
 		}
 	}
 
