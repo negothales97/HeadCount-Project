@@ -1,14 +1,12 @@
 package view.funcionario;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -19,30 +17,20 @@ import javax.swing.JTextField;
 
 import controller.CargoController;
 import controller.DepartamentoController;
-import controller.DependenteController;
 import controller.FilialController;
 import controller.FuncionarioController;
 
-import java.util.Date;
-import java.util.List;
-
-import javax.swing.JOptionPane;
-
-import model.dao.FilialDAO;
 import model.vo.Cargo;
 import model.vo.Departamento;
-import model.vo.Endereco;
 import model.vo.Filial;
 import model.vo.Funcionario;
 
 public class CadFuncionario extends JFrame implements ActionListener {
 	private JFrame janela;
 	private FuncionarioController control;
-	private Filial filial;
 	private FilialController filialControl;
 	private DepartamentoController departamentoController;
 	private CargoController cargoController;
-	
 
 	private JPanel contentPanel;
 	private JPanel panelGridTop;
@@ -50,8 +38,6 @@ public class CadFuncionario extends JFrame implements ActionListener {
 
 	private BorderLayout boderLayout;
 	private GridBagLayout gbLayout;
-
-	private JPanel panel;
 
 	private JButton btnSave;
 	private JButton btnVoltar;
@@ -62,8 +48,6 @@ public class CadFuncionario extends JFrame implements ActionListener {
 	private JLabel lblCargo;
 	private JLabel lblDepartamento;
 	private JLabel lblFilial;
-	private List<Filial> filiais;
-
 
 	private JTextField txtNome;
 	private JTextField txtCPF;
@@ -87,9 +71,6 @@ public class CadFuncionario extends JFrame implements ActionListener {
 
 		btnSave = new JButton("Salvar");
 		btnVoltar = new JButton("Voltar");
-		
-	
-
 
 		txtNome = new JTextField(30);
 		txtCPF = new JTextField(12);
@@ -104,35 +85,36 @@ public class CadFuncionario extends JFrame implements ActionListener {
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets(5, 5, 5, 5);
-		
+
 		comboBoxCargo = new JComboBox<>();
 		try {
-				cargoController = new CargoController();
-				List<Cargo> masterCargo = cargoController.getCargos();
-				for(int i =0;i<masterCargo.size();i++) {
-					comboBoxCargo.addItem(masterCargo.get(i));
-				}
-			
-		}catch (Exception e) {
+			cargoController = new CargoController();
+			List<Cargo> masterCargo = cargoController.getCargos();
+			for (int i = 0; i < masterCargo.size(); i++) {
+				comboBoxCargo.addItem(masterCargo.get(i));
+			}
+
+		} catch (Exception e) {
 		}
-	
+
 		comboBoxDepartamento = new JComboBox<>();
 		try {
 			departamentoController = new DepartamentoController();
-			List<Departamento> masterDepartamento =departamentoController.getDepartamentos();
-			for (int i =0; i< masterDepartamento.size(); i++) {
+			List<Departamento> masterDepartamento = departamentoController.getDepartamentos();
+			for (int i = 0; i < masterDepartamento.size(); i++) {
 				comboBoxDepartamento.addItem(masterDepartamento.get(i));
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 		comboBoxFilial = new JComboBox<>();
-			  filialControl = new FilialController();
-			  List<Filial> master =filialControl.getFiliais();
-			  for (int i = 0; i < master.size(); i++) {
-			   comboBoxFilial.addItem(master.get(i));;}
-		 		
+		filialControl = new FilialController();
+		List<Filial> master = filialControl.getFiliais();
+		for (int i = 0; i < master.size(); i++) {
+			comboBoxFilial.addItem(master.get(i));
+		}
+
 		gbc.gridy = 1;
 		gbc.anchor = 13;
 		panelGridTop.add(lblNome, gbc);
@@ -162,13 +144,13 @@ public class CadFuncionario extends JFrame implements ActionListener {
 		panelGridTop.add(lblDepartamento, gbc);
 		gbc.anchor = 17;
 		panelGridTop.add(comboBoxDepartamento, gbc);
-		
+
 		gbc.gridy = 8;
 		gbc.anchor = 13;
 		panelGridTop.add(lblFilial, gbc);
 		gbc.anchor = 17;
 		panelGridTop.add(comboBoxFilial, gbc);
-		
+
 		panelGridBottom.add(btnSave, gbc);
 		panelGridBottom.add(btnVoltar, gbc);
 
@@ -201,7 +183,8 @@ public class CadFuncionario extends JFrame implements ActionListener {
 			Departamento departamento = (Departamento) comboBoxDepartamento.getSelectedItem();
 			Cargo cargo = (Cargo) comboBoxCargo.getSelectedItem();
 			FuncionarioController col = new FuncionarioController();
-			Funcionario funcionario = new Funcionario(txtNome.getText(), txtCPF.getText(), txtDataNasc.getText(), cargo.getId(), departamento.getId(), filial.getId());
+			Funcionario funcionario = new Funcionario(txtNome.getText(), txtCPF.getText(), txtDataNasc.getText(),
+					cargo.getId(), departamento.getId(), filial.getId());
 			funcionario.setFilial_id(filial.getId());
 			funcionario.setCargo(cargo.getId());
 			funcionario.setDepartamento_id(departamento.getId());
@@ -210,6 +193,5 @@ public class CadFuncionario extends JFrame implements ActionListener {
 
 		}
 	}
-	
 
 }
