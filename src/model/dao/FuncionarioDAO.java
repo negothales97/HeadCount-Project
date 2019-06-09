@@ -46,9 +46,8 @@ public class FuncionarioDAO {
 
 				stmt.execute();
 				JOptionPane.showMessageDialog(null, "Funcionario criado com sucesso");
-			} catch (SQLException e) {
+		} catch (SQLException e) {
 				JOptionPane.showMessageDialog(null, "Erro ao criar Funcionario no banco de dados: " + e.getMessage());
-			}
 		}
 
 	public void update(Funcionario funcionario) throws DAOException {

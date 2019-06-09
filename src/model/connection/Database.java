@@ -11,7 +11,6 @@ public class Database {
 	private String pass = "";
 	
 	private static Database instancia =null;
-	
 	private Database() {
 		try {
 			Class.forName("org.hsqldb.util.DatabaseManager");
