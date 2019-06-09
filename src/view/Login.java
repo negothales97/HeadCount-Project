@@ -17,6 +17,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import controller.FilialController;
+import controller.LoginController;
 import model.vo.Endereco;
 import model.vo.Filial;
 
@@ -106,10 +107,12 @@ public class Login implements ActionListener {
 
 		if (fonte == btnCancelar) {
 			janela.dispose();
-
 		}
 		if (fonte == btnOk) {
-			headCount = new HeadCount();
+			String login = txtLogin.getText();
+			String senha = new String(((JPasswordField) txtPassword).getPassword());
+			LoginController control = new LoginController();
+			control.validaLogin(login, senha);
 			janela.dispose();
 		}
 	}
