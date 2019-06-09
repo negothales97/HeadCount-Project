@@ -68,4 +68,7 @@ public class Funcionario {
 		return matricula;
 	}
 
+	public String toString(){
+		return getNome();
+	}
 }
