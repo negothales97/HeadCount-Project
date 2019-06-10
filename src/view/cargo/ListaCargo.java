@@ -39,6 +39,8 @@ public class ListaCargo extends JFrame implements ActionListener {
 	private JTable tblCargo;
 	private JScrollPane barraRolagem;
 	private DefaultTableModel modelo = new DefaultTableModel();
+	private JButton btnPesquisar;
+	private JTextField txtPesquisar;
 
 
 	public ListaCargo() {
@@ -51,7 +53,10 @@ public class ListaCargo extends JFrame implements ActionListener {
 		btnNovo = new JButton("Novo");
 		btnEditar = new JButton("Editar");
 		btnRemover = new JButton("Remover");
+		btnPesquisar = new JButton("Pesquisar");
 		btnSair = new JButton("Sair");
+		
+		txtPesquisar = new JTextField(10);
 		
 		janela = new JFrame();
 		contentPanel = new JPanel();
@@ -65,7 +70,9 @@ public class ListaCargo extends JFrame implements ActionListener {
 		barraRolagem = new JScrollPane(tblCargo);
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets(5, 5, 5, 5);
-		
+
+		panelGrid.add(btnPesquisar,gbc);
+		panelGrid.add(txtPesquisar, gbc);
 		panelGrid.add(btnNovo, gbc);
 		panelGrid.add(btnEditar, gbc);
 		panelGrid.add(btnRemover, gbc);
@@ -79,11 +86,12 @@ public class ListaCargo extends JFrame implements ActionListener {
 		btnEditar.addActionListener(this);
 		btnRemover.addActionListener(this);
 		btnSair.addActionListener(this);
+		btnPesquisar.addActionListener(this);
 		
 		janela.setContentPane(contentPanel);
 		janela.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		janela.setTitle("Lista de Cargos");
-		janela.setSize(500, 300);
+		janela.setSize(700, 300);
 		janela.setVisible(true);
 	}
 	
@@ -108,7 +116,27 @@ public class ListaCargo extends JFrame implements ActionListener {
 			});
 		}
 	}
-
+	
+	public void AtualizaTabela(String nome) {
+		LimpaTabela();
+		PopulaTabela(nome);		
+	}
+	
+	public void LimpaTabela() {
+		while (modelo.getRowCount() > 0) {
+			modelo.removeRow(0);
+		}
+			
+	}
+	
+	public void PopulaTabela(String nome) {
+		for (Cargo c : control.pesquisaCargos(nome)) {
+			modelo.addRow(new Object[] {
+					c.getId(),
+					c.getNome(),
+			});
+		}
+	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object fonte = e.getSource();
@@ -145,6 +173,8 @@ public class ListaCargo extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null, 
                 "É necesário selecionar uma linha.");
             }
+		}if (fonte == btnPesquisar) {
+			AtualizaTabela(txtPesquisar.getText());
 		}
 
 	}
