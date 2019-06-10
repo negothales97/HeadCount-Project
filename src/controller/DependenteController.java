@@ -3,6 +3,8 @@ package controller;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import model.connection.DAOException;
 import model.dao.DependenteDAO;
 import model.dao.FilialDAO;
@@ -31,12 +33,14 @@ public class DependenteController {
 	}
 	
 	public void criaDependente(Dependente dependente) {
-		try {
-			dao.create(dependente);
-		} catch (DAOException e) {
-			e.printStackTrace();
+		if(validaCampos(dependente)) {
+			try {
+				dao.create(dependente);
+			} catch (DAOException e) {
+				e.printStackTrace();
+			}
+			this.listaDependente();
 		}
-		this.listaDependente();
 	}
 
 	public void deletaDependente(int id){
@@ -76,15 +80,29 @@ public class DependenteController {
 	}
 	
 	public void updateDependente(Dependente dependente) {
-		try {
-			dao.update(dependente);
-			this.listaDependente();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		if(validaCampos(dependente)) {
+			try {
+				dao.update(dependente);
+				this.listaDependente();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
-	
-		
+	public boolean validaCampos(Dependente dependente) {
+		boolean campos = true;
+		if(dependente.getNome().equals("") || dependente.getNome().equals(null)) {
+			JOptionPane.showMessageDialog(null, "Preencher todos os campos");
+			campos = false;
+		} else if(dependente.getDataNasc().equals("") || dependente.getDataNasc().equals(null)) {
+			JOptionPane.showMessageDialog(null, "Preencher todos os campos");
+			campos = false;
+		} else if(dependente.getCpf().equals("") || dependente.getCpf().equals(null)) {
+			JOptionPane.showMessageDialog(null, "Preencher todos os campos");
+			campos = false;
+		}
+		return campos;
+	}
 	
 }

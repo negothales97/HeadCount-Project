@@ -3,6 +3,8 @@ package controller;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import model.dao.FuncionarioDAO;
 import model.dao.FilialDAO;
 import model.connection.DAOException;
@@ -27,13 +29,13 @@ public class FuncionarioController {
 	private CustoFuncionarioView custoFuncionario;
 	private EditFuncionario editFuncionario;
 	private RelCustoFuncionario relFunc;
-	private FuncionarioDAO dao;	
+	private FuncionarioDAO dao;
 
 	public FuncionarioController() {
 		FuncionarioDAO = new FuncionarioDAO();
 	}
 
-	public void listaFuncionario(){
+	public void listaFuncionario() {
 		listaFuncionario = new ListaFuncionario();
 	}
 
@@ -41,12 +43,14 @@ public class FuncionarioController {
 		cadFuncionario = new CadFuncionario();
 	}
 
-	public void criaFuncionario(Funcionario funcionario){
-		try {
-			FuncionarioDAO.create(funcionario);
-			this.listaFuncionario();
-		} catch (SQLException e) {
-			e.printStackTrace();
+	public void criaFuncionario(Funcionario funcionario) {
+		if (validaCampos(funcionario)) {
+			try {
+				FuncionarioDAO.create(funcionario);
+				this.listaFuncionario();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -62,11 +66,13 @@ public class FuncionarioController {
 	}
 
 	public void updateFuncionario(Funcionario funcionario) {
-		try {
-			FuncionarioDAO.update(funcionario);
-			this.listaFuncionario();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		if (validaCampos(funcionario)) {
+			try {
+				FuncionarioDAO.update(funcionario);
+				this.listaFuncionario();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -96,8 +102,8 @@ public class FuncionarioController {
 		}
 		return funcionarios;
 	}
-	
-	public List<Funcionario> pesquisaFuncionarios(String nome){
+
+	public List<Funcionario> pesquisaFuncionarios(String nome) {
 		List<Funcionario> funcionarios = null;
 		try {
 			funcionarios = dao.pesquisar(nome);
@@ -107,7 +113,7 @@ public class FuncionarioController {
 		return funcionarios;
 	}
 
-	public List<CustoFuncionario> getCustoFuncionarios(){
+	public List<CustoFuncionario> getCustoFuncionarios() {
 		List<CustoFuncionario> custos = null;
 		try {
 			custos = FuncionarioDAO.getCustoFunc();
@@ -129,25 +135,40 @@ public class FuncionarioController {
 			e.printStackTrace();
 		}
 	}
-	
-	public List<String> getRelFuncionarios(int filial, int departamento){
+
+	public List<String> getRelFuncionarios(int filial, int departamento) {
 		List<String> relFuncionarios = null;
 		try {
 			relFuncionarios = FuncionarioDAO.getRelFuncionarios(filial, departamento);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}		
+		}
 		return relFuncionarios;
 	}
-	
-	public List<String> getCustosTodosFuncionarios(){
+
+	public List<String> getCustosTodosFuncionarios() {
 		List<String> custosFuncionarios = null;
 		try {
 			custosFuncionarios = FuncionarioDAO.getCustosTodosFuncionarios();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}		
+		}
 		return custosFuncionarios;
 	}
-	
+
+	public boolean validaCampos(Funcionario funcionario) {
+		boolean campos = true;
+		if (funcionario.getNome().equals("") || funcionario.getNome().equals(null)) {
+			JOptionPane.showMessageDialog(null, "Preencher todos os campos");
+			campos = false;
+		} else if (funcionario.getCpf().equals("") || (funcionario.getCpf().equals(null))) {
+			JOptionPane.showMessageDialog(null, "Preencher todos os campos");
+			campos = false;
+		}else if (funcionario.getDatanasc().equals("") || (funcionario.getDatanasc().equals(null))) {
+			JOptionPane.showMessageDialog(null, "Preencher todos os campos");
+			campos = false;
+		}
+		return campos;
+	}
+
 }

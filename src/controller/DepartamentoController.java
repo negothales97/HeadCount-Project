@@ -4,6 +4,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import model.connection.DAOException;
 import model.dao.DepartamentoDAO;
 import model.vo.Cargo;
@@ -128,4 +130,20 @@ public class DepartamentoController {
 			e.printStackTrace();
 		}
 	}
+	
+	public boolean validaCampos(Departamento departamento) {
+		boolean campos = true;
+		if(departamento.getNome().equals("") || departamento.getNome().equals(null)) {
+			JOptionPane.showMessageDialog(null, "Preencher todos os campos");
+			campos = false;
+		} else if(departamento.getCentroCusto().equals("") || departamento.getCentroCusto().equals(null)) {
+			JOptionPane.showMessageDialog(null, "Preencher todos os campos");
+			campos = false;
+		} else if(String.valueOf(departamento.getOrcamento()).equals("")) {
+			JOptionPane.showMessageDialog(null, "Preencher todos os campos");
+			campos = false;
+		}
+		return campos;
+	}
+	
 }
