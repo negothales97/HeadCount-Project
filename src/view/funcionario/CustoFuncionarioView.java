@@ -15,16 +15,12 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
 import controller.FuncionarioController;
-import controller.FilialController;
-import model.dao.FuncionarioDAO;
-import model.dao.FilialDAO;
 import model.vo.CustoFuncionario;
 import model.vo.Funcionario;
 
@@ -144,7 +140,6 @@ public class CustoFuncionarioView extends JFrame implements ActionListener {
 			double custo = Double.parseDouble(txtCusto.getText());
 			int funcionario_id = cmbFuncionario.getSelectedIndex();
 			control.incluiCusto(funcionario_id, txtObs.getText(), custo);
-			JOptionPane.showMessageDialog(null, "Custo adicionado com sucesso");
 			janela.dispose();
 
 		}

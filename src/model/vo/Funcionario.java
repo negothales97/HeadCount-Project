@@ -10,6 +10,18 @@ public class Funcionario {
 	double salario;
 	int filial_id;
 	
+	public Funcionario(int matricula, String nome, String cpf, String datanasc) {
+		this.nome = nome;
+		this.cpf = cpf;
+		this.datanasc = datanasc;
+		this.matricula = matricula;
+	}
+	public Funcionario(String nome, String cpf, String datanasc) {
+		this.nome = nome;
+		this.cpf = cpf;
+		this.datanasc = datanasc;
+		
+	}
 	public Funcionario(int matricula, String nome, String cpf, String datanasc, int cargo_id, int departamento_id, int filial_id) {
 		this.nome = nome;
 		this.cpf = cpf;
@@ -20,7 +32,6 @@ public class Funcionario {
 		this.nome = nome;
 		this.cpf = cpf;
 		this.datanasc = datanasc;
-		
 	}
 	public String getNome() {
 		return nome;

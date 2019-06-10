@@ -10,11 +10,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
-import java.sql.SQLException;
 
 import controller.FilialController;
 import model.vo.Endereco;
@@ -148,9 +145,9 @@ public class CadFilial extends JFrame implements ActionListener {
 			Endereco endereco = new Endereco(txtRua.getText(), txtNumero.getText(), txtBairro.getText());
 			filial.setEndereco(endereco);
 
-			control.criaFilial(filial);
-			janela.dispose();
-			
+			if (control.criaFilial(filial)) {
+				janela.dispose();	
+			}
 		}
 
 	}

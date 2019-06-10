@@ -6,7 +6,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -123,10 +122,9 @@ public class EditDepartamento extends JFrame implements ActionListener {
 			this.departamento.setNome(txtNome.getText());
 			this.departamento.setCentroCusto(txtCentroCusto.getText());
 			
-			control.updateDepartamento(departamento);
-			janela.dispose();
+			if (control.updateDepartamento(departamento)) {
+				janela.dispose();	
+			}
 		}
-
 	}
-
 }

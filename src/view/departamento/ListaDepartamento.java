@@ -25,6 +25,7 @@ import controller.DepartamentoController;
 import controller.FilialController;
 import model.dao.DepartamentoDAO;
 import model.dao.FilialDAO;
+import model.vo.Cargo;
 import model.vo.Departamento;
 
 public class ListaDepartamento extends JFrame implements ActionListener {
@@ -45,6 +46,8 @@ public class ListaDepartamento extends JFrame implements ActionListener {
 
 	private JScrollPane barraRolagem;
 	private DefaultTableModel modelo = new DefaultTableModel();
+	private JButton btnPesquisar;
+	private JTextField txtPesquisar;
 
 	public ListaDepartamento(){
 		super("Departamentos");
@@ -54,9 +57,12 @@ public class ListaDepartamento extends JFrame implements ActionListener {
 	
 	public void geraTela() {
 		btnNovo = new JButton("Novo");
+		btnEditar = new JButton("Editar");
 		btnRemover = new JButton("Remover");
+		btnPesquisar = new JButton("Pesquisar");
 		btnSair = new JButton("Sair");
-		btnEditar = new JButton ("Editar");
+		
+		txtPesquisar = new JTextField(10);
 		
 		janela = new JFrame();
 		contentPanel = new JPanel();
@@ -71,6 +77,8 @@ public class ListaDepartamento extends JFrame implements ActionListener {
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets(5, 5, 5, 5);
 
+		panelGrid.add(btnPesquisar, gbc);
+		panelGrid.add(txtPesquisar, gbc);
 		panelGrid.add(btnNovo, gbc);
 		panelGrid.add(btnEditar, gbc);
 		panelGrid.add(btnRemover, gbc);
@@ -83,6 +91,7 @@ public class ListaDepartamento extends JFrame implements ActionListener {
 		btnNovo.addActionListener(this);
 		btnEditar.addActionListener(this);
 		btnRemover.addActionListener(this);
+		btnPesquisar.addActionListener(this);
 		btnSair.addActionListener(this);
 		
 		janela.setContentPane(contentPanel);
@@ -110,6 +119,27 @@ public class ListaDepartamento extends JFrame implements ActionListener {
 		modelo.setNumRows(0);
 		control = new DepartamentoController();
 		for (Departamento d : control.getDepartamentos()) {
+			modelo.addRow(new Object[] {
+					d.getId(),
+					d.getNome(),
+					d.getCentroCusto(),
+					"R$ "+d.getOrcamento(),
+			});
+		}
+	}
+	public void AtualizaTabela(String nome) {
+		LimpaTabela();
+		PopulaTabela(nome);		
+	}
+	
+	public void LimpaTabela() {
+		while (modelo.getRowCount() > 0) {
+			modelo.removeRow(0);
+		}
+	}
+	
+	public void PopulaTabela(String nome) {
+		for (Departamento d : control.pesquisaDepartamentos(nome)) {
 			modelo.addRow(new Object[] {
 					d.getId(),
 					d.getNome(),
@@ -156,6 +186,9 @@ public class ListaDepartamento extends JFrame implements ActionListener {
 		if (fonte == btnSair) {
 			janela.dispose();
 
+		}
+		if(fonte == btnPesquisar) {
+			AtualizaTabela(txtPesquisar.getText());
 		}
 
 	}

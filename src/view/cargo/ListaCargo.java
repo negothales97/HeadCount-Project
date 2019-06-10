@@ -126,7 +126,6 @@ public class ListaCargo extends JFrame implements ActionListener {
 		while (modelo.getRowCount() > 0) {
 			modelo.removeRow(0);
 		}
-			
 	}
 	
 	public void PopulaTabela(String nome) {

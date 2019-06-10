@@ -24,6 +24,7 @@ public class DepartamentoDAO {
 	private final String UPDATE		= "UPDATE DEPARTAMENTO SET nome=?, centrocusto=?, orcamento=? WHERE id=?";
 	private final String DELETE 	= "DELETE FROM DEPARTAMENTO WHERE id=?";
 	private final String LIST 		= "SELECT * FROM DEPARTAMENTO";
+	private final String SEARCH 	= "select * from DEPARTAMENTO where nome like ?";
 	private final String LISTBYID 	= "SELECT * FROM DEPARTAMENTO WHERE ID = ?";
 
 	public void create(Departamento departamento) throws DAOException {
@@ -121,8 +122,30 @@ public class DepartamentoDAO {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	public List<Departamento> pesquisar(String search) throws DAOException {
+		List<Departamento> departamentos = new ArrayList<>();
+		try (Connection con = Database.getInstance().getConnection()) {
+			PreparedStatement stmt = con.prepareStatement(SEARCH);
+			stmt.setString(1, "%"+search+"%");
+			stmt.execute();
+			ResultSet rs = stmt.getResultSet();
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				String nome = rs.getString("nome");
+				String centroCusto = rs.getString("centrocusto");
+				Double orcamento = rs.getDouble("orcamento");
+				Departamento departamento = new Departamento(nome, centroCusto, orcamento);
+				
+				departamento.setId(id);
+				departamentos.add(departamento);
+				
+			}
+		}catch (SQLException e) {
+		e.printStackTrace();
+		}
+		return departamentos;
 		
-
 	}
 	
 	public List<CustoDepartamento> getCustoDep() throws DAOException{

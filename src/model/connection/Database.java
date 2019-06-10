@@ -14,7 +14,6 @@ public class Database {
 	private Database() {
 		try {
 			Class.forName("org.hsqldb.util.DatabaseManager");
-			System.out.println("Driver criado");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}

@@ -3,6 +3,8 @@ package controller;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import model.connection.DAOException;
 import model.dao.CargoDAO;
 import model.vo.Cargo;
@@ -29,13 +31,18 @@ public class CargoController {
 		cadCargo = new CadCargo();
 	}
 	
-	public void criaCargo(Cargo cargo){
-		try {
-			dao.create(cargo);
-		} catch (DAOException e) {
-			e.printStackTrace();
+	public boolean criaCargo(Cargo cargo){
+		if(validaCampos(cargo)) {
+			try {
+				dao.create(cargo);
+				this.listaCargo();
+				return true;
+			} catch (DAOException e) {
+				e.printStackTrace();
+				return false;
+			}
 		}
-		this.listaCargo();
+		return false;
 	}
 
 	public void deletaCargo(int id) {
@@ -77,13 +84,27 @@ public class CargoController {
 		}
 	}
 	
-	public void updateCargo(Cargo cargo) {
-		try {
-			dao.update(cargo);
-			this.listaCargo();
-		} catch (SQLException e) {
-			e.printStackTrace();
+	public boolean updateCargo(Cargo cargo) {
+		if (validaCampos(cargo)) {
+			try {
+				dao.update(cargo);
+				this.listaCargo();
+				return true;
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return false;
+			}
 		}
+		return false;
+	}
+	
+	public boolean validaCampos(Cargo cargo) {
+		boolean campos = true;
+		if(cargo.getNome().equals("") || cargo.getNome().equals(null)) {
+			JOptionPane.showMessageDialog(null, "Preencher todos os campos");
+			campos = false;
+		}
+		return campos;
 	}
 		
 }

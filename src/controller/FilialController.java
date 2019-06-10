@@ -3,8 +3,11 @@ package controller;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import model.connection.DAOException;
 import model.dao.FilialDAO;
+import model.vo.Cargo;
 import model.vo.Filial;
 import view.filial.CadFilial;
 import view.filial.EditFilial;
@@ -28,13 +31,18 @@ public class FilialController  {
 		cadFilial = new CadFilial();
 	}
 	
-	public void criaFilial(Filial filial) {
-		try {
-			dao.create(filial);
-			this.listaFilial();
-		} catch (SQLException e) {
-			e.printStackTrace();
+	public boolean criaFilial(Filial filial) {
+		if(validaCampos(filial)) {
+			try {
+				dao.create(filial);
+				this.listaFilial();
+				return true;
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return false;
+			}
 		}
+		return false;
 	}
 	
 	public void editaFilial(int id) {
@@ -46,13 +54,27 @@ public class FilialController  {
 		}
 	}
 	
-	public void updateFilial(Filial filial) {
+	public boolean updateFilial(Filial filial) {
+		if(validaCampos(filial)) {
+			try {
+				dao.update(filial);
+				this.listaFilial();
+				return true;
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return false;
+			}
+		}
+		return false;
+	}
+	public List<Filial> pesquisaFiliais(String nome){
+		List<Filial> filiais = null;
 		try {
-			dao.update(filial);
-			this.listaFilial();
-		} catch (SQLException e) {
+			filiais = dao.pesquisar(nome);
+		} catch (DAOException e) {
 			e.printStackTrace();
 		}
+		return filiais;
 	}
 
 	public void deletaFilial(int id) {
@@ -74,5 +96,25 @@ public class FilialController  {
 		
 		return filiais;
 	}
-		
+	
+	public boolean validaCampos(Filial filial) {
+		boolean campos = true;
+		if(filial.getNome().equals("") || filial.getNome().equals(null)) {
+			JOptionPane.showMessageDialog(null, "Preencher todos os campos");
+			campos = false;
+		} else if(filial.getCnpj().equals("") || filial.getCnpj().equals(null)) {
+			JOptionPane.showMessageDialog(null, "Preencher todos os campos");
+			campos = false;
+		} else if(filial.getEndereco().getBairro().equals("") || filial.getEndereco().getBairro().equals(null)) {
+			JOptionPane.showMessageDialog(null, "Preencher todos os campos");
+			campos = false;
+		} else if(filial.getEndereco().getRua().equals("") || filial.getEndereco().getRua().equals(null)) {
+			JOptionPane.showMessageDialog(null, "Preencher todos os campos");
+			campos = false;
+		} else if(filial.getEndereco().getNumero().equals("") || filial.getEndereco().getNumero().equals(null)) {
+			JOptionPane.showMessageDialog(null, "Preencher todos os campos");
+			campos = false;
+		}
+		return campos;
+	}
 }

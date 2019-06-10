@@ -1,27 +1,19 @@
 package view.dependente;
 
 import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
-import org.hsqldb.Constraint;
 
 import controller.DependenteController;
 import controller.FuncionarioController;
@@ -31,7 +23,6 @@ import model.vo.Funcionario;
 public class EditDependente extends JFrame implements ActionListener {
 	private JFrame janela;
 	private DependenteController control;
-	private Dependente filial;
 
 	private JPanel contentPanel;
 	private JPanel panelGridTop;
@@ -150,13 +141,13 @@ public class EditDependente extends JFrame implements ActionListener {
 			control.listaDependente();
 		}
 		if (fonte == btnSalvar) {
-			this.dependente.setNome("****" +txtNome.getText()+"****");
+			this.dependente.setNome(txtNome.getText());
 			this.dependente.setCpf(txtCPF.getText());
 			this.dependente.setDataNasc(txtDataNasc.getText());
 			this.dependente.setFuncionario(cmbFuncionario.getSelectedIndex());
-			control.updateDependente(this.dependente);
-			janela.dispose();
-			
+			if (control.updateDependente(this.dependente)) {
+				janela.dispose();
+			}
 		}
 
 	}
