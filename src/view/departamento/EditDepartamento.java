@@ -122,10 +122,9 @@ public class EditDepartamento extends JFrame implements ActionListener {
 			this.departamento.setNome(txtNome.getText());
 			this.departamento.setCentroCusto(txtCentroCusto.getText());
 			
-			control.updateDepartamento(departamento);
-			janela.dispose();
+			if (control.updateDepartamento(departamento)) {
+				janela.dispose();	
+			}
 		}
-
 	}
-
 }

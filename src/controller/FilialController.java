@@ -31,15 +31,18 @@ public class FilialController  {
 		cadFilial = new CadFilial();
 	}
 	
-	public void criaFilial(Filial filial) {
+	public boolean criaFilial(Filial filial) {
 		if(validaCampos(filial)) {
 			try {
 				dao.create(filial);
 				this.listaFilial();
+				return true;
 			} catch (SQLException e) {
 				e.printStackTrace();
+				return false;
 			}
 		}
+		return false;
 	}
 	
 	public void editaFilial(int id) {
@@ -51,15 +54,18 @@ public class FilialController  {
 		}
 	}
 	
-	public void updateFilial(Filial filial) {
+	public boolean updateFilial(Filial filial) {
 		if(validaCampos(filial)) {
 			try {
 				dao.update(filial);
 				this.listaFilial();
+				return true;
 			} catch (SQLException e) {
 				e.printStackTrace();
+				return false;
 			}
 		}
+		return false;
 	}
 	public List<Filial> pesquisaFiliais(String nome){
 		List<Filial> filiais = null;

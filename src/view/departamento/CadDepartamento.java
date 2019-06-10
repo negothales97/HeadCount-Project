@@ -112,10 +112,9 @@ public class CadDepartamento extends JFrame implements ActionListener {
 			double orcamento = Double.parseDouble(txtOrcamento.getText());
 			Departamento departamento = new Departamento(txtNome.getText(), txtCentroCusto.getText(), orcamento);
 			control = new DepartamentoController();
-			control.criaDepartamento(departamento);
-			janela.dispose();
+			if (control.criaDepartamento(departamento)) {
+				janela.dispose();	
+			}
 		}
-
 	}
-
 }

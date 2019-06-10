@@ -43,15 +43,18 @@ public class FuncionarioController {
 		cadFuncionario = new CadFuncionario();
 	}
 
-	public void criaFuncionario(Funcionario funcionario) {
+	public boolean criaFuncionario(Funcionario funcionario) {
 		if (validaCampos(funcionario)) {
 			try {
 				FuncionarioDAO.create(funcionario);
 				this.listaFuncionario();
+				return true;
 			} catch (SQLException e) {
 				e.printStackTrace();
+				return false;
 			}
 		}
+		return false;
 	}
 
 	public void editaFuncionario(int id) {
@@ -65,15 +68,18 @@ public class FuncionarioController {
 
 	}
 
-	public void updateFuncionario(Funcionario funcionario) {
+	public boolean updateFuncionario(Funcionario funcionario) {
 		if (validaCampos(funcionario)) {
 			try {
 				FuncionarioDAO.update(funcionario);
 				this.listaFuncionario();
+				return true;
 			} catch (SQLException e) {
 				e.printStackTrace();
+				return false;
 			}
 		}
+		return false;
 	}
 
 	public void deletaFuncionario(int id) {
@@ -164,7 +170,7 @@ public class FuncionarioController {
 		} else if (funcionario.getCpf().equals("") || (funcionario.getCpf().equals(null))) {
 			JOptionPane.showMessageDialog(null, "Preencher todos os campos");
 			campos = false;
-		}else if (funcionario.getDatanasc().equals("") || (funcionario.getDatanasc().equals(null))) {
+		} else if (funcionario.getDatanasc().equals("") || (funcionario.getDatanasc().equals(null))) {
 			JOptionPane.showMessageDialog(null, "Preencher todos os campos");
 			campos = false;
 		}

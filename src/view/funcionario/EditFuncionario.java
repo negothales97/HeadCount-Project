@@ -203,8 +203,10 @@ public class EditFuncionario extends JFrame implements ActionListener {
 		if (fonte == btnSave) {
 			FuncionarioController col = new FuncionarioController();
 			Funcionario funcionario = new Funcionario(txtNome.getText(), txtCPF.getText(), txtDataNasc.getText(), comboBoxFilial.getSelectedIndex(),comboBoxDepartamento.getSelectedIndex(),comboBoxFilial.getSelectedIndex());
-			col.updateFuncionario(funcionario);
-			janela.dispose();
+			if (col.updateFuncionario(funcionario)) {
+				janela.dispose();
+			}
+			
 		}
 	}
 	

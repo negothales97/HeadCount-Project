@@ -91,7 +91,9 @@ public class CadCargo extends JFrame implements ActionListener {
 		}
 		if (fonte == btnSalvar) {
 			cargo = new Cargo(txtCargo.getText());
-			control.criaCargo(cargo);
+			if (control.criaCargo(cargo)) {
+				janela.dispose();
+			}
 		}
 
 	}

@@ -188,9 +188,9 @@ public class CadFuncionario extends JFrame implements ActionListener {
 			funcionario.setFilial_id(filial.getId());
 			funcionario.setCargo(cargo.getId());
 			funcionario.setDepartamento_id(departamento.getId());
-			col.criaFuncionario(funcionario);
-			janela.dispose();
-
+			if (col.criaFuncionario(funcionario)) {
+				janela.dispose();	
+			}		
 		}
 	}
 

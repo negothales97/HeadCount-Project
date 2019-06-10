@@ -145,9 +145,9 @@ public class EditDependente extends JFrame implements ActionListener {
 			this.dependente.setCpf(txtCPF.getText());
 			this.dependente.setDataNasc(txtDataNasc.getText());
 			this.dependente.setFuncionario(cmbFuncionario.getSelectedIndex());
-			control.updateDependente(this.dependente);
-			janela.dispose();
-			
+			if (control.updateDependente(this.dependente)) {
+				janela.dispose();
+			}
 		}
 
 	}

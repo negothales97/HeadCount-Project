@@ -41,13 +41,18 @@ public class DepartamentoController {
 		cadDepartamento = new CadDepartamento();
 	}
 
-	public void criaDepartamento(Departamento departamento){
-		try {
-			dao.create(departamento);
-		} catch (DAOException e) {
-			e.printStackTrace();
+	public boolean criaDepartamento(Departamento departamento){
+		if (validaCampos(departamento)) {
+			try {
+				dao.create(departamento);
+				this.listaDepartamento();
+				return true;
+			} catch (DAOException e) {
+				e.printStackTrace();
+				return true;
+			}
 		}
-		this.listaDepartamento();
+		return false;
 	}
 
 	public void deletaDepartamento(int id){
@@ -122,13 +127,18 @@ public class DepartamentoController {
 		relDep.criaJanela();
 	}
 
-	public void updateDepartamento(Departamento departamento) {
-		try {
-			dao.update(departamento);
-			this.listaDepartamento();
-		} catch (SQLException e) {
-			e.printStackTrace();
+	public boolean updateDepartamento(Departamento departamento) {
+		if(validaCampos(departamento)) {
+			try {
+				dao.update(departamento);
+				this.listaDepartamento();
+				return true;
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return false;
+			}
 		}
+		return false;
 	}
 	
 	public boolean validaCampos(Departamento departamento) {

@@ -31,7 +31,7 @@ public class EditFilial extends JFrame implements ActionListener {
 
 	private JButton btnEditar;
 	private JButton btnVoltar;
-	
+
 	private JLabel lblCNPJ;
 	private JLabel lblNome;
 	private JLabel lblIE;
@@ -48,35 +48,35 @@ public class EditFilial extends JFrame implements ActionListener {
 
 	public EditFilial(Filial filial) {
 		this.filial = filial;
-		janela 			= new JFrame();
-		contentPanel 	= new JPanel();
-		panelGridTop 	= new JPanel();
+		janela = new JFrame();
+		contentPanel = new JPanel();
+		panelGridTop = new JPanel();
 		panelGridBottom = new JPanel();
 
-		boderLayout 	= new BorderLayout();
-		gbLayout 		= new GridBagLayout();
+		boderLayout = new BorderLayout();
+		gbLayout = new GridBagLayout();
 
 		panelGridTop.setLayout(gbLayout);
 		panelGridBottom.setLayout(gbLayout);
 		contentPanel.setLayout(boderLayout);
 
-		btnEditar 		= new JButton("Editar");
-		btnVoltar 		= new JButton("Voltar");
-		
-		lblCNPJ 		= new JLabel("CNPJ");
-		lblNome 		= new JLabel("Razao Social");
-		lblIE 			= new JLabel("Inscricao Estadual");
-		lblRua 			= new JLabel("Rua");
-		lblNumero 		= new JLabel("Numero");
-		lblBairro 		= new JLabel("Bairro");
+		btnEditar = new JButton("Editar");
+		btnVoltar = new JButton("Voltar");
 
-		txtCNPJ 		= new JTextField(15);
-		txtNome 		= new JTextField(25);
-		txtIE 			= new JTextField(10);
-		txtRua 			= new JTextField(20);
-		txtNumero 		= new JTextField(5);
-		txtBairro 		= new JTextField(12);
-		
+		lblCNPJ = new JLabel("CNPJ");
+		lblNome = new JLabel("Razao Social");
+		lblIE = new JLabel("Inscricao Estadual");
+		lblRua = new JLabel("Rua");
+		lblNumero = new JLabel("Numero");
+		lblBairro = new JLabel("Bairro");
+
+		txtCNPJ = new JTextField(15);
+		txtNome = new JTextField(25);
+		txtIE = new JTextField(10);
+		txtRua = new JTextField(20);
+		txtNumero = new JTextField(5);
+		txtBairro = new JTextField(12);
+
 		txtCNPJ.setText(filial.getCnpj());
 		txtNome.setText(filial.getNome());
 		txtIE.setText(filial.getInscEstadual());
@@ -145,7 +145,7 @@ public class EditFilial extends JFrame implements ActionListener {
 
 		if (fonte == btnVoltar) {
 			janela.dispose();
-				control.listaFilial();
+			control.listaFilial();
 		}
 		if (fonte == btnEditar) {
 			this.filial.setCnpj(txtCNPJ.getText());
@@ -153,10 +153,9 @@ public class EditFilial extends JFrame implements ActionListener {
 			this.filial.setInscEstadual(txtIE.getText());
 			Endereco endereco = new Endereco(txtRua.getText(), txtNumero.getText(), txtBairro.getText());
 			this.filial.setEndereco(endereco);
-			control.updateFilial(this.filial);
-			janela.dispose();
-			
-	}
-
+			if (control.updateFilial(this.filial)) {
+				janela.dispose();
+			}
+		}
 	}
 }

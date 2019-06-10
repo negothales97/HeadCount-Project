@@ -32,15 +32,18 @@ public class DependenteController {
 		cadDependente = new CadDependente();
 	}
 	
-	public void criaDependente(Dependente dependente) {
+	public boolean criaDependente(Dependente dependente) {
 		if(validaCampos(dependente)) {
 			try {
 				dao.create(dependente);
+				this.listaDependente();
+				return true;
 			} catch (DAOException e) {
 				e.printStackTrace();
+				return false;
 			}
-			this.listaDependente();
 		}
+		return false;
 	}
 
 	public void deletaDependente(int id){
@@ -79,15 +82,18 @@ public class DependenteController {
 		}
 	}
 	
-	public void updateDependente(Dependente dependente) {
+	public boolean updateDependente(Dependente dependente) {
 		if(validaCampos(dependente)) {
 			try {
 				dao.update(dependente);
 				this.listaDependente();
+				return true;
 			} catch (SQLException e) {
 				e.printStackTrace();
+				return false;
 			}
 		}
+		return false;
 	}
 	
 	public boolean validaCampos(Dependente dependente) {

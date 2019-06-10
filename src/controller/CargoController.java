@@ -31,15 +31,18 @@ public class CargoController {
 		cadCargo = new CadCargo();
 	}
 	
-	public void criaCargo(Cargo cargo){
+	public boolean criaCargo(Cargo cargo){
 		if(validaCampos(cargo)) {
 			try {
 				dao.create(cargo);
+				this.listaCargo();
+				return true;
 			} catch (DAOException e) {
 				e.printStackTrace();
+				return false;
 			}
-			this.listaCargo();
 		}
+		return false;
 	}
 
 	public void deletaCargo(int id) {
@@ -81,15 +84,18 @@ public class CargoController {
 		}
 	}
 	
-	public void updateCargo(Cargo cargo) {
-		if(validaCampos(cargo)) {
+	public boolean updateCargo(Cargo cargo) {
+		if (validaCampos(cargo)) {
 			try {
 				dao.update(cargo);
 				this.listaCargo();
+				return true;
 			} catch (SQLException e) {
 				e.printStackTrace();
+				return false;
 			}
 		}
+		return false;
 	}
 	
 	public boolean validaCampos(Cargo cargo) {
