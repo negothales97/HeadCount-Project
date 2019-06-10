@@ -7,6 +7,7 @@ import model.dao.FuncionarioDAO;
 import model.dao.FilialDAO;
 import model.connection.DAOException;
 import model.dao.DepartamentoDAO;
+import model.vo.Cargo;
 import model.vo.CustoFuncionario;
 import model.vo.Departamento;
 import model.vo.Funcionario;
@@ -43,6 +44,7 @@ public class FuncionarioController {
 	public void criaFuncionario(Funcionario funcionario){
 		try {
 			FuncionarioDAO.create(funcionario);
+			this.listaFuncionario();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -94,6 +96,16 @@ public class FuncionarioController {
 		}
 		return funcionarios;
 	}
+	
+	public List<Funcionario> pesquisaFuncionarios(String nome){
+		List<Funcionario> funcionarios = null;
+		try {
+			funcionarios = dao.pesquisar(nome);
+		} catch (DAOException e) {
+			e.printStackTrace();
+		}
+		return funcionarios;
+	}
 
 	public List<CustoFuncionario> getCustoFuncionarios(){
 		List<CustoFuncionario> custos = null;
@@ -111,7 +123,6 @@ public class FuncionarioController {
 
 	public void incluiCusto(int funcionario_id, String obs, double custo) {
 		try {
-			System.out.println(obs);
 			FuncionarioDAO.custoFunc(funcionario_id, obs, custo);
 			this.registraCustoFuncionario();
 		} catch (Exception e) {

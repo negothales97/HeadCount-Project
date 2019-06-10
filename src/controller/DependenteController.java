@@ -56,6 +56,16 @@ public class DependenteController {
 		}
 		return dependentes;
 	}
+	
+	public List<Dependente> pesquisaDependentes(String nome) {
+		List<Dependente> dependentes = null;
+		try {
+			dependentes = dao.pesquisar(nome);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return dependentes;
+	}
 	public void editaDependete(int id) {
 		try {
 			Dependente dependente = dao.getDependente(id);

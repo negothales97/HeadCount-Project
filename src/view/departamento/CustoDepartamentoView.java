@@ -23,7 +23,6 @@ import javax.swing.JTextField;
 import controller.DepartamentoController;
 import controller.FilialController;
 import model.vo.CustoDepartamento;
-import model.vo.CustoFuncionario;
 import model.vo.Departamento;
 import model.vo.Filial;
 

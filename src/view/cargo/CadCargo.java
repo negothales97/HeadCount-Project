@@ -10,14 +10,10 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import java.sql.SQLException;
-
 import controller.CargoController;
-import model.vo.Endereco;
 import model.vo.Cargo;
 
 public class CadCargo extends JFrame implements ActionListener {
@@ -96,8 +92,6 @@ public class CadCargo extends JFrame implements ActionListener {
 		if (fonte == btnSalvar) {
 			cargo = new Cargo(txtCargo.getText());
 			control.criaCargo(cargo);
-			janela.dispose();
-			JOptionPane.showMessageDialog(null, "Cargo cadastrado com sucesso");
 		}
 
 	}

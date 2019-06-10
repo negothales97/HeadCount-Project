@@ -34,6 +34,7 @@ public class DepartamentoController {
 		listaDepartamento = new ListaDepartamento();
 	}
 
+	
 	public void novoDepartamento() {
 		cadDepartamento = new CadDepartamento();
 	}
@@ -87,6 +88,16 @@ public class DepartamentoController {
 		List<Departamento> departamentos = null;
 		try {
 			departamentos = dao.getDepartamentos();
+		} catch (DAOException e) {
+			e.printStackTrace();
+		}
+		return departamentos;
+	}
+	
+	public List<Departamento> pesquisaDepartamentos(String nome){
+		List<Departamento> departamentos = null;
+		try {
+			departamentos = dao.pesquisar(nome);
 		} catch (DAOException e) {
 			e.printStackTrace();
 		}

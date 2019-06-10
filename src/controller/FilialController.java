@@ -5,6 +5,7 @@ import java.util.List;
 
 import model.connection.DAOException;
 import model.dao.FilialDAO;
+import model.vo.Cargo;
 import model.vo.Filial;
 import view.filial.CadFilial;
 import view.filial.EditFilial;
@@ -53,6 +54,15 @@ public class FilialController  {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	public List<Filial> pesquisaFiliais(String nome){
+		List<Filial> filiais = null;
+		try {
+			filiais = dao.pesquisar(nome);
+		} catch (DAOException e) {
+			e.printStackTrace();
+		}
+		return filiais;
 	}
 
 	public void deletaFilial(int id) {

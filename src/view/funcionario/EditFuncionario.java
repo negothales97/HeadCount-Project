@@ -1,13 +1,11 @@
 package view.funcionario;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -18,19 +16,13 @@ import javax.swing.JTextField;
 
 import controller.CargoController;
 import controller.DepartamentoController;
-import controller.DependenteController;
 import controller.FilialController;
 import controller.FuncionarioController;
 
-import java.util.Date;
 import java.util.List;
 
-import javax.swing.JOptionPane;
-
-import model.dao.FilialDAO;
 import model.vo.Cargo;
 import model.vo.Departamento;
-import model.vo.Endereco;
 import model.vo.Filial;
 import model.vo.Funcionario;
 

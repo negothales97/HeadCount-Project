@@ -6,23 +6,19 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import controller.DepartamentoController;
-import controller.FilialController;
 import model.vo.Departamento;
 
 public class CadDepartamento extends JFrame implements ActionListener {
 	private JFrame janela;
 	private DepartamentoController control;
-	private Departamento departamento;
 
 	private JPanel contentPanel;
 	private JPanel panelGridTop;
@@ -118,7 +114,6 @@ public class CadDepartamento extends JFrame implements ActionListener {
 			control = new DepartamentoController();
 			control.criaDepartamento(departamento);
 			janela.dispose();
-			JOptionPane.showMessageDialog(null, "Departamento Cadastrado com sucesso");
 		}
 
 	}

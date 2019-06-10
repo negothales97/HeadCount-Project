@@ -20,6 +20,7 @@ public class DependenteDAO {
 	private final String UPDATE		= "UPDATE DEPENDENTE SET nome=?, cpf=?, datanasc=?, funcionario_id=? WHERE id=?";
 	private final String DELETE 	= "DELETE FROM DEPENDENTE WHERE ID=?";
 	private final String LIST 		= "SELECT * FROM DEPENDENTE";
+	private final String SEARCH 	= "SELECT * FROM DEPENDENTE WHERE NOME LIKE ?";
 	private final String LISTBYID 	= "SELECT * FROM DEPENDENTE WHERE ID = ?";
 
 	public void create(Dependente dependente) throws DAOException {
@@ -97,6 +98,34 @@ public class DependenteDAO {
 		}
 		return dependentes;
 	}	
+	
+	public List<Dependente> pesquisar(String search) throws DAOException {
+		List<Dependente> dependentes = new ArrayList<>();
+		try (Connection con = Database.getInstance().getConnection()) {
+			PreparedStatement stmt = con.prepareStatement(SEARCH);
+			stmt.setString(1, "%"+search+"%");
+			stmt.execute();
+			ResultSet rs = stmt.getResultSet();
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				String nome = rs.getString("nome");
+				String cpf = rs.getString("cpf");
+				String datanasc = rs.getString("datanasc");
+				int funcionario_id = rs.getInt("funcionario_id");
+				Dependente dependente = new Dependente(nome, cpf, datanasc, funcionario_id);
+				
+				dependente.setId(id);
+				dependentes.add(dependente);
+				
+			}
+			
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return dependentes;
+	}
 
 	public Dependente getDependente(int id) throws DAOException {
 

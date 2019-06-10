@@ -16,9 +16,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import controller.FilialController;
+import model.vo.Cargo;
 import model.vo.Filial;
 
 public class ListaFilial extends JFrame implements ActionListener {
@@ -36,19 +38,23 @@ public class ListaFilial extends JFrame implements ActionListener {
 	private DefaultTableModel modelo = new DefaultTableModel();
 	private JTable tblFilial;
 	private JScrollPane barraRolagem;
+	private JButton btnPesquisar;
+	private JTextField txtPesquisar;
 
 	public ListaFilial() {
 		super("Filiais");
-
 		geraTabela();
 		geraTela();
 	}
 	
 	public void geraTela() {
 		btnNovo = new JButton("Novo");
+		btnEditar = new JButton("Editar");
 		btnRemover = new JButton("Remover");
+		btnPesquisar = new JButton("Pesquisar");
 		btnSair = new JButton("Sair");
-		btnEditar = new JButton ("Editar");
+		
+		txtPesquisar = new JTextField(10);
 		
 		janela = new JFrame();
 		contentPanel = new JPanel();
@@ -63,6 +69,8 @@ public class ListaFilial extends JFrame implements ActionListener {
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets(5, 5, 5, 5);
 
+		panelGrid.add(btnPesquisar,gbc);
+		panelGrid.add(txtPesquisar, gbc);
 		panelGrid.add(btnNovo, gbc);
 		panelGrid.add(btnEditar, gbc);
 		panelGrid.add(btnRemover, gbc);
@@ -76,6 +84,7 @@ public class ListaFilial extends JFrame implements ActionListener {
 		btnEditar.addActionListener(this);
 		btnRemover.addActionListener(this);
 		btnSair.addActionListener(this);
+		btnPesquisar.addActionListener(this);
 		
 		janela.setContentPane(contentPanel);
 		janela.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -109,6 +118,32 @@ public class ListaFilial extends JFrame implements ActionListener {
 		modelo.setNumRows(0);
 		control = new FilialController();
 		for (Filial f : control.getFiliais()) {
+			modelo.addRow(new Object[] {
+					f.getId(),
+					f.getNome(),
+					f.getCnpj(),
+					f.getInscEstadual(),
+					f.getEndereco().getRua(),
+					f.getEndereco().getNumero(),
+					f.getEndereco().getBairro(),
+					
+			});
+		}
+	}
+	
+	public void AtualizaTabela(String nome) {
+		LimpaTabela();
+		PopulaTabela(nome);		
+	}
+	
+	public void LimpaTabela() {
+		while (modelo.getRowCount() > 0) {
+			modelo.removeRow(0);
+		}
+	}
+	
+	public void PopulaTabela(String nome) {
+		for (Filial f : control.pesquisaFiliais(nome)) {
 			modelo.addRow(new Object[] {
 					f.getId(),
 					f.getNome(),
@@ -157,6 +192,9 @@ public class ListaFilial extends JFrame implements ActionListener {
 		}
 		if (fonte == btnSair) {
 			janela.dispose();
+		}
+		if(fonte == btnPesquisar) {
+			AtualizaTabela(txtPesquisar.getText());
 		}
 
 	}
