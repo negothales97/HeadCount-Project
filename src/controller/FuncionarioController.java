@@ -11,10 +11,12 @@ import model.vo.CustoFuncionario;
 import model.vo.Departamento;
 import model.vo.Funcionario;
 import view.departamento.EditDepartamento;
+import view.departamento.RelCustoDepartamento;
 import view.funcionario.CadFuncionario;
 import view.funcionario.CustoFuncionarioView;
 import view.funcionario.EditFuncionario;
 import view.funcionario.ListaFuncionario;
+import view.funcionario.MasterDetailFuncionario;
 import view.funcionario.RelCustoFuncionario;
 
 public class FuncionarioController {
@@ -27,6 +29,7 @@ public class FuncionarioController {
 	private EditFuncionario editFuncionario;
 	private RelCustoFuncionario relFunc;
 	private FuncionarioDAO dao;	
+	private MasterDetailFuncionario masterDetailDepartamento;
 
 	public FuncionarioController() {
 		FuncionarioDAO = new FuncionarioDAO();
@@ -137,6 +140,10 @@ public class FuncionarioController {
 			e.printStackTrace();
 		}		
 		return custosFuncionarios;
+	}
+
+	public void masterDetailFuncionario() {
+		masterDetailDepartamento = new MasterDetailFuncionario();
 	}
 	
 }

@@ -74,7 +74,25 @@ public class DependenteController {
 		}
 	}
 	
+	public List<String> getListaDependente(int matricula){
+		List<String> listaDepentendes = null;
+		try {
+			listaDepentendes = dao.getListaDependentes(matricula);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+		return listaDepentendes;
+	}
 	
+//	public List<String> getTodosDependentes(){
+//		List<String> listaDepentendes = null;
+//		try {
+//			listaDepentendes = dao.getDependentes();
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}		
+//		return listaDepentendes;
+//	}
 		
 	
 }
