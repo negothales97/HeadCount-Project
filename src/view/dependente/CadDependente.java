@@ -138,6 +138,5 @@ public class CadDependente extends JFrame implements ActionListener {
 			control.criaDependente(dependente);
 			janela.dispose();
 		}
-
 	}
 }

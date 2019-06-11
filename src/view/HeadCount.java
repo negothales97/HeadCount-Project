@@ -24,10 +24,10 @@ public class HeadCount implements ActionListener {
 	private JMenuItem cadFunc;
 	private JMenuItem cadDep;
 	private JMenuItem cadCar;
-	
+
 	private JMenuItem custoDepart;
 	private JMenuItem custoFunc;
-	
+
 	private FilialController controlFil;
 	private FuncionarioController controlFun;
 	private DepartamentoController controlDeprt;
@@ -36,6 +36,7 @@ public class HeadCount implements ActionListener {
 	private JMenu relMenu;
 	private JMenuItem relFunc;
 	private JMenuItem relDepart;
+	private JMenuItem masterDetailFD;
 
 	public HeadCount() {
 
@@ -49,7 +50,7 @@ public class HeadCount implements ActionListener {
 		janela.setJMenuBar(menuBar);
 		crudMenu = new JMenu("Cadastro");
 		custoMenu = new JMenu("Custos");
-		relMenu = new JMenu("Relatórios");
+		relMenu = new JMenu("Relatï¿½rios");
 
 		menuBar.add(crudMenu);
 		menuBar.add(custoMenu);
@@ -63,9 +64,11 @@ public class HeadCount implements ActionListener {
 
 		custoFunc = new JMenuItem("Custo p/ Funcionario");
 		custoDepart = new JMenuItem("Custo p/ Departamento");
-		
-		relFunc = new JMenuItem("Custo Funcionário");
+
+		relFunc = new JMenuItem("Custo Funcionï¿½rio");
 		relDepart = new JMenuItem("Custo Departamento");
+
+		masterDetailFD = new JMenuItem("MasterDetail Func x Depend");
 
 		crudMenu.add(cadFil);
 		crudMenu.add(cadFunc);
@@ -75,10 +78,11 @@ public class HeadCount implements ActionListener {
 
 		custoMenu.add(custoFunc);
 		custoMenu.add(custoDepart);
-		
+
 		relMenu.add(relFunc);
 		relMenu.add(relDepart);
-		
+		relMenu.add(masterDetailFD);
+
 		cadFil.addActionListener(this);
 		cadDeprt.addActionListener(this);
 		cadFunc.addActionListener(this);
@@ -88,6 +92,7 @@ public class HeadCount implements ActionListener {
 		custoDepart.addActionListener(this);
 		relFunc.addActionListener(this);
 		relDepart.addActionListener(this);
+		masterDetailFD.addActionListener(this);
 
 		janela.setSize(600, 400);
 		janela.setVisible(true);
@@ -120,6 +125,12 @@ public class HeadCount implements ActionListener {
 			controlFun.relCustoFunc();
 		}if(fonte == relDepart) {
 			controlDeprt.relDepartamento();
+		}else if(fonte == masterDetailFD) {
+		controlFun = new FuncionarioController();
+		controlFun.masterDetailFuncionario();
+		
+	}
+
 		}
 	}
 }

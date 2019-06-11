@@ -3,8 +3,6 @@ package controller;
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.swing.text.MaskFormatter;
-
 import model.connection.DAOException;
 import model.dao.DependenteDAO;
 import model.dao.FilialDAO;
@@ -32,13 +30,18 @@ public class DependenteController {
 		cadDependente = new CadDependente();
 	}
 	
-	public void criaDependente(Dependente dependente) {
-		try {
-			dao.create(dependente);
-		} catch (DAOException e) {
-			e.printStackTrace();
+	public boolean criaDependente(Dependente dependente) {
+		if(validaCampos(dependente)) {
+			try {
+				dao.create(dependente);
+				this.listaDependente();
+				return true;
+			} catch (DAOException e) {
+				e.printStackTrace();
+				return false;
+			}
 		}
-		this.listaDependente();
+		return false;
 	}
 
 	public void deletaDependente(int id){
@@ -77,13 +80,43 @@ public class DependenteController {
 		}
 	}
 	
-	public void updateDependente(Dependente dependente) {
+	public boolean updateDependente(Dependente dependente) {
+		if(validaCampos(dependente)) {
+			try {
+				dao.update(dependente);
+				this.listaDependente();
+				return true;
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return false;
+			}
+		}
+		return false;
+	}
+	
+	public List<String> getListaDependente(int matricula){
+		List<String> listaDepentendes = null;
 		try {
-			dao.update(dependente);
-			this.listaDependente();
+			listaDepentendes = dao.getListaDependentes(matricula);
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}		
+		return listaDepentendes;
+	}
+	public boolean validaCampos(Dependente dependente) {
+		boolean campos = true;
+		if(dependente.getNome().equals("") || dependente.getNome().equals(null)) {
+			JOptionPane.showMessageDialog(null, "Preencher todos os campos");
+			campos = false;
+		} else if(dependente.getDataNasc().equals("") || dependente.getDataNasc().equals(null)) {
+			JOptionPane.showMessageDialog(null, "Preencher todos os campos");
+			campos = false;
+		} else if(dependente.getCpf().equals("") || dependente.getCpf().equals(null)) {
+			JOptionPane.showMessageDialog(null, "Preencher todos os campos");
+			campos = false;
 		}
+		return campos;
+	}
 	}		
 	
 }

@@ -55,7 +55,7 @@ public class EditCargo extends JFrame implements ActionListener {
 		lblCargo = new JLabel("Cargo");
 
 		txtCargo = new JTextField(25);
-		
+
 		txtCargo.setText(cargo.getNome());
 
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -94,9 +94,9 @@ public class EditCargo extends JFrame implements ActionListener {
 		}
 		if (fonte == btnSalvar) {
 			this.cargo.setNome(txtCargo.getText());
-			control.updateCargo(cargo);
-			janela.dispose();
+			if (control.updateCargo(cargo)) {
+				janela.dispose();
+			}
 		}
-
 	}
 }

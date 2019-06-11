@@ -4,6 +4,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import model.connection.DAOException;
 import model.dao.DepartamentoDAO;
 import model.vo.Cargo;
@@ -39,13 +41,18 @@ public class DepartamentoController {
 		cadDepartamento = new CadDepartamento();
 	}
 
-	public void criaDepartamento(Departamento departamento){
-		try {
-			dao.create(departamento);
-		} catch (DAOException e) {
-			e.printStackTrace();
+	public boolean criaDepartamento(Departamento departamento){
+		if (validaCampos(departamento)) {
+			try {
+				dao.create(departamento);
+				this.listaDepartamento();
+				return true;
+			} catch (DAOException e) {
+				e.printStackTrace();
+				return true;
+			}
 		}
-		this.listaDepartamento();
+		return false;
 	}
 
 	public void deletaDepartamento(int id){
@@ -120,12 +127,33 @@ public class DepartamentoController {
 		relDep.criaJanela();
 	}
 
-	public void updateDepartamento(Departamento departamento) {
-		try {
-			dao.update(departamento);
-			this.listaDepartamento();
-		} catch (SQLException e) {
-			e.printStackTrace();
+	public boolean updateDepartamento(Departamento departamento) {
+		if(validaCampos(departamento)) {
+			try {
+				dao.update(departamento);
+				this.listaDepartamento();
+				return true;
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return false;
+			}
 		}
+		return false;
 	}
+	
+	public boolean validaCampos(Departamento departamento) {
+		boolean campos = true;
+		if(departamento.getNome().equals("") || departamento.getNome().equals(null)) {
+			JOptionPane.showMessageDialog(null, "Preencher todos os campos");
+			campos = false;
+		} else if(departamento.getCentroCusto().equals("") || departamento.getCentroCusto().equals(null)) {
+			JOptionPane.showMessageDialog(null, "Preencher todos os campos");
+			campos = false;
+		} else if(String.valueOf(departamento.getOrcamento()).equals("")) {
+			JOptionPane.showMessageDialog(null, "Preencher todos os campos");
+			campos = false;
+		}
+		return campos;
+	}
+	
 }

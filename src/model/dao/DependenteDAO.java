@@ -22,6 +22,7 @@ public class DependenteDAO {
 	private final String LIST 		= "SELECT * FROM DEPENDENTE";
 	private final String SEARCH 	= "SELECT * FROM DEPENDENTE WHERE NOME LIKE ?";
 	private final String LISTBYID 	= "SELECT * FROM DEPENDENTE WHERE ID = ?";
+	private final String LISTBYFID 	= "SELECT * FROM DEPENDENTE WHERE FUNCIONARIO_ID = ?";
 	private FuncionarioDAO daoFunc = new FuncionarioDAO();
 
 	public void create(Dependente dependente) throws DAOException {
@@ -158,5 +159,36 @@ public class DependenteDAO {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public List<String> getListaDependentes(int matricula) throws DAOException {
+		List<String> listaDepentendes = new ArrayList<>();
+		try (Connection con = Database.getInstance().getConnection()) {
+			PreparedStatement stmt = con.prepareStatement(LISTBYFID);
+			stmt.setInt(1, matricula);
+			stmt.execute();
+			ResultSet rs = stmt.getResultSet();
+			while (rs.next()) {
+				String id = String.valueOf(rs.getInt("id"));
+				listaDepentendes.add(id);
+
+				String nome = rs.getString("nome");
+				listaDepentendes.add(nome);
+
+				String cpf = rs.getString("cpf");
+				listaDepentendes.add(cpf);
+				
+				String datanasc = rs.getString("datanasc");
+				listaDepentendes.add(datanasc);
+				
+				String funcionario_id = String.valueOf(rs.getInt("funcionario_id"));
+				listaDepentendes.add(funcionario_id);
+
+			}
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, "Erro ao buscar custo no banco de dados: " + e.getMessage());
+		}
+
+		return listaDepentendes;
 	}
 }

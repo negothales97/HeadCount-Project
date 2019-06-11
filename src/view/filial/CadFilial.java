@@ -145,9 +145,9 @@ public class CadFilial extends JFrame implements ActionListener {
 			Endereco endereco = new Endereco(txtRua.getText(), txtNumero.getText(), txtBairro.getText());
 			filial.setEndereco(endereco);
 
-			control.criaFilial(filial);
-			janela.dispose();
-			
+			if (control.criaFilial(filial)) {
+				janela.dispose();	
+			}
 		}
 
 	}
