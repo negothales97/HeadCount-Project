@@ -149,9 +149,6 @@ public class DepartamentoController {
 		} else if(departamento.getCentroCusto().equals("") || departamento.getCentroCusto().equals(null)) {
 			JOptionPane.showMessageDialog(null, "Preencher todos os campos");
 			campos = false;
-		} else if(String.valueOf(departamento.getOrcamento()).equals("")) {
-			JOptionPane.showMessageDialog(null, "Preencher todos os campos");
-			campos = false;
 		}
 		return campos;
 	}

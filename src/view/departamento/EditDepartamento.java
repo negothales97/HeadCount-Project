@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -117,13 +118,17 @@ public class EditDepartamento extends JFrame implements ActionListener {
 			control.listaDepartamento();
 		}
 		if (fonte == btnSalvar) {
-			double orcamento = Double.parseDouble(txtOrcamento.getText());
-			this.departamento.setOrcamento(orcamento);
-			this.departamento.setNome(txtNome.getText());
-			this.departamento.setCentroCusto(txtCentroCusto.getText());
-			
-			if (control.updateDepartamento(departamento)) {
-				janela.dispose();	
+			if(!txtOrcamento.getText().equals("")) {
+				double orcamento = Double.parseDouble(txtOrcamento.getText());
+				this.departamento.setOrcamento(orcamento);
+				this.departamento.setNome(txtNome.getText());
+				this.departamento.setCentroCusto(txtCentroCusto.getText());
+				
+				if (control.updateDepartamento(departamento)) {
+					janela.dispose();	
+				}
+			}else {
+				JOptionPane.showMessageDialog(null, "Preencher todos os campos");
 			}
 		}
 	}

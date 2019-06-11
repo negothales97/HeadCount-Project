@@ -190,8 +190,10 @@ public class EditFuncionario extends JFrame implements ActionListener {
 			funcionario.setCargo(cargo);
 			funcionario.setDepartamento_id(departamento);
 			funcionario.setFilial(filial);
-			col.updateFuncionario(funcionario);
-			janela.dispose();
+			
+			if(col.updateFuncionario(funcionario)) {
+				janela.dispose();
+			}
 		}
 	}
 	

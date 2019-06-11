@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -96,7 +97,7 @@ public class CadDepartamento extends JFrame implements ActionListener {
 		janela.setTitle("Cadastro de Departamentos");
 		janela.setSize(450, 300);
 		janela.setVisible(true);
-		janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		janela.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
 
 	@Override
@@ -109,12 +110,17 @@ public class CadDepartamento extends JFrame implements ActionListener {
 			control.listaDepartamento();
 		}
 		if (fonte == btnSalvar) {
-			double orcamento = Double.parseDouble(txtOrcamento.getText());
-			Departamento departamento = new Departamento(txtNome.getText(), txtCentroCusto.getText(), orcamento);
-			control = new DepartamentoController();
-			if (control.criaDepartamento(departamento)) {
-				janela.dispose();	
+			if(!txtOrcamento.getText().equals("")) {
+				double orcamento = Double.parseDouble(txtOrcamento.getText());
+				Departamento departamento = new Departamento(txtNome.getText(), txtCentroCusto.getText(), orcamento);
+				control = new DepartamentoController();
+				if (control.criaDepartamento(departamento)) {
+					janela.dispose();	
+				}
+			}else {
+				JOptionPane.showMessageDialog(null, "Preencher todos os campos");
 			}
+			
 		}
 	}
 }

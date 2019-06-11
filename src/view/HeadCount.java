@@ -50,7 +50,7 @@ public class HeadCount implements ActionListener {
 		janela.setJMenuBar(menuBar);
 		crudMenu = new JMenu("Cadastro");
 		custoMenu = new JMenu("Custos");
-		relMenu = new JMenu("Relat�rios");
+		relMenu = new JMenu("Relatorios");
 
 		menuBar.add(crudMenu);
 		menuBar.add(custoMenu);
@@ -105,6 +105,7 @@ public class HeadCount implements ActionListener {
 		controlFil = new FilialController();
 		controlFun = new FuncionarioController();
 		controlDeprt = new DepartamentoController();
+		controlCar = new CargoController();
 		controlDep = new DependenteController();
 		
 		if (fonte == cadFil) {

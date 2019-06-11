@@ -140,8 +140,10 @@ public class EditDependente extends JFrame implements ActionListener {
 			this.dependente.setDataNasc(txtDataNasc.getText());
 			Funcionario funcionario = (Funcionario) cmbFuncionario.getSelectedItem();
 			this.dependente.setFuncionario(funcionario);
-			control.updateDependente(this.dependente);
-			janela.dispose();
+			
+			if(control.updateDependente(this.dependente)) {
+				janela.dispose();
+			}
 			
 		}
 

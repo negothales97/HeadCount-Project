@@ -178,14 +178,18 @@ public class CadFuncionario extends JFrame implements ActionListener {
 		}
 
 		if (fonte == btnSave) {
+			
 			Filial filial = (Filial) comboBoxFilial.getSelectedItem();
 			Departamento departamento = (Departamento) comboBoxDepartamento.getSelectedItem();
 			Cargo cargo = (Cargo) comboBoxCargo.getSelectedItem();
 			FuncionarioController col = new FuncionarioController();
 			Funcionario funcionario = new Funcionario(txtNome.getText(), txtCPF.getText(), txtDataNasc.getText(),
 					cargo, departamento, filial);
-			col.criaFuncionario(funcionario);
-			janela.dispose();
+			
+			if(col.criaFuncionario(funcionario)) {
+				janela.dispose();
+			}
+			
 
 		}
 	}
