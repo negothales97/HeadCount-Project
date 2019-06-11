@@ -5,33 +5,26 @@ public class Funcionario {
 	String nome;
 	String cpf;
 	String datanasc;
-	int cargo_id;
-	int departamento_id;
-	double salario;
-	int filial_id;
-	
-	public Funcionario(int matricula, String nome, String cpf, String datanasc) {
-		this.nome = nome;
-		this.cpf = cpf;
-		this.datanasc = datanasc;
+	Cargo cargo;
+	Departamento departamento;
+	Filial filial;
+
+	public Funcionario(int matricula, String nome, String cpf, String datanasc, Cargo cargo, Departamento departamento, Filial filial) {
 		this.matricula = matricula;
-	}
-	public Funcionario(String nome, String cpf, String datanasc) {
 		this.nome = nome;
 		this.cpf = cpf;
 		this.datanasc = datanasc;
-		
+		this.cargo = cargo;
+		this.departamento = departamento;
+		this.filial = filial;
 	}
-	public Funcionario(int matricula, String nome, String cpf, String datanasc, int cargo_id, int departamento_id, int filial_id) {
+	public Funcionario(String nome, String cpf, String datanasc, Cargo cargo, Departamento departamento, Filial filial) {
 		this.nome = nome;
 		this.cpf = cpf;
 		this.datanasc = datanasc;
-		this.matricula = matricula;
-	}
-	public Funcionario(String nome, String cpf, String datanasc, int cargo_id, int departamento_id, int filial_id) {
-		this.nome = nome;
-		this.cpf = cpf;
-		this.datanasc = datanasc;
+		this.cargo = cargo;
+		this.departamento = departamento;
+		this.filial = filial;
 	}
 	public String getNome() {
 		return nome;
@@ -39,17 +32,11 @@ public class Funcionario {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public int getCargo_id() {
-		return cargo_id;
+	public Cargo getCargo() {
+		return cargo;
 	}
-	public void setCargo(int cargo_id) {
-		this.cargo_id = cargo_id;
-	}
-	public double getSalario() {
-		return salario;
-	}
-	public void setSalario(double salario) {
-		this.salario = salario;
+	public void setCargo(Cargo cargo) {
+		this.cargo = cargo;
 	}
 	public String getCpf() {
 		return cpf;
@@ -63,17 +50,17 @@ public class Funcionario {
 	public void setDatanasc(String datanasc) {
 		this.datanasc = datanasc;
 	}
-	public int getDepartamento_id() {
-		return departamento_id;
+	public Departamento getDepartamento() {
+		return departamento;
 	}
-	public void setDepartamento_id(int departamento_id) {
-		this.departamento_id = departamento_id;
+	public void setDepartamento_id(Departamento departamento) {
+		this.departamento = departamento;
 	}
-	public int getFilial_id() {
-		return filial_id;
+	public Filial getFilial() {
+		return filial;
 	}
-	public void setFilial_id(int filial_id) {
-		this.filial_id = filial_id;
+	public void setFilial(Filial filial) {
+		this.filial = filial;
 	}
 	public int getMatricula() {
 		return matricula;

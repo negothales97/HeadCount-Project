@@ -3,6 +3,8 @@ package controller;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.swing.text.MaskFormatter;
+
 import model.connection.DAOException;
 import model.dao.DependenteDAO;
 import model.dao.FilialDAO;
@@ -82,9 +84,6 @@ public class DependenteController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	
-		
+	}		
 	
 }

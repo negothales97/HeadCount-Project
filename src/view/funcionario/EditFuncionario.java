@@ -31,7 +31,6 @@ public class EditFuncionario extends JFrame implements ActionListener {
 	private FuncionarioController control;
 	private DepartamentoController departamentoController;
 	private CargoController cargoController;
-	
 
 	private JPanel contentPanel;
 	private JPanel panelGridTop;
@@ -40,9 +39,7 @@ public class EditFuncionario extends JFrame implements ActionListener {
 	private BorderLayout boderLayout;
 	private GridBagLayout gbLayout;
 
-	private JPanel panel;
-
-	private JButton btnSave;
+	private JButton btnSalvar;
 	private JButton btnVoltar;
 
 	private JLabel lblNome;
@@ -51,15 +48,13 @@ public class EditFuncionario extends JFrame implements ActionListener {
 	private JLabel lblCargo;
 	private JLabel lblDepartamento;
 	private JLabel lblFilial;
-	private List<Filial> filiais;
-
 
 	private JTextField txtNome;
 	private JTextField txtCPF;
 	private JTextField txtDataNasc;
-	private JComboBox<String> comboBoxDepartamento;
-	private JComboBox<String> comboBoxCargo;
-	private JComboBox<String> comboBoxFilial;
+	private JComboBox<Departamento> comboBoxDepartamento;
+	private JComboBox<Cargo> comboBoxCargo;
+	private JComboBox<Filial> comboBoxFilial;
 	private FilialController filialControl;
 	private Funcionario funcionario;
 
@@ -77,17 +72,9 @@ public class EditFuncionario extends JFrame implements ActionListener {
 		panelGridBottom.setLayout(gbLayout);
 		contentPanel.setLayout(boderLayout);
 
-		btnSave = new JButton("Salvar");
+		btnSalvar = new JButton("Salvar");
 		btnVoltar = new JButton("Voltar");
 		
-		comboBoxCargo = new JComboBox<String>();
-		comboBoxDepartamento = new JComboBox<String>();
-		comboBoxFilial = new JComboBox<String>();
-
-		txtNome = new JTextField(30);
-		txtCPF = new JTextField(12);
-		txtDataNasc = new JTextField(8);
-
 		lblNome = new JLabel("Nome");
 		lblCPF = new JLabel("CPF");
 		lblDataNasc = new JLabel("Data de Nascimento");
@@ -95,88 +82,80 @@ public class EditFuncionario extends JFrame implements ActionListener {
 		lblFilial = new JLabel("Filial");
 		lblDepartamento = new JLabel("Departamento");
 		
+		txtNome = new JTextField(30);
+		txtCPF = new JTextField(12);
+		txtDataNasc = new JTextField(8);
+		comboBoxCargo = new JComboBox<>();
+		comboBoxDepartamento = new JComboBox<>();
+		comboBoxFilial = new JComboBox<>();
+
 		txtNome.setText(funcionario.getNome());
 		txtCPF.setText(funcionario.getCpf());
 		txtDataNasc.setText(funcionario.getDatanasc());
-//		comboBoxCargo.setSelectedIndex(funcionario.getCargo_id());
-//		comboBoxDepartamento.setSelectedIndex(funcionario.getDepartamento_id());
-//		comboBoxFilial.setSelectedIndex(funcionario.getFilial_id());
-
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.insets = new Insets(5, 5, 5, 5);
 		
-		
-		try {
-				cargoController = new CargoController();
-				List<Cargo> masterCargo = cargoController.getCargos();
-				for(int i =0;i<masterCargo.size();i++) {
-					comboBoxCargo.addItem(masterCargo.get(i).getNome());
-				}
-			
-		}catch (Exception e) {
-			e.printStackTrace();
+		cargoController = new CargoController();
+		List<Cargo> masterCargo = cargoController.getCargos();
+		for(int i =0;i<masterCargo.size();i++) {
+			comboBoxCargo.addItem(masterCargo.get(i));
 		}
 	
-		
-		try {
-			departamentoController = new DepartamentoController();
-			List<Departamento> masterDepartamento = departamentoController.getDepartamentos();
-			for (int i =0; i< masterDepartamento.size(); i++) {
-				comboBoxDepartamento.addItem(masterDepartamento.get(i).getNome());
-			}
-		}
-		catch (Exception e) {
-			e.printStackTrace();
+		departamentoController = new DepartamentoController();
+		List<Departamento> masterDepartamento = departamentoController.getDepartamentos();
+		for (int i =0; i< masterDepartamento.size(); i++) {
+			comboBoxDepartamento.addItem(masterDepartamento.get(i));
 		}
 		
 		filialControl = new FilialController();
-			List<Filial> master = filialControl.getFiliais();
-			for (int i = 0; i < master.size(); i++) {
-				comboBoxFilial.addItem(master.get(i).getNome());}
-		 		
-
-	
-
-		gbc.gridy = 1;
+		List<Filial> master = filialControl.getFiliais();
+		for (int i = 0; i < master.size(); i++) {
+			comboBoxFilial.addItem(master.get(i));
+		}
+		comboBoxCargo.setSelectedItem(funcionario.getCargo());
+		comboBoxDepartamento.setSelectedItem(funcionario.getDepartamento());
+		comboBoxFilial.setSelectedItem(funcionario.getFilial());
+		
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.insets = new Insets(5, 5, 5, 5);
+		
 		gbc.anchor = 13;
 		panelGridTop.add(lblNome, gbc);
 		gbc.anchor = 17;
 		panelGridTop.add(txtNome, gbc);
 
-		gbc.gridy = 2;
+		gbc.gridy = 1;
 		gbc.anchor = 13;
 		panelGridTop.add(lblCPF, gbc);
 		gbc.anchor = 17;
 		panelGridTop.add(txtCPF, gbc);
 
-		gbc.gridy = 3;
+		gbc.gridy = 2;
 		gbc.anchor = 13;
 		panelGridTop.add(lblDataNasc, gbc);
 		gbc.anchor = 17;
 		panelGridTop.add(txtDataNasc, gbc);
 
-		gbc.gridy = 4;
+		gbc.gridy = 3;
 		gbc.anchor = 13;
 		panelGridTop.add(lblCargo, gbc);
 		gbc.anchor = 17;
 		panelGridTop.add(comboBoxCargo, gbc);
 		
-		gbc.gridy = 7;
+		gbc.gridy = 4;
 		gbc.anchor = 13;
 		panelGridTop.add(lblDepartamento, gbc);
 		gbc.anchor = 17;
 		panelGridTop.add(comboBoxDepartamento, gbc);
 		
-		gbc.gridy = 8;
+		gbc.gridy = 5;
 		gbc.anchor = 13;
 		panelGridTop.add(lblFilial, gbc);
 		gbc.anchor = 17;
 		panelGridTop.add(comboBoxFilial, gbc);
 		
-		panelGridBottom.add(btnSave, gbc);
+		panelGridBottom.add(btnSalvar, gbc);
 		panelGridBottom.add(btnVoltar, gbc);
 
-		btnSave.addActionListener(this);
+		btnSalvar.addActionListener(this);
 		btnVoltar.addActionListener(this);
 
 		contentPanel.add(BorderLayout.NORTH, panelGridTop);
@@ -200,9 +179,17 @@ public class EditFuncionario extends JFrame implements ActionListener {
 			control.listaFuncionario();
 		}
 
-		if (fonte == btnSave) {
+		if (fonte == btnSalvar) {
+			Filial filial = (Filial) comboBoxFilial.getSelectedItem();
+			Departamento departamento = (Departamento) comboBoxDepartamento.getSelectedItem();
+			Cargo cargo = (Cargo) comboBoxCargo.getSelectedItem();
 			FuncionarioController col = new FuncionarioController();
-			Funcionario funcionario = new Funcionario(txtNome.getText(), txtCPF.getText(), txtDataNasc.getText(), comboBoxFilial.getSelectedIndex(),comboBoxDepartamento.getSelectedIndex(),comboBoxFilial.getSelectedIndex());
+			funcionario.setNome(txtNome.getText());
+			funcionario.setCpf(txtCPF.getText());
+			funcionario.setDatanasc(txtDataNasc.getText());
+			funcionario.setCargo(cargo);
+			funcionario.setDepartamento_id(departamento);
+			funcionario.setFilial(filial);
 			col.updateFuncionario(funcionario);
 			janela.dispose();
 		}

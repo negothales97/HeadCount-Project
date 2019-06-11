@@ -42,7 +42,7 @@ public class EditDependente extends JFrame implements ActionListener {
 	private JTextField txtNome;
 	private JTextField txtCPF;
 	private JTextField txtDataNasc;
-	private JComboBox<String> cmbFuncionario;
+	private JComboBox<Funcionario> cmbFuncionario;
 	private FuncionarioController controlFunc;
 	private Dependente dependente ;
 
@@ -68,27 +68,21 @@ public class EditDependente extends JFrame implements ActionListener {
 		lblDataNasc = new JLabel("Data Nascimento");
 		lblFuncionario = new JLabel("Parentesco");
 		
-		
-
 		txtNome = new JTextField(15);
 		txtCPF = new JTextField(11);
 		txtDataNasc = new JTextField(8);
-		cmbFuncionario = new JComboBox<String>();
+		cmbFuncionario = new JComboBox<>();
 		
 		txtNome.setText(dependente.getNome());
 		txtCPF.setText(dependente.getCpf());
 		txtDataNasc.setText(dependente.getDataNasc());
 		
-		cmbFuncionario.addItem("SELECIONE....");
-		try {
-			controlFunc = new FuncionarioController();
-			List<Funcionario> master= controlFunc.getFuncionarios();
-			for (int i = 0; i< master.size(); i++) {
-				cmbFuncionario.addItem(master.get(i).getNome());
-			}
-		}catch (Exception e) {
-			e.printStackTrace();
+		controlFunc = new FuncionarioController();
+		List<Funcionario> master= controlFunc.getFuncionarios();
+		for (int i = 0; i< master.size(); i++) {
+			cmbFuncionario.addItem(master.get(i));
 		}
+		cmbFuncionario.setSelectedItem(dependente.getFuncionario());
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets(5, 5, 5, 5);
 
@@ -144,7 +138,8 @@ public class EditDependente extends JFrame implements ActionListener {
 			this.dependente.setNome(txtNome.getText());
 			this.dependente.setCpf(txtCPF.getText());
 			this.dependente.setDataNasc(txtDataNasc.getText());
-			this.dependente.setFuncionario(cmbFuncionario.getSelectedIndex());
+			Funcionario funcionario = (Funcionario) cmbFuncionario.getSelectedItem();
+			this.dependente.setFuncionario(funcionario);
 			control.updateDependente(this.dependente);
 			janela.dispose();
 			

@@ -134,7 +134,7 @@ public class CadDependente extends JFrame implements ActionListener {
 		}
 		if (fonte == btnSalvar) {
 			Funcionario funcionario = (Funcionario) cmbFuncionario.getSelectedItem();
-			Dependente dependente = new Dependente(txtNome.getText(), txtCPF.getText(), txtDataNasc.getText(), funcionario.getMatricula());
+			Dependente dependente = new Dependente(txtNome.getText(), txtCPF.getText(), txtDataNasc.getText(), funcionario);
 			control.criaDependente(dependente);
 			janela.dispose();
 		}

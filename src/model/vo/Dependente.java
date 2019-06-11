@@ -6,14 +6,14 @@ public class Dependente {
 	private String nome;
 	private String cpf;
 	private String dataNasc;
-	private int funcionario_id;
+	private Funcionario funcionario;
 
 
-	public Dependente(String nome, String cpf, String dataNasc, int funcionario_id) {
+	public Dependente(String nome, String cpf, String dataNasc, Funcionario funcionario) {
 		this.nome = nome;
 		this.cpf = cpf;
 		this.dataNasc = dataNasc;
-		this.funcionario_id = funcionario_id;
+		this.funcionario = funcionario;
 	}
 
 	public int getId() {
@@ -48,12 +48,12 @@ public class Dependente {
 		this.dataNasc = dataNasc;
 	}
 
-	public int getFuncionario() {
-		return funcionario_id;
+	public Funcionario getFuncionario() {
+		return funcionario;
 	}
 
-	public void setFuncionario(int funcionario_id) {
-		this.funcionario_id = funcionario_id;
+	public void setFuncionario(Funcionario funcionario) {
+		this.funcionario = funcionario;
 
 	}
 	

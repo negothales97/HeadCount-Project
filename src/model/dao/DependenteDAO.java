@@ -12,16 +12,17 @@ import javax.swing.JOptionPane;
 import model.connection.DAOException;
 import model.connection.Database;
 import model.vo.Dependente;
+import model.vo.Funcionario;
 
 public class DependenteDAO {
 	
-	private int id;
 	private final String INSERT		= "INSERT INTO DEPENDENTE (nome, cpf, datanasc, funcionario_id) values (?, ?, ?, ?)";
 	private final String UPDATE		= "UPDATE DEPENDENTE SET nome=?, cpf=?, datanasc=?, funcionario_id=? WHERE id=?";
 	private final String DELETE 	= "DELETE FROM DEPENDENTE WHERE ID=?";
 	private final String LIST 		= "SELECT * FROM DEPENDENTE";
 	private final String SEARCH 	= "SELECT * FROM DEPENDENTE WHERE NOME LIKE ?";
 	private final String LISTBYID 	= "SELECT * FROM DEPENDENTE WHERE ID = ?";
+	private FuncionarioDAO daoFunc = new FuncionarioDAO();
 
 	public void create(Dependente dependente) throws DAOException {
 		try (Connection con = Database.getInstance().getConnection()) {
@@ -31,7 +32,7 @@ public class DependenteDAO {
 				stmt.setString(1, dependente.getNome());
 				stmt.setString(2, dependente.getCpf());
 				stmt.setString(3, dependente.getDataNasc());
-				stmt.setInt(4, dependente.getFuncionario());
+				stmt.setInt(4, dependente.getFuncionario().getMatricula());
 				
 				stmt.execute();
 				JOptionPane.showMessageDialog(null, "Dependente Cadastrado com sucesso");
@@ -47,7 +48,7 @@ public class DependenteDAO {
 				stmt.setString(1, dependente.getNome());
 				stmt.setString(2, dependente.getCpf());
 				stmt.setString(3, dependente.getDataNasc());
-				stmt.setInt(4, dependente.getFuncionario());
+				stmt.setInt(4, dependente.getFuncionario().getMatricula());
 				stmt.setInt(5, dependente.getId());
 
 				stmt.execute();
@@ -84,7 +85,8 @@ public class DependenteDAO {
 					String cpf = rs.getString("cpf");
 					String datanasc = rs.getString("datanasc");
 					int funcionario_id = rs.getInt("funcionario_id");
-					Dependente dependente = new Dependente(nome, cpf, datanasc, funcionario_id);
+					Funcionario funcionario = daoFunc.getFuncionario(funcionario_id);
+					Dependente dependente = new Dependente(nome, cpf, datanasc, funcionario);
 					
 					dependente.setId(id);
 					dependentes.add(dependente);
@@ -112,7 +114,9 @@ public class DependenteDAO {
 				String cpf = rs.getString("cpf");
 				String datanasc = rs.getString("datanasc");
 				int funcionario_id = rs.getInt("funcionario_id");
-				Dependente dependente = new Dependente(nome, cpf, datanasc, funcionario_id);
+				Funcionario funcionario = daoFunc.getFuncionario(funcionario_id);
+				
+				Dependente dependente = new Dependente(nome, cpf, datanasc, funcionario);
 				
 				dependente.setId(id);
 				dependentes.add(dependente);
@@ -142,7 +146,10 @@ public class DependenteDAO {
 				String cpf = rs.getString("cpf");
 				String datanasc = rs.getString("datanasc");
 				int funcionario_id = rs.getInt("funcionario_id");
-				dependente = new Dependente(nome, cpf, datanasc, funcionario_id);					
+				
+				Funcionario funcionario = daoFunc.getFuncionario(funcionario_id);
+				
+				dependente = new Dependente(nome, cpf, datanasc, funcionario);					
 				dependente.setId(idDependente);
 				return dependente;
 

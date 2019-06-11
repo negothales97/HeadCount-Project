@@ -6,22 +6,17 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import controller.FilialController;
 import controller.LoginController;
-import model.vo.Endereco;
-import model.vo.Filial;
 
-public class Login implements ActionListener {
+public class Login implements ActionListener   {
 	private JFrame janela;
 	private JPanel contentPanel;
 	private JPanel panelCenter;
@@ -37,8 +32,6 @@ public class Login implements ActionListener {
 
 	private JButton btnOk;
 	private JButton btnCancelar;
-
-	private HeadCount headCount;
 
 	public Login() {
 
@@ -97,6 +90,7 @@ public class Login implements ActionListener {
 		janela.setTitle("Login");
 		janela.setSize(250, 200);
 		janela.setVisible(true);
+		janela.getRootPane().setDefaultButton(btnOk);
 		janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	}
@@ -116,5 +110,4 @@ public class Login implements ActionListener {
 			janela.dispose();
 		}
 	}
-
 }

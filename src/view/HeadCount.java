@@ -2,8 +2,6 @@ package view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
-
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -99,34 +97,29 @@ public class HeadCount implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object fonte = e.getSource();
+		controlFil = new FilialController();
+		controlFun = new FuncionarioController();
+		controlDeprt = new DepartamentoController();
+		controlDep = new DependenteController();
+		
 		if (fonte == cadFil) {
-			controlFil = new FilialController();
 				controlFil.listaFilial();
-		} else if (fonte == cadFunc) {
-			controlFun = new FuncionarioController();
+		}if (fonte == cadFunc) {
 			controlFun.listaFuncionario();
-		} else if (fonte == cadDeprt) {
-			controlDeprt = new DepartamentoController();
+		}if (fonte == cadDeprt) {
 			controlDeprt.listaDepartamento();
-		} else if (fonte == cadDep) {
-			controlDep = new DependenteController();
+		}if (fonte == cadDep) {
 			controlDep.listaDependente();
-		} else if (fonte == cadCar) {
-			controlCar = new CargoController();
+		}if (fonte == cadCar) {
 				controlCar.listaCargo();
-		} else if (fonte == custoFunc) {
-			controlFun = new FuncionarioController();
+		}if (fonte == custoFunc) {
 			controlFun.registraCustoFuncionario();
-		} else if (fonte == custoDepart) {
-			controlDeprt = new DepartamentoController();
+		}if (fonte == custoDepart) {
 			controlDeprt.registraCustoDepartamento();
-		}else if(fonte == relFunc) {
-			controlFun = new FuncionarioController();
+		}if(fonte == relFunc) {
 			controlFun.relCustoFunc();
-		}else if(fonte == relDepart) {
-			controlDeprt = new DepartamentoController();
+		}if(fonte == relDepart) {
 			controlDeprt.relDepartamento();
 		}
-
 	}
 }

@@ -15,10 +15,15 @@ import model.connection.Database;
 import model.vo.Cargo;
 import model.vo.CustoDepartamento;
 import model.vo.CustoFuncionario;
+import model.vo.Departamento;
 import model.vo.Filial;
 import model.vo.Funcionario;
 
 public class FuncionarioDAO {
+	
+	private FilialDAO daoFil = new FilialDAO();
+	private DepartamentoDAO daoDep = new DepartamentoDAO();
+	private CargoDAO daoCar = new CargoDAO();
 
 	private final String INSERT 		= "INSERT INTO Funcionario (nome,cpf,datanasc, cargo_id, departamento_id, filial_id) values (?, ?, ?, ?, ?, ?)";
 	private final String UPDATE 		= "UPDATE FUNCIONARIO SET   nome=?, cpf=?, datanasc=?,cargo_id=?,departamento_id=?,filial_id=? WHERE matricula=?";
@@ -39,9 +44,9 @@ public class FuncionarioDAO {
 			stmt.setString(1, funcionario.getNome());
 			stmt.setString(2, funcionario.getCpf());
 			stmt.setString(3, funcionario.getDatanasc());
-			stmt.setInt(4, funcionario.getCargo_id());
-			stmt.setInt(5, funcionario.getDepartamento_id());
-			stmt.setInt(6, funcionario.getFilial_id());
+			stmt.setInt(4, funcionario.getCargo().getId());
+			stmt.setInt(5, funcionario.getDepartamento().getId());
+			stmt.setInt(6, funcionario.getFilial().getId());
 
 			stmt.execute();
 			JOptionPane.showMessageDialog(null, "Funcionario criado com sucesso");
@@ -56,9 +61,9 @@ public class FuncionarioDAO {
 			stmt.setString(1, funcionario.getNome());
 			stmt.setString(2, funcionario.getCpf());
 			stmt.setString(3, funcionario.getDatanasc());
-			stmt.setInt(4, funcionario.getCargo_id());
-			stmt.setInt(5, funcionario.getDepartamento_id());
-			stmt.setInt(6, funcionario.getFilial_id());
+			stmt.setInt(4, funcionario.getCargo().getId());
+			stmt.setInt(5, funcionario.getDepartamento().getId());
+			stmt.setInt(6, funcionario.getFilial().getId());
 			stmt.setInt(7, funcionario.getMatricula());
 			stmt.execute();
 			JOptionPane.showMessageDialog(null, "Funcionario editado com sucesso");
@@ -93,8 +98,11 @@ public class FuncionarioDAO {
 				int cargo_id = rs.getInt("cargo_id");
 				int departamento_id = rs.getInt("departamento_id");
 				int filial_id = rs.getInt("filial_id");
-				Funcionario funcionario = new Funcionario(matricula, nome, cpf, dataNasc, cargo_id, departamento_id,
-						filial_id);
+				
+				Cargo cargo = daoCar.getCargo(cargo_id);
+				Departamento departamento = daoDep.getDepartamento(departamento_id);
+				Filial filial = daoFil.getFilial(filial_id);
+				Funcionario funcionario = new Funcionario(matricula, nome, cpf, dataNasc, cargo, departamento, filial);
 
 				funcionarios.add(funcionario);
 			}
@@ -120,7 +128,11 @@ public class FuncionarioDAO {
 			int cargo_id = rs.getInt("cargo_id");
 			int departamento_id = rs.getInt("departamento_id");
 			int filial_id = rs.getInt("filial_id");
-			funcionario = new Funcionario(matricula, nome, cpf, dataNasc, cargo_id, departamento_id, filial_id);
+
+			Cargo cargo = daoCar.getCargo(cargo_id);
+			Departamento departamento = daoDep.getDepartamento(departamento_id);
+			Filial filial = daoFil.getFilial(filial_id);
+			funcionario = new Funcionario(matricula, nome, cpf, dataNasc, cargo, departamento, filial);
 
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Erro ao buscar funcionario no banco de dados: " + e.getMessage());
@@ -144,8 +156,11 @@ public class FuncionarioDAO {
 				int cargo_id = rs.getInt("cargo_id");
 				int departamento_id = rs.getInt("departamento_id");
 				int filial_id = rs.getInt("filial_id");
-				Funcionario funcionario = new Funcionario(matricula, nome, cpf, dataNasc, cargo_id, departamento_id,
-						filial_id);
+				
+				Cargo cargo = daoCar.getCargo(cargo_id);
+				Departamento departamento = daoDep.getDepartamento(departamento_id);
+				Filial filial = daoFil.getFilial(filial_id);
+				Funcionario funcionario = new Funcionario(matricula, nome, cpf, dataNasc, cargo, departamento, filial);
 
 				funcionarios.add(funcionario);
 			}

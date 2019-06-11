@@ -9,6 +9,7 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -99,7 +100,7 @@ public class ListaFuncionario extends JFrame implements ActionListener {
 		janela.setContentPane(contentPanel);
 		janela.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		janela.setTitle("Lista de Funcionários");
-		janela.setSize(700, 300);
+		janela.setSize(900, 400);
 		janela.setVisible(true);
 	}
 	private void geraTabela() {
@@ -108,11 +109,17 @@ public class ListaFuncionario extends JFrame implements ActionListener {
 		modelo.addColumn("Nome");
 		modelo.addColumn("CPF");
 		modelo.addColumn("Data Nasc");
+		modelo.addColumn("Cargo");
+		modelo.addColumn("Departamento");
+		modelo.addColumn("Filial");
 
 		tblFuncionario.getColumnModel().getColumn(0).setPreferredWidth(100);
 		tblFuncionario.getColumnModel().getColumn(1).setPreferredWidth(100);
 		tblFuncionario.getColumnModel().getColumn(2).setPreferredWidth(100);
 		tblFuncionario.getColumnModel().getColumn(3).setPreferredWidth(150);
+		tblFuncionario.getColumnModel().getColumn(4).setPreferredWidth(150);
+		tblFuncionario.getColumnModel().getColumn(5).setPreferredWidth(150);
+		tblFuncionario.getColumnModel().getColumn(6).setPreferredWidth(150);
 		pesquisar(modelo);
 	}
 	
@@ -125,6 +132,9 @@ public class ListaFuncionario extends JFrame implements ActionListener {
 					f.getNome(),
 					f.getCpf(),
 					f.getDatanasc(),
+					f.getCargo(),
+					f.getDepartamento(),
+					f.getFilial()
 			});
 		}
 	}
@@ -146,6 +156,9 @@ public class ListaFuncionario extends JFrame implements ActionListener {
 					f.getNome(),
 					f.getCpf(),
 					f.getDatanasc(),
+					f.getCargo(),
+					f.getDepartamento(),
+					f.getFilial()
 			});
 		}
 	}
@@ -190,4 +203,6 @@ public class ListaFuncionario extends JFrame implements ActionListener {
 			AtualizaTabela(txtPesquisar.getText());
 		}
 	}
+	
+	 
 }

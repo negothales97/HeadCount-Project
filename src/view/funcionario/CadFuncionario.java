@@ -115,37 +115,36 @@ public class CadFuncionario extends JFrame implements ActionListener {
 			comboBoxFilial.addItem(master.get(i));
 		}
 
-		gbc.gridy = 1;
 		gbc.anchor = 13;
 		panelGridTop.add(lblNome, gbc);
 		gbc.anchor = 17;
 		panelGridTop.add(txtNome, gbc);
 
-		gbc.gridy = 2;
+		gbc.gridy = 1;
 		gbc.anchor = 13;
 		panelGridTop.add(lblCPF, gbc);
 		gbc.anchor = 17;
 		panelGridTop.add(txtCPF, gbc);
 
-		gbc.gridy = 3;
+		gbc.gridy = 2;
 		gbc.anchor = 13;
 		panelGridTop.add(lblDataNasc, gbc);
 		gbc.anchor = 17;
 		panelGridTop.add(txtDataNasc, gbc);
 
-		gbc.gridy = 4;
+		gbc.gridy = 3;
 		gbc.anchor = 13;
 		panelGridTop.add(lblCargo, gbc);
 		gbc.anchor = 17;
 		panelGridTop.add(comboBoxCargo, gbc);
 
-		gbc.gridy = 7;
+		gbc.gridy = 4;
 		gbc.anchor = 13;
 		panelGridTop.add(lblDepartamento, gbc);
 		gbc.anchor = 17;
 		panelGridTop.add(comboBoxDepartamento, gbc);
 
-		gbc.gridy = 8;
+		gbc.gridy = 5;
 		gbc.anchor = 13;
 		panelGridTop.add(lblFilial, gbc);
 		gbc.anchor = 17;
@@ -184,10 +183,7 @@ public class CadFuncionario extends JFrame implements ActionListener {
 			Cargo cargo = (Cargo) comboBoxCargo.getSelectedItem();
 			FuncionarioController col = new FuncionarioController();
 			Funcionario funcionario = new Funcionario(txtNome.getText(), txtCPF.getText(), txtDataNasc.getText(),
-					cargo.getId(), departamento.getId(), filial.getId());
-			funcionario.setFilial_id(filial.getId());
-			funcionario.setCargo(cargo.getId());
-			funcionario.setDepartamento_id(departamento.getId());
+					cargo, departamento, filial);
 			col.criaFuncionario(funcionario);
 			janela.dispose();
 
