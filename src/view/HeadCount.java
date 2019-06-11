@@ -125,12 +125,8 @@ public class HeadCount implements ActionListener {
 			controlFun.relCustoFunc();
 		}if(fonte == relDepart) {
 			controlDeprt.relDepartamento();
-		}else if(fonte == masterDetailFD) {
-		controlFun = new FuncionarioController();
-		controlFun.masterDetailFuncionario();
-		
-	}
-
+		}if(fonte == masterDetailFD) {
+			controlFun.masterDetailFuncionario();
 		}
 	}
 }

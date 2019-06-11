@@ -168,5 +168,19 @@ public class FuncionarioController {
 	public void masterDetailFuncionario() {
 		masterDetailDepartamento = new MasterDetailFuncionario();
 	}
+	public boolean validaCampos(Funcionario funcionario) {
+		boolean campos = true;
+		if (funcionario.getNome().equals("") || funcionario.getNome().equals(null)) {
+			JOptionPane.showMessageDialog(null, "Preencher todos os campos");
+			campos = false;
+		} else if (funcionario.getCpf().equals("") || (funcionario.getCpf().equals(null))) {
+			JOptionPane.showMessageDialog(null, "Preencher todos os campos");
+			campos = false;
+		} else if (funcionario.getDatanasc().equals("") || (funcionario.getDatanasc().equals(null))) {
+			JOptionPane.showMessageDialog(null, "Preencher todos os campos");
+			campos = false;
+		}
+		return campos;
+	}
 	
 }
