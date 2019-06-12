@@ -6,12 +6,18 @@ public class CustoDepartamento {
 	int departamento_id;
 	String observacao;
 	double custo;
+	Departamento departamento;
+	Filial filial;
+
 	
-	public CustoDepartamento(int id, int filial_id, int departamento_id, String observacao, double custo){
+	public CustoDepartamento(int id, int filial_id, int departamento_id, 
+			String observacao, double custo, Departamento departamento, Filial filial){
 		this.id = id;
 		this.filial_id = filial_id;
 		this.departamento_id = departamento_id;
 		this.custo = custo;
+		this.departamento = departamento;
+		this.filial = filial;
 	}
 	public int getId() {
 		return id;
@@ -43,4 +49,17 @@ public class CustoDepartamento {
 	public void setCusto(double custo) {
 		this.custo = custo;
 	}
+	public Departamento getDepartamento() {
+		return departamento;
+	}
+	public void setDepartamento(Departamento departamento) {
+		this.departamento = departamento;
+	}
+	public Filial getFilial() {
+		return filial;
+	}
+	public void setFilial(Filial filial) {
+		this.filial = filial;
+	}
+
 }

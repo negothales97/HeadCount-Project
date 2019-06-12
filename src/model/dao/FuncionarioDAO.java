@@ -163,6 +163,7 @@ public class FuncionarioDAO {
 				Funcionario funcionario = new Funcionario(matricula, nome, cpf, dataNasc, cargo, departamento, filial);
 
 				funcionarios.add(funcionario);
+				
 			}
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Erro ao listar Funcionario no banco de dados: " + e.getMessage());
@@ -186,6 +187,7 @@ public class FuncionarioDAO {
 	}
 
 	public List<CustoFuncionario> getCustoFunc() throws DAOException {
+		Funcionario funcionario =null;
 		List<CustoFuncionario> custoFuncs = new ArrayList<>();
 		try (Connection con = Database.getInstance().getConnection()) {
 			PreparedStatement stmt = con.prepareStatement(CUSTOFUNC);
@@ -197,8 +199,10 @@ public class FuncionarioDAO {
 				int funcionario_id = rs.getInt("funcionario_id");
 				String observacao = rs.getString("observacao");
 				double custo = rs.getDouble("custo");
+				
+				funcionario = getFuncionario(funcionario_id);
 
-				CustoFuncionario custoFunc = new CustoFuncionario(id, funcionario_id, observacao, custo);
+				CustoFuncionario custoFunc = new CustoFuncionario(id, funcionario, funcionario_id, observacao, custo);
 				custoFuncs.add(custoFunc);
 			}
 		} catch (SQLException e) {

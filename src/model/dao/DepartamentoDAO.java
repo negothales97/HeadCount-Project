@@ -162,16 +162,23 @@ public class DepartamentoDAO {
 					String observacao = rs.getString("observacao");
 					double custo = rs.getDouble("custo");
 					
-					CustoDepartamento custoDep = new CustoDepartamento(id, filial_id, departamento_id, observacao, custo);
+					Departamento departamento = getDepartamento(departamento_id);
+					FilialDAO dao= new FilialDAO();
+					Filial filial = dao.getFilial(filial_id); 
+					
+					System.out.println(filial);
+					System.out.println(departamento);
+					
+					CustoDepartamento custoDep = new CustoDepartamento(id, filial_id, departamento_id, observacao, custo,departamento,filial);
 					custosDepartamento.add(custoDep);
-					return custosDepartamento;
+					
 				}
 			}
 			catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
+		return custosDepartamento;
 	}
 	
 	

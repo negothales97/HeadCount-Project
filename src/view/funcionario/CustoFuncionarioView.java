@@ -21,6 +21,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 
 import controller.FuncionarioController;
+import model.connection.DAOException;
 import model.vo.CustoFuncionario;
 import model.vo.Funcionario;
 
@@ -46,7 +47,7 @@ public class CustoFuncionarioView extends JFrame implements ActionListener {
 
 	private JScrollPane barraRolagem;
 
-	public CustoFuncionarioView() throws SQLException {
+	public CustoFuncionarioView() throws DAOException {
 		
 		control= new FuncionarioController();
 		String[] colunas = { "ID", "Nome", "Observacao", "Custo" };
@@ -57,7 +58,7 @@ public class CustoFuncionarioView extends JFrame implements ActionListener {
 		for (int i = 0; i < custos.size(); i++) {
 			CustoFuncionario custo = custos.get(i);
 			dados[i][0] = custo.getId();
-			dados[i][1] = custo.getFuncionario_id();
+			dados[i][1] = custo.getFuncionario();
 			dados[i][2] = custo.getObservacao();
 			dados[i][3] = custo.getCusto();
 		}

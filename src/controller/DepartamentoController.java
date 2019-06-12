@@ -67,7 +67,7 @@ public class DepartamentoController {
 	public void registraCustoDepartamento() {
 		try {
 			custoDepartamento = new CustoDepartamentoView();
-		} catch (SQLException e) {
+		} catch (DAOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -116,7 +116,7 @@ public class DepartamentoController {
 		try {
 			departamento = dao.getDepartamento(id);
 			editDepartamento = new EditDepartamento(departamento);
-		} catch (SQLException e) {
+		} catch (DAOException e) {
 			e.printStackTrace();
 		}
 		
@@ -133,7 +133,7 @@ public class DepartamentoController {
 				dao.update(departamento);
 				this.listaDepartamento();
 				return true;
-			} catch (SQLException e) {
+			} catch (DAOException e) {
 				e.printStackTrace();
 				return false;
 			}

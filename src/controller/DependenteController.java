@@ -58,7 +58,7 @@ public class DependenteController {
 		List<Dependente> dependentes = null;
 		try {
 			dependentes = dao.getDependentes();
-		} catch (SQLException e) {
+		} catch (DAOException e) {
 			e.printStackTrace();
 		}
 		return dependentes;
@@ -68,7 +68,7 @@ public class DependenteController {
 		List<Dependente> dependentes = null;
 		try {
 			dependentes = dao.pesquisar(nome);
-		} catch (SQLException e) {
+		} catch (DAOException e) {
 			e.printStackTrace();
 		}
 		return dependentes;
@@ -77,7 +77,7 @@ public class DependenteController {
 		try {
 			Dependente dependente = dao.getDependente(id);
 			editDependente = new EditDependente(dependente);
-		} catch (SQLException e) {
+		} catch (DAOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -88,7 +88,7 @@ public class DependenteController {
 				dao.update(dependente);
 				this.listaDependente();
 				return true;
-			} catch (SQLException e) {
+			} catch (DAOException e) {
 				e.printStackTrace();
 				return false;
 			}
@@ -100,7 +100,7 @@ public class DependenteController {
 		List<String> listaDepentendes = null;
 		try {
 			listaDepentendes = dao.getListaDependentes(matricula);
-		} catch (SQLException e) {
+		} catch (DAOException e) {
 			e.printStackTrace();
 		}		
 		return listaDepentendes;

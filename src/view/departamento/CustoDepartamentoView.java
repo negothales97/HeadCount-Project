@@ -22,6 +22,7 @@ import javax.swing.JTextField;
 
 import controller.DepartamentoController;
 import controller.FilialController;
+import model.connection.DAOException;
 import model.vo.CustoDepartamento;
 import model.vo.Departamento;
 import model.vo.Filial;
@@ -56,7 +57,7 @@ public class CustoDepartamentoView extends JFrame implements ActionListener {
 	private FilialController filialControl;
 	private Object[][] dados;
 
-	public CustoDepartamentoView() throws SQLException {
+	public CustoDepartamentoView() throws DAOException {
 		String[] colunas = { "Filial", "Departamento", "Observação", "Custo (R$)" };
 		janela 			= new JFrame();
 		contentPanel 	= new JPanel();
@@ -98,12 +99,12 @@ public class CustoDepartamentoView extends JFrame implements ActionListener {
 			e.printStackTrace();
 		}
 		List<CustoDepartamento> custos = controlDepart.getCustoDepartamentos();
+		System.out.println(custos);
 		Object[][] dados = new Object[custos.size()][4];
 		for (int i = 0; i < custos.size(); i++) {
 			CustoDepartamento custo = custos.get(i);
-			dados[i][0] = custo.getId();
-			dados[i][1] = custo.getFilial_id();
-			dados[i][1] = custo.getDepartamento_id();
+			dados[i][0] = custo.getFilial();
+			dados[i][1] = custo.getDepartamento();
 			dados[i][2] = custo.getObservacao();
 			dados[i][3] = custo.getCusto();
 		}

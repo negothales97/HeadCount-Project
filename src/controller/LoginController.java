@@ -4,6 +4,7 @@ import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
+import model.connection.DAOException;
 import model.dao.LoginDAO;
 import view.HeadCount;
 import view.Login;
@@ -20,7 +21,7 @@ public class LoginController {
 				JOptionPane.showMessageDialog(null, "Login Incorreto");
 				new Login();
 			}
-		} catch (SQLException e) {
+		} catch (DAOException e) {
 			e.printStackTrace();
 		}
 	}

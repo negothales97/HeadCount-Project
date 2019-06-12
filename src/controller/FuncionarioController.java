@@ -52,7 +52,7 @@ public class FuncionarioController {
 				FuncionarioDAO.create(funcionario);
 				this.listaFuncionario();
 				return true;
-			} catch (SQLException e) {
+			} catch (DAOException e) {
 				e.printStackTrace();
 				return false;
 			}
@@ -65,7 +65,7 @@ public class FuncionarioController {
 		try {
 			funcionario = FuncionarioDAO.getFuncionario(id);
 			editFuncionario = new EditFuncionario(funcionario);
-		} catch (SQLException e) {
+		} catch (DAOException e) {
 			e.printStackTrace();
 		}
 
@@ -77,7 +77,7 @@ public class FuncionarioController {
 				FuncionarioDAO.update(funcionario);
 				this.listaFuncionario();
 				return true;
-			} catch (SQLException e) {
+			} catch (DAOException e) {
 				e.printStackTrace();
 				return false;
 			}
@@ -88,25 +88,25 @@ public class FuncionarioController {
 	public void deletaFuncionario(int id) {
 		try {
 			FuncionarioDAO.delete(id);
-		} catch (SQLException e) {
+		} catch (DAOException e) {
 			e.printStackTrace();
 		}
 		this.listaFuncionario();
 	}
 
 	public void registraCustoFuncionario() {
-		try {
-			custoFuncionario = new CustoFuncionarioView();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+			try {
+				custoFuncionario = new CustoFuncionarioView();
+			} catch (DAOException e) {
+				e.printStackTrace();
+			}
 	}
 
 	public List<Funcionario> getFuncionarios() {
 		List<Funcionario> funcionarios = null;
 		try {
 			funcionarios = FuncionarioDAO.getFuncionarios();
-		} catch (SQLException e) {
+		} catch (DAOException e) {
 			e.printStackTrace();
 		}
 		return funcionarios;
@@ -115,7 +115,7 @@ public class FuncionarioController {
 	public List<Funcionario> pesquisaFuncionarios(String nome) {
 		List<Funcionario> funcionarios = null;
 		try {
-			funcionarios = dao.pesquisar(nome);
+			funcionarios = FuncionarioDAO.pesquisar(nome);
 		} catch (DAOException e) {
 			e.printStackTrace();
 		}
@@ -126,7 +126,7 @@ public class FuncionarioController {
 		List<CustoFuncionario> custos = null;
 		try {
 			custos = FuncionarioDAO.getCustoFunc();
-		} catch (SQLException e) {
+		} catch (DAOException e) {
 			e.printStackTrace();
 		}
 		return custos;
@@ -149,7 +149,7 @@ public class FuncionarioController {
 		List<String> relFuncionarios = null;
 		try {
 			relFuncionarios = FuncionarioDAO.getRelFuncionarios(filial, departamento);
-		} catch (SQLException e) {
+		} catch (DAOException e) {
 			e.printStackTrace();
 		}
 		return relFuncionarios;
@@ -159,7 +159,7 @@ public class FuncionarioController {
 		List<String> custosFuncionarios = null;
 		try {
 			custosFuncionarios = FuncionarioDAO.getCustosTodosFuncionarios();
-		} catch (SQLException e) {
+		} catch (DAOException e) {
 			e.printStackTrace();
 		}
 		return custosFuncionarios;

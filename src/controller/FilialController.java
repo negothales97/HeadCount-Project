@@ -37,7 +37,7 @@ public class FilialController  {
 				dao.create(filial);
 				this.listaFilial();
 				return true;
-			} catch (SQLException e) {
+			} catch (DAOException e) {
 				e.printStackTrace();
 				return false;
 			}
@@ -49,7 +49,7 @@ public class FilialController  {
 		try {
 			Filial filial = dao.getFilial(id);
 			editFilial = new EditFilial(filial);
-		} catch (SQLException e) {
+		} catch (DAOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -60,7 +60,7 @@ public class FilialController  {
 				dao.update(filial);
 				this.listaFilial();
 				return true;
-			} catch (SQLException e) {
+			} catch (DAOException e) {
 				e.printStackTrace();
 				return false;
 			}
@@ -90,7 +90,7 @@ public class FilialController  {
 		List<Filial> filiais = null;
 		try {
 			filiais = dao.getFiliais();
-		} catch (SQLException e) {
+		} catch (DAOException e) {
 			e.printStackTrace();
 		}
 		

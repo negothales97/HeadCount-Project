@@ -79,7 +79,7 @@ public class CargoController {
 		try {
 			Cargo cargo = dao.getCargo(id);
 			editCargo = new EditCargo(cargo);
-		} catch (SQLException e) {
+		} catch (DAOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -90,7 +90,7 @@ public class CargoController {
 				dao.update(cargo);
 				this.listaCargo();
 				return true;
-			} catch (SQLException e) {
+			} catch (DAOException e) {
 				e.printStackTrace();
 				return false;
 			}
