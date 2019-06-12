@@ -23,6 +23,7 @@ import javax.swing.JTextField;
 import controller.FuncionarioController;
 import model.connection.DAOException;
 import model.vo.CustoFuncionario;
+import model.vo.Departamento;
 import model.vo.Funcionario;
 
 public class CustoFuncionarioView extends JFrame implements ActionListener {
@@ -34,7 +35,7 @@ public class CustoFuncionarioView extends JFrame implements ActionListener {
 	private BorderLayout boderLayout;
 	private GridBagLayout gbLayout;
 
-	private JComboBox<String> cmbFuncionario;
+	private JComboBox<Funcionario> cmbFuncionario;
 	private JLabel lblFuncionario;
 	private JLabel lblObs;
 	private JLabel lblCusto;
@@ -78,17 +79,16 @@ public class CustoFuncionarioView extends JFrame implements ActionListener {
 		
 		
 		lblFuncionario = new JLabel("Funcionario");
-		lblObs = new JLabel("Observcao");
+		lblObs = new JLabel("Observacao");
 		lblCusto = new JLabel("Custo");
 		
-		cmbFuncionario = new JComboBox<String>();
+		cmbFuncionario = new JComboBox<Funcionario>();
 		
-		cmbFuncionario.addItem("SELECIONE....");
 		try {
 			control = new FuncionarioController();
 			List<Funcionario> master= control.getFuncionarios();
 			for (int i = 0; i< master.size(); i++) {
-				cmbFuncionario.addItem(master.get(i).getNome());
+				cmbFuncionario.addItem(master.get(i));
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -126,7 +126,7 @@ public class CustoFuncionarioView extends JFrame implements ActionListener {
 
 		janela.setContentPane(contentPanel);
 		janela.setTitle("Lista de Funcionarios");
-		janela.setSize(800, 600);
+		janela.setSize(1000, 800);
 		janela.setVisible(true);
 		janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -139,8 +139,8 @@ public class CustoFuncionarioView extends JFrame implements ActionListener {
 
 		if (fonte == btnSalvar) {
 			double custo = Double.parseDouble(txtCusto.getText());
-			int funcionario_id = cmbFuncionario.getSelectedIndex();
-			control.incluiCusto(funcionario_id, txtObs.getText(), custo);
+			Funcionario funcionario = (Funcionario) cmbFuncionario.getSelectedItem();
+			control.incluiCusto(funcionario.getMatricula(), txtObs.getText(), custo);
 			janela.dispose();
 
 		}

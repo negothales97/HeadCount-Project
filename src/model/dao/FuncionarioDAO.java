@@ -195,7 +195,6 @@ public class FuncionarioDAO {
 			ResultSet rs = stmt.getResultSet();
 			while (rs.next()) {
 				int id = rs.getInt("id");
-				System.out.println(id);
 				int funcionario_id = rs.getInt("funcionario_id");
 				String observacao = rs.getString("observacao");
 				double custo = rs.getDouble("custo");

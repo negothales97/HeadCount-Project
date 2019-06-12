@@ -65,8 +65,7 @@ public class HeadCount implements ActionListener {
 		custoFunc = new JMenuItem("Custo p/ Funcionario");
 		custoDepart = new JMenuItem("Custo p/ Departamento");
 
-		relFunc = new JMenuItem("Custo Funcion�rio");
-		relDepart = new JMenuItem("Custo Departamento");
+		relFunc = new JMenuItem("Custo Funcionario");
 
 		masterDetailFD = new JMenuItem("MasterDetail Func x Depend");
 
@@ -80,7 +79,6 @@ public class HeadCount implements ActionListener {
 		custoMenu.add(custoDepart);
 
 		relMenu.add(relFunc);
-		relMenu.add(relDepart);
 		relMenu.add(masterDetailFD);
 
 		cadFil.addActionListener(this);
@@ -91,7 +89,6 @@ public class HeadCount implements ActionListener {
 		custoFunc.addActionListener(this);
 		custoDepart.addActionListener(this);
 		relFunc.addActionListener(this);
-		relDepart.addActionListener(this);
 		masterDetailFD.addActionListener(this);
 
 		janela.setSize(600, 400);
@@ -124,8 +121,6 @@ public class HeadCount implements ActionListener {
 			controlDeprt.registraCustoDepartamento();
 		}if(fonte == relFunc) {
 			controlFun.relCustoFunc();
-		}if(fonte == relDepart) {
-			controlDeprt.relDepartamento();
 		}if(fonte == masterDetailFD) {
 			controlFun.masterDetailFuncionario();
 		}

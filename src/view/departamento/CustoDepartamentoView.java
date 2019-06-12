@@ -26,6 +26,7 @@ import model.connection.DAOException;
 import model.vo.CustoDepartamento;
 import model.vo.Departamento;
 import model.vo.Filial;
+import model.vo.Funcionario;
 
 public class CustoDepartamentoView extends JFrame implements ActionListener {
 	
@@ -37,8 +38,8 @@ public class CustoDepartamentoView extends JFrame implements ActionListener {
 	private BorderLayout boderLayout;
 	private GridBagLayout gbLayout;
 
-	private JComboBox<String> cmbFilial;
-	private JComboBox<String> cmbDepartamento;
+	private JComboBox<Filial> cmbFilial;
+	private JComboBox<Departamento> cmbDepartamento;
 	
 	private JLabel lblFilial;
 	private JLabel lblDepartamento;
@@ -78,22 +79,21 @@ public class CustoDepartamentoView extends JFrame implements ActionListener {
 		lblObs 			= new JLabel("Observcao");
 		lblCusto 		= new JLabel("Custo");
 		
-		cmbFilial 		= new JComboBox<String>();
-		cmbDepartamento = new JComboBox<String>();
+		cmbFilial 		= new JComboBox<Filial>();
+		cmbDepartamento = new JComboBox<Departamento>();
 		
-		cmbDepartamento.addItem("SELECIONE....");
-		cmbFilial.addItem("SELECIONE....");
+		
 		try {
 			controlDepart = new DepartamentoController();
 			List<Departamento> masterDepartamento = controlDepart.getDepartamentos();
 			for (int i = 0; i< masterDepartamento.size(); i++) {
-				cmbDepartamento.addItem(masterDepartamento.get(i).getNome());
+				cmbDepartamento.addItem(masterDepartamento.get(i));
 			}
 			filialControl = new FilialController();
 			List<Filial> master = filialControl.getFiliais();
 			  for (int i = 0; i < master.size(); i++) {
 				  
-				  cmbFilial.addItem(master.get(i).getNome());
+				  cmbFilial.addItem(master.get(i));
 			  }
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -155,9 +155,10 @@ public class CustoDepartamentoView extends JFrame implements ActionListener {
 		controlDepart = new DepartamentoController();
 		if (fonte == btnSalvar) {
 			double custo = Double.parseDouble(txtCusto.getText());
-			int filial_id = cmbFilial.getSelectedIndex();
-			int departamento_id = cmbDepartamento.getSelectedIndex();
-			controlDepart.incluiCusto(filial_id, departamento_id, txtObs.getText(), custo);
+			Departamento departamento = (Departamento) cmbDepartamento.getSelectedItem();
+			Filial filial = (Filial) cmbFilial.getSelectedItem();
+			
+			controlDepart.incluiCusto(filial.getId(), departamento.getId(), txtObs.getText(), custo);
 			janela.dispose();
 		}
 		if (fonte == btnSair) {
