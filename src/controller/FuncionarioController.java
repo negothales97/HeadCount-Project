@@ -14,7 +14,6 @@ import model.vo.CustoFuncionario;
 import model.vo.Departamento;
 import model.vo.Funcionario;
 import view.departamento.EditDepartamento;
-import view.departamento.RelCustoDepartamento;
 import view.funcionario.CadFuncionario;
 import view.funcionario.CustoFuncionarioView;
 import view.funcionario.EditFuncionario;

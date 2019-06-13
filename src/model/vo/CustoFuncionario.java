@@ -11,6 +11,7 @@ public class CustoFuncionario {
 		this.id = id;
 		this.funcionario = funcionario;
 		this.funcionario_id = funcionario_id;
+		this.observacao = observacao;
 		this.custo = custo;
 		
 	}

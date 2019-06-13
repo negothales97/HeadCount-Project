@@ -15,6 +15,7 @@ public class CustoDepartamento {
 		this.id = id;
 		this.filial_id = filial_id;
 		this.departamento_id = departamento_id;
+		this.observacao = observacao;
 		this.custo = custo;
 		this.departamento = departamento;
 		this.filial = filial;

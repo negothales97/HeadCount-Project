@@ -76,8 +76,6 @@ public class CustoFuncionarioView extends JFrame implements ActionListener {
 		contentPanel.setLayout(boderLayout);
 		container.setLayout(new FlowLayout());
 
-		
-		
 		lblFuncionario = new JLabel("Funcionario");
 		lblObs = new JLabel("Observacao");
 		lblCusto = new JLabel("Custo");
@@ -128,7 +126,7 @@ public class CustoFuncionarioView extends JFrame implements ActionListener {
 		janela.setTitle("Lista de Funcionarios");
 		janela.setSize(1000, 800);
 		janela.setVisible(true);
-		janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		janela.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 	}
 

@@ -17,7 +17,6 @@ import view.departamento.CadDepartamento;
 import view.departamento.CustoDepartamentoView;
 import view.departamento.EditDepartamento;
 import view.departamento.ListaDepartamento;
-import view.departamento.RelCustoDepartamento;
 
 public class DepartamentoController {
 	private ListaDepartamento listaDepartamento;
@@ -25,8 +24,6 @@ public class DepartamentoController {
 	private CustoDepartamentoView custoDepartamento;
 	private DepartamentoDAO dao;
 	private EditDepartamento editDepartamento;
-	private RelCustoDepartamento relDep;
-	
 
 	public DepartamentoController() {
 		dao = new DepartamentoDAO();
@@ -120,11 +117,6 @@ public class DepartamentoController {
 			e.printStackTrace();
 		}
 		
-	}
-	
-	public void relDepartamento() {
-		relDep = new RelCustoDepartamento();
-		relDep.criaJanela();
 	}
 
 	public boolean updateDepartamento(Departamento departamento) {

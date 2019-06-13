@@ -35,7 +35,6 @@ public class HeadCount implements ActionListener {
 	private CargoController controlCar;
 	private JMenu relMenu;
 	private JMenuItem relFunc;
-	private JMenuItem relDepart;
 	private JMenuItem masterDetailFD;
 
 	public HeadCount() {
@@ -65,8 +64,7 @@ public class HeadCount implements ActionListener {
 		custoFunc = new JMenuItem("Custo p/ Funcionario");
 		custoDepart = new JMenuItem("Custo p/ Departamento");
 
-		relFunc = new JMenuItem("Custo Funcionario");
-
+		relFunc = new JMenuItem("Relatório Custo Funcionario");
 		masterDetailFD = new JMenuItem("MasterDetail Func x Depend");
 
 		crudMenu.add(cadFil);

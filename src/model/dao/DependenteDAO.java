@@ -181,8 +181,10 @@ public class DependenteDAO {
 				String datanasc = rs.getString("datanasc");
 				listaDepentendes.add(datanasc);
 				
-				String funcionario_id = String.valueOf(rs.getInt("funcionario_id"));
-				listaDepentendes.add(funcionario_id);
+				int funcionario_id = (rs.getInt("funcionario_id"));
+				Funcionario funcionario = daoFunc.getFuncionario(funcionario_id);
+				
+				listaDepentendes.add(funcionario.getNome());
 
 			}
 		} catch (SQLException e) {

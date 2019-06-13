@@ -113,7 +113,7 @@ public class MasterDetailFuncionario extends JFrame implements ActionListener {
 		modeloFuncionario.setNumRows(0);
 		controlFuncionario = new FuncionarioController();
 		for (Funcionario f : controlFuncionario.getFuncionarios()) {
-			modeloFuncionario.addRow(new Object[] { f.getMatricula(), f.getNome(), f.getCpf(), f.getDatanasc(), });
+			modeloFuncionario.addRow(new Object[] { f.getMatricula(), f.getNome(), f.getCpf(), f.getDatanasc()});
 		}
 	}
 
@@ -127,7 +127,6 @@ public class MasterDetailFuncionario extends JFrame implements ActionListener {
 					d.getCpf(),
 					d.getDataNasc(),
 					d.getFuncionario(),
-					
 			});
 		}
 	}

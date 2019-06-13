@@ -200,7 +200,6 @@ public class FuncionarioDAO {
 				double custo = rs.getDouble("custo");
 				
 				funcionario = getFuncionario(funcionario_id);
-
 				CustoFuncionario custoFunc = new CustoFuncionario(id, funcionario, funcionario_id, observacao, custo);
 				custoFuncs.add(custoFunc);
 			}
